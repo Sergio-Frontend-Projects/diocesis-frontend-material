@@ -5,13 +5,22 @@
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="user-form">
     <mat-form-field appearance="fill">
-      <mat-label>Nombre</mat-label>
+      <mat-label class="caviar-bold">Nombre</mat-label>
       <input matInput formControlName="username" />
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Correo</mat-label>
+      <mat-label class="caviar-bold">Correo</mat-label>
       <input matInput formControlName="email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label class="caviar-bold">Rol</mat-label>
+      <mat-select matInput formControlName="role">
+        @for(rol of roles; track $index) {
+        <mat-option [value]="rol">{{ rol | titlecase }}</mat-option>
+        }
+      </mat-select>
     </mat-form-field>
 
     <div class="form-actions">

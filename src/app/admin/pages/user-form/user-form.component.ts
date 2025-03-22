@@ -3,8 +3,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormField, MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UserService } from '../../../core/services/user.service';
+import { User, UserRole } from '../../../core/models/user.model';
+import { USER_ROLES } from '../../../core/constants/user.constants';
 
 @Component({
   selector: 'app-user-form',
@@ -15,6 +18,7 @@ import { UserService } from '../../../core/services/user.service';
     MatFormField,
     MatInputModule,
     MatButtonModule,
+    MatSelectModule,
   ],
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.scss',
@@ -25,9 +29,12 @@ export default class UserFormComponent implements OnInit {
   router = inject(Router);
   route = inject(ActivatedRoute);
 
+  roles = USER_ROLES;
+
   form = this.fb.group({
     username: ['', Validators.required],
     email: ['', Validators.required],
+    role: ['user', Validators.required],
   });
 
   editing = false;
@@ -49,9 +56,10 @@ export default class UserFormComponent implements OnInit {
     if (this.form.invalid) return;
 
     const formValue = this.form.value;
-    const payload = {
+    const payload: Partial<User> = {
       username: formValue.username ?? '',
       email: formValue.email ?? '',
+      role: (formValue.role ?? 'user') as UserRole,
     };
 
     if (this.editing && this.userId) {
