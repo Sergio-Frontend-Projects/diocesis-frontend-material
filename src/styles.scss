@@ -1,4 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "CaviarDreamsNormal";
+  src: url("assets/fonts/CaviarDreams.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "CaviarDreamsBold";
+  src: url("assets/fonts/CaviarDreams_Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: "CaviarDreamsBoldItalic";
+  src: url("assets/fonts/CaviarDreams_BoldItalic.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face {
+  font-family: "CaviarDreamsItalic";
+  src: url("assets/fonts/CaviarDreams_Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
 
 html,
 body {
@@ -13,4 +37,20 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+.caviar-normal {
+  font-family: "CaviarDreamsNormal";
+}
+
+.caviar-bold {
+  font-family: "CaviarDreamsBold";
+}
+
+.caviar-bold-italic {
+  font-family: "CaviarDreamsBoldItalic";
+}
+
+.caviar-italic {
+  font-family: "CaviarDreamsItalic";
 }

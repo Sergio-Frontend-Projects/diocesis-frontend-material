@@ -8,7 +8,7 @@
 
 .toolbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .spacer {
@@ -17,4 +17,20 @@
 
 .main-content {
   padding: 24px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-img {
+  height: 32px;
+  width: auto;
+}
+
+.logo-text {
+  font-weight: 600;
+  font-size: 1.2rem;
 }

@@ -1,17 +1,34 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav mode="side" opened class="sidenav">
+  <mat-sidenav
+    [mode]="isSmallScreen() ? 'over' : 'side'"
+    [opened]="sidenavOpened()"
+    (closedStart)="sidenavOpened.set(false)"
+    class="sidenav"
+  >
     <mat-nav-list>
-      <a mat-list-item routerLink="/admin">Dashboard</a>
-      <a mat-list-item routerLink="/admin">Dashboard</a>
-      <a mat-list-item routerLink="/admin">Dashboard</a>
-      <a mat-list-item routerLink="/admin">Dashboard</a>
-      <a mat-list-item routerLink="/admin">Dashboard</a>
+      <a mat-list-item routerLink="/admin"
+        ><p class="caviar-bold">Dashboard</p>
+      </a>
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content>
     <mat-toolbar color="primary" class="toolbar">
-      <span class="logo">Admin Panel</span>
+      @if(isSmallScreen()) {
+      <button mat-icon-button (click)="toggleSidenav()" aria-label="Menú">
+        <mat-icon>menu</mat-icon>
+      </button>
+      }
+
+      <div class="logo-container">
+        <img
+          src="images/logo-normal-transparente.png"
+          alt="Logo"
+          class="logo-img"
+        />
+        <span class="logo-text caviar-normal">Admin Panel</span>
+      </div>
+
       <span class="spacer"></span>
       <button mat-icon-button (click)="logout()" matTooltip="Cerrar sesión">
         <mat-icon>logout</mat-icon>
