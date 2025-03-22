@@ -27,10 +27,8 @@ export default class LoginComponent {
 
     const { username, password } = this.form.value;
 
-    localStorage.setItem('token', 'temporalValue');
-
-    // this.auth.login(username!, password!).subscribe(() => {
-    this.router.navigateByUrl('/admin');
-    // });
+    this.auth.login(username!, password!).subscribe(() => {
+      this.router.navigateByUrl('/admin');
+    });
   }
 }

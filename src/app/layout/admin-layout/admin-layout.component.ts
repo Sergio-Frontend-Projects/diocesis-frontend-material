@@ -28,7 +28,6 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
     CommonModule,
     RouterModule,
     RouterLink,
-    RouterLinkActive,
     RouterOutlet,
     MatSidenavModule,
     MatToolbarModule,

@@ -24,15 +24,20 @@ export default class UsersComponent implements OnInit {
   private userService = inject(UserService);
   users = signal<any[]>([]);
 
+  tempUsers = [
+    { id: 1, name: 'Sergio', email: 'text' },
+    { id: 2, name: 'Ricardo', email: 'text' },
+  ];
+
   displayedColumns = ['id', 'name', 'email', 'actions'];
 
   ngOnInit(): void {
-    //this.userService.getUsers().subscribe((data) => this.users.set(data));
+    this.userService.getUsers().subscribe((data) => this.users.set(data));
   }
 
   deleteUser(id: string) {
-    // this.userService.deleteUser(id).subscribe(() => {
-    //   this.users.update((users) => users.filter((u) => u.id !== id));
-    // });
+    this.userService.deleteUser(id).subscribe(() => {
+      this.users.update((users) => users.filter((u) => u.id !== id));
+    });
   }
 }
