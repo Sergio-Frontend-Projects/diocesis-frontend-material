@@ -1,12 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, signal } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterModule,
+  RouterOutlet,
+} from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
-import { AuthService } from '../../core/auth.service';
+import { AuthService } from '../../core/services/auth.service';
 
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
@@ -14,17 +26,21 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
   selector: 'app-admin-layout',
   imports: [
     CommonModule,
+    RouterModule,
+    RouterLink,
+    RouterLinkActive,
     RouterOutlet,
-    MatToolbarModule,
-    MatButtonModule,
     MatSidenavModule,
+    MatToolbarModule,
     MatIconModule,
     MatListModule,
+    MatButtonModule,
   ],
   templateUrl: './admin-layout.component.html',
   styleUrl: './admin-layout.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdminLayoutComponent {
+export default class AdminLayoutComponent {
   auth = inject(AuthService);
   router = inject(Router);
 

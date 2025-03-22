@@ -1,17 +1,28 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/auth.guard';
-import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
-import { PublicLayoutComponent } from './layout/public-layout/public-layout.component';
-import { LoginComponent } from './public/pages/login/login.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  {
+    path: 'login',
+    loadComponent: () => import('../app/public/pages/login/login.component'),
+  },
   {
     path: 'admin',
-    component: AdminLayoutComponent,
+    loadComponent: () =>
+      import('../app/layout/admin-layout/admin-layout.component'),
     canActivate: [authGuard],
+    children: [
+      {
+        path: 'users',
+        loadComponent: () => import('../app/admin/pages/users/users.component'),
+      },
+    ],
+  },
+  {
+    path: '',
+    loadComponent: () =>
+      import('../app/layout/public-layout/public-layout.component'),
     children: [],
   },
-  { path: '', component: PublicLayoutComponent, children: [] },
   { path: '**', redirectTo: '' },
 ];

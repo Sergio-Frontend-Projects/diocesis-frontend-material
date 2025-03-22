@@ -19,4 +19,4 @@ import { RouterModule } from '@angular/router';
   templateUrl: './public-layout.component.html',
   styleUrl: './public-layout.component.scss',
 })
-export class PublicLayoutComponent {}
+export default class PublicLayoutComponent {}

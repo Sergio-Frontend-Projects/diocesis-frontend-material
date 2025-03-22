@@ -6,8 +6,13 @@
     class="sidenav"
   >
     <mat-nav-list>
-      <a mat-list-item routerLink="/admin"
-        ><p class="caviar-bold">Dashboard</p>
+      <a
+        mat-list-item
+        routerLink="/admin/users"
+        [routerLinkActiveOptions]="{ exact: true }"
+        aria-current="page"
+        href="#"
+        ><p class="caviar-bold">Usuarios</p>
       </a>
     </mat-nav-list>
   </mat-sidenav>
