@@ -9,7 +9,6 @@ import {
 import {
   Router,
   RouterLink,
-  RouterLinkActive,
   RouterModule,
   RouterOutlet,
 } from '@angular/router';

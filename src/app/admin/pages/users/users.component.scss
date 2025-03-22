@@ -7,3 +7,18 @@
 table {
   width: 100%;
 }
+
+.status-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.active {
+  background-color: #4caf50;
+}
+
+.inactive {
+  background-color: #f44336;
+}

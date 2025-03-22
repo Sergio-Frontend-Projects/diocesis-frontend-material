@@ -1,0 +1,30 @@
+<div class="form-container">
+  <h2 class="caviar-bold">
+    {{ editing ? "Editar usuario" : "Nuevo usuario" }}
+  </h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="user-form">
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="username" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Correo</mat-label>
+      <input matInput formControlName="email" />
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        class="caviar-bold"
+      >
+        {{ editing ? "Actualizar" : "Crear" }}
+      </button>
+
+      <button mat-button routerLink="/admin/users">Cancelar</button>
+    </div>
+  </form>
+</div>

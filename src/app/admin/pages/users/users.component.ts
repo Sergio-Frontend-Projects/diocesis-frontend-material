@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { UserService } from '../../../core/services/user.service';
+import { User } from '../../../core/models/user.model';
 
 @Component({
   selector: 'app-users',
@@ -22,17 +23,36 @@ import { UserService } from '../../../core/services/user.service';
 })
 export default class UsersComponent implements OnInit {
   private userService = inject(UserService);
-  users = signal<any[]>([]);
+  users = signal<User[]>([]);
 
-  tempUsers = [
-    { id: 1, name: 'Sergio', email: 'text' },
-    { id: 2, name: 'Ricardo', email: 'text' },
+  displayedColumns = ['isActive', 'username', 'email', 'actions'];
+
+  tempUsers: User[] = [
+    {
+      id: '1',
+      username: 'Sergio',
+      email: 'sergiobg.isc@gmail.com',
+      role: 'super',
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: null,
+      deletedAt: null,
+    },
+    {
+      id: '2',
+      username: 'Sergio',
+      email: 'sergiobg.isc@gmail.com',
+      role: 'admin',
+      isActive: false,
+      createdAt: new Date(),
+      updatedAt: null,
+      deletedAt: null,
+    },
   ];
 
-  displayedColumns = ['id', 'name', 'email', 'actions'];
-
   ngOnInit(): void {
-    this.userService.getUsers().subscribe((data) => this.users.set(data));
+    this.users.set(this.tempUsers);
+    //this.userService.getUsers().subscribe((data) => this.users.set(data));
   }
 
   deleteUser(id: string) {

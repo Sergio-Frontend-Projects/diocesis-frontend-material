@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,19 @@ export class UserService {
   private api = `${environment.apiUrl}/users/`;
 
   getUsers() {
-    return this.http.get<any[]>(this.api);
+    return this.http.get<User[]>(this.api);
+  }
+
+  getUserById(id: string) {
+    return this.http.get<User>(`${this.api}/${id}`);
+  }
+
+  createUser(data: Partial<User>) {
+    return this.http.post<User>(this.api, data);
+  }
+
+  updateUser(id: string, data: Partial<User>) {
+    return this.http.put(`${this.api}/${id}`, data);
   }
 
   deleteUser(id: string) {

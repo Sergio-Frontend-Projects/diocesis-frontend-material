@@ -16,6 +16,16 @@ export const routes: Routes = [
         path: 'users',
         loadComponent: () => import('../app/admin/pages/users/users.component'),
       },
+      {
+        path: 'users/add',
+        loadComponent: () =>
+          import('../app/admin/pages/user-form/user-form.component'),
+      },
+      {
+        path: 'users/edit/:id',
+        loadComponent: () =>
+          import('../app/admin/pages/user-form/user-form.component'),
+      },
     ],
   },
   {
