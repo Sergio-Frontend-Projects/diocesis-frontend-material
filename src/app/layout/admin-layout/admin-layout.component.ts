@@ -5,6 +5,7 @@ import {
   Component,
   effect,
   inject,
+  OnInit,
   signal,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -18,7 +19,9 @@ import {
   RouterModule,
   RouterOutlet,
 } from '@angular/router';
+import { User } from '../../core/models/user.model';
 import { AuthService } from '../../core/services/auth.service';
+import { UserService } from '../../core/services/user.service';
 
 interface Options {
   routerLink: string;
@@ -42,14 +45,16 @@ interface Options {
   styleUrl: './admin-layout.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class AdminLayoutComponent {
+export default class AdminLayoutComponent implements OnInit {
   auth = inject(AuthService);
+  userService = inject(UserService);
   router = inject(Router);
 
   breakpointObserver = inject(BreakpointObserver);
 
   isSmallScreen = signal(false);
   sidenavOpened = signal(true);
+  user = signal<User | null>(null);
 
   menuOptions: Options[] = [
     { routerLink: '/admin/users', text: 'Usuarios' },
@@ -72,6 +77,16 @@ export default class AdminLayoutComponent {
           this.isSmallScreen.set(isSmall);
           this.sidenavOpened.set(!isSmall);
         });
+    });
+  }
+
+  ngOnInit(): void {
+    const userId = this.auth.getUserIdFromToken();
+
+    if (!userId) return;
+
+    this.userService.getUserById(userId).subscribe((u) => {
+      this.user.set(u);
     });
   }
 

@@ -5,6 +5,13 @@
     (closedStart)="sidenavOpened.set(false)"
     class="sidenav"
   >
+    <div class="user-info">
+      <mat-icon class="user-icon">account_circle</mat-icon>
+      <span class="username caviar-bold">{{
+        user()?.username ? user()?.username : "???"
+      }}</span>
+    </div>
+
     <mat-nav-list>
       @for(option of menuOptions; track $index) {
       <a

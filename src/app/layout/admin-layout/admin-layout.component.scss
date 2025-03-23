@@ -40,6 +40,24 @@
   font-size: 1.2rem;
 }
 
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  font-size: 1rem;
+  color: #333;
+  border-bottom: 1px solid #333;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.user-icon {
+  color: #333;
+}
+
 mat-icon {
   color: #f8f8f8;
 }
@@ -47,6 +65,3 @@ mat-icon {
 mat-sidenav-content {
   background: #f8f8f8;
 }
-
-
-

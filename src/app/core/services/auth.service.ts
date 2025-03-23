@@ -2,10 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { jwtDecode } from 'jwt-decode';
 
 interface Token {
   access: string;
   refresh: string;
+}
+
+export interface JwtPayload {
+  user_id: string;
 }
 
 @Injectable({
@@ -37,5 +42,17 @@ export class AuthService {
 
   getToken() {
     return this.token();
+  }
+
+  getUserIdFromToken(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const decoded = jwtDecode<JwtPayload>(token);
+      return decoded.user_id;
+    } catch {
+      return null;
+    }
   }
 }
