@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { UserService } from '../../../core/services/user.service';
 import { User } from '../../../core/models/user.model';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-users',
@@ -23,6 +24,8 @@ import { User } from '../../../core/models/user.model';
 })
 export default class UsersComponent implements OnInit {
   private userService = inject(UserService);
+  private dialog = inject(MatDialog);
+
   users = signal<User[]>([]);
 
   displayedColumns = ['isActive', 'username', 'email', 'actions'];
@@ -56,8 +59,22 @@ export default class UsersComponent implements OnInit {
   }
 
   deleteUser(id: string) {
-    this.userService.deleteUser(id).subscribe(() => {
-      this.users.update((users) => users.filter((u) => u.id !== id));
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Desactivar usuario',
+        message: '¿Estás seguro de que deseas desactivar este usuario?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) return;
+
+      console.log('BORRADO');
+
+      return;
+      this.userService.deleteUser(id).subscribe(() => {
+        this.users.update((users) => users.filter((u) => u.id !== id));
+      });
     });
   }
 }

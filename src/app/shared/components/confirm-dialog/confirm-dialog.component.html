@@ -1,0 +1,16 @@
+<h2 mat-dialog-title class="caviar-bold">{{ data.title || "Confirmar" }}</h2>
+
+<mat-dialog-content class="caviar-bold">
+  <p class="caviar-bold">
+    {{ data.message || "¿Estás seguro que deseas continuar?" }}
+  </p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close(false)">
+    <p class="caviar-bold">Cancelar</p>
+  </button>
+  <button mat-raised-button color="warn" (click)="dialogRef.close(true)">
+    <p class="caviar-bold">Desactivar</p>
+  </button>
+</mat-dialog-actions>
