@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { FilterConfig } from '../../../core/models/filter-config.model';
+import { FilterConfig } from '@core/models/filter-config.model';
 
 @Component({
   selector: 'app-filter-bar',

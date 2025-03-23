@@ -6,13 +6,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
-import { User } from '../../../core/models/user.model';
-import { ToastrService } from '../../../core/services/toastr.service';
-import { UserService } from '../../../core/services/user.service';
-import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
-import { PaginatorComponent } from '../../../shared/components/paginator/paginator.component';
-import { FilterBarComponent } from '../../../shared/components/filter-bar/filter-bar.component';
-import { FilterConfig } from '../../../core/models/filter-config.model';
+import { FilterConfig } from '@core/models/filter-config.model';
+import { User } from '@core/models/user.model';
+import { ToastrService } from '@core/services/toastr.service';
+import { UserService } from '@core/services/user.service';
+import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
+import { FilterBarComponent } from '@shared/components/filter-bar/filter-bar.component';
+import { PaginatorComponent } from '@shared/components/paginator/paginator.component';
 
 @Component({
   selector: 'app-users',

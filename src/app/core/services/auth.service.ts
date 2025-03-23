@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { tap } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { environment } from '@environments/environment';
 import { jwtDecode } from 'jwt-decode';
+import { tap } from 'rxjs';
 
 interface Token {
   access: string;

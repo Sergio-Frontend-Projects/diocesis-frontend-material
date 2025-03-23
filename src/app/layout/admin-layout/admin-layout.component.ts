@@ -19,9 +19,9 @@ import {
   RouterModule,
   RouterOutlet,
 } from '@angular/router';
-import { User } from '../../core/models/user.model';
-import { AuthService } from '../../core/services/auth.service';
-import { UserService } from '../../core/services/user.service';
+import { User } from '@core/models/user.model';
+import { AuthService } from '@core/services/auth.service';
+import { UserService } from '@core/services/user.service';
 
 interface Options {
   routerLink: string;

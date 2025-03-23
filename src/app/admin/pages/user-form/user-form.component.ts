@@ -5,10 +5,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormField, MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { UserService } from '../../../core/services/user.service';
-import { User, UserRole } from '../../../core/models/user.model';
-import { USER_ROLES } from '../../../core/constants/user.constants';
-import { ToastrService } from '../../../core/services/toastr.service';
+import { USER_ROLES } from '@core/constants/user.constants';
+import { User, UserRole } from '@core/models/user.model';
+import { ToastrService } from '@core/services/toastr.service';
+import { UserService } from '@core/services/user.service';
 
 @Component({
   selector: 'app-user-form',
@@ -83,9 +83,12 @@ export default class UserFormComponent implements OnInit {
         );
         this.router.navigateByUrl('/admin/users');
       },
-      error: ()=> {
-        this.toastrService.showError('Error al guardar el usuario', 'Malas noticias');
-      }
+      error: () => {
+        this.toastrService.showError(
+          'Error al guardar el usuario',
+          'Malas noticias'
+        );
+      },
     });
   }
 }
