@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
+import { ToastrService } from '@core/services/toastr.service';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,8 @@ import { AuthService } from '@core/services/auth.service';
 export default class LoginComponent {
   fb = inject(FormBuilder);
   auth = inject(AuthService);
+  toastrService = inject(ToastrService);
+
   router = inject(Router);
 
   form = this.fb.group({
@@ -27,8 +30,15 @@ export default class LoginComponent {
 
     const { username, password } = this.form.value;
 
-    this.auth.login(username!, password!).subscribe(() => {
-      this.router.navigateByUrl('/admin/users');
+    this.auth.login(username!, password!).subscribe({
+      next: () => {
+        this.toastrService.showSuccess(username!, 'Bienvenido');
+        this.router.navigateByUrl('/admin/users');
+      },
+      error: (err) => {
+        console.warn(err.error.detail);
+        this.toastrService.showError(err.error.detail, 'Error');
+      }
     });
   }
 }
