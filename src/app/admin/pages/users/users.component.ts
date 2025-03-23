@@ -54,8 +54,11 @@ export default class UsersComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.users.set(this.tempUsers);
-    //this.userService.getUsers().subscribe((data) => this.users.set(data));
+    this.loadUsers();
+  }
+
+  loadUsers() {
+    this.userService.getUsers().subscribe((data) => this.users.set(data));
   }
 
   deleteUser(id: string) {
@@ -68,13 +71,24 @@ export default class UsersComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (!result) return;
-
-      console.log('BORRADO');
-
-      return;
       this.userService.deleteUser(id).subscribe(() => {
         this.users.update((users) => users.filter((u) => u.id !== id));
       });
+    });
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+
+    if (!file) return;
+    if (file.type !== 'text/csv') return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    this.userService.createUsersByCsv(formData).subscribe(() => {
+      this.loadUsers();
     });
   }
 }

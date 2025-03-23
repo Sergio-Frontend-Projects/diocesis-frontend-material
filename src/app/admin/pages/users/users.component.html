@@ -1,9 +1,25 @@
 <div class="users-container">
   <h2 class="caviar-bold">Gestión de usuarios</h2>
-  <button mat-raised-button color="primary" routerLink="add">
-    <mat-icon>person_add</mat-icon>
-    <p class="caviar-bold">Nuevo usuario</p>
-  </button>
+
+  <div class="actions">
+    <button mat-raised-button color="primary" routerLink="add">
+      <mat-icon>person_add</mat-icon>
+      <p class="caviar-bold">Nuevo usuario</p>
+    </button>
+
+    <button mat-raised-button color="accent" (click)="fileInput.click()">
+      <mat-icon>upload_file</mat-icon>
+      <p class="caviar-bold">Cargar CSV</p>
+    </button>
+
+    <input
+      type="file"
+      #fileInput
+      accept=".csv"
+      style="display: none"
+      (change)="onFileSelected($event)"
+    />
+  </div>
 
   <table mat-table [dataSource]="users()" class="mat-elevation-z2">
     <ng-container matColumnDef="isActive">
@@ -13,19 +29,22 @@
           class="status-indicator"
           [class.active]="user.isActive"
           [class.inactive]="!user.isActive"
-
         ></span>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="username">
       <th mat-header-cell *matHeaderCellDef class="caviar-bold">Nombre</th>
-      <td mat-cell *matCellDef="let user" class="caviar-normal">{{ user.username }}</td>
+      <td mat-cell *matCellDef="let user" class="caviar-normal">
+        {{ user.username }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="email">
       <th mat-header-cell *matHeaderCellDef class="caviar-bold">Email</th>
-      <td mat-cell *matCellDef="let user" class="caviar-normal">{{ user.email }}</td>
+      <td mat-cell *matCellDef="let user" class="caviar-normal">
+        {{ user.email }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">

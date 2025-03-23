@@ -22,3 +22,10 @@ table {
 .inactive {
   background-color: #f44336;
 }
+
+.actions {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
