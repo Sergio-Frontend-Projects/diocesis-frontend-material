@@ -1,14 +1,19 @@
 .sidenav-container {
   height: 100vh;
+  background-color: #434343;
 }
 
 .sidenav {
   width: 240px;
+  background: #f7c873;
+  border-radius: 0px 20px 0px 0px;
 }
 
 .toolbar {
   display: flex;
   justify-content: center;
+  background: #434343;
+  color: #f8f8f8;
 }
 
 .spacer {
@@ -34,3 +39,14 @@
   font-weight: 600;
   font-size: 1.2rem;
 }
+
+mat-icon {
+  color: #f8f8f8;
+}
+
+mat-sidenav-content {
+  background: #f8f8f8;
+}
+
+
+
