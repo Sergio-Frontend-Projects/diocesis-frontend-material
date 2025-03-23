@@ -12,7 +12,7 @@ export class UserService {
 
   getUsersPaginated(page: number, limit: number) {
     return this.http.get<{ data: User[]; total: number }>(
-      `${this.api}?page=${page + 1}&limit=${limit}`
+      `${this.api}?page=${page + 1}&page_size=${limit}`
     );
   }
 
