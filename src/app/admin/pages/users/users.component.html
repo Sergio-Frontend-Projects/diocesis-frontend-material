@@ -1,6 +1,12 @@
 <div class="users-container">
   <h2 class="caviar-bold">Gestión de usuarios</h2>
 
+  <app-filter-bar
+    [filters]="filters"
+    (search)="onSearch($event)"
+    (clear)="onSearch({})"
+  />
+
   <div class="actions">
     <button mat-raised-button color="primary" routerLink="add">
       <mat-icon>person_add</mat-icon>

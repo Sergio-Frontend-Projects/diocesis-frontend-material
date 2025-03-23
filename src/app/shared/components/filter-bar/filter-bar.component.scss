@@ -1,0 +1,22 @@
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.filter-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.filter-field {
+  min-width: 200px;
+  flex: 1;
+}
+
+.filter-buttons {
+  display: flex;
+  justify-content: end;
+  gap: 16px;
+}

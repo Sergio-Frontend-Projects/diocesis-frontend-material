@@ -3,14 +3,16 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { PageEvent } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
-import { UserService } from '../../../core/services/user.service';
 import { User } from '../../../core/models/user.model';
-import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
-import { PageEvent } from '@angular/material/paginator';
-import { PaginatorComponent } from '../../../shared/components/paginator/paginator.component';
 import { ToastrService } from '../../../core/services/toastr.service';
+import { UserService } from '../../../core/services/user.service';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { PaginatorComponent } from '../../../shared/components/paginator/paginator.component';
+import { FilterBarComponent } from '../../../shared/components/filter-bar/filter-bar.component';
+import { FilterConfig } from '../../../core/models/filter-config.model';
 
 @Component({
   selector: 'app-users',
@@ -22,6 +24,7 @@ import { ToastrService } from '../../../core/services/toastr.service';
     MatIconModule,
     MatDialogModule,
     PaginatorComponent,
+    FilterBarComponent,
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
@@ -38,27 +41,29 @@ export default class UsersComponent implements OnInit {
 
   displayedColumns = ['isActive', 'username', 'email', 'actions'];
 
-  tempUsers: User[] = [
+  filters: FilterConfig[] = [
+    { key: 'username', label: 'Nombre', type: 'text' },
     {
-      id: '1',
-      username: 'Sergio',
-      email: 'sergiobg.isc@gmail.com',
-      role: 'super',
-      isActive: true,
-      createdAt: new Date(),
-      updatedAt: null,
-      deletedAt: null,
+      key: 'role',
+      label: 'Rol',
+      type: 'select',
+      options: [
+        { label: 'Todos', value: null },
+        { label: 'Admin', value: 'admin' },
+        { label: 'Usuario', value: 'user' },
+      ],
     },
     {
-      id: '2',
-      username: 'Sergio',
-      email: 'sergiobg.isc@gmail.com',
-      role: 'admin',
-      isActive: false,
-      createdAt: new Date(),
-      updatedAt: null,
-      deletedAt: null,
+      key: 'isActive',
+      label: 'Estado',
+      type: 'boolean',
+      options: [
+        { label: 'Todos', value: null },
+        { label: 'Activo', value: true },
+        { label: 'Inactivo', value: false },
+      ],
     },
+    { key: 'createdAt', label: 'Fecha de creación', type: 'date' },
   ];
 
   ngOnInit(): void {
@@ -72,7 +77,10 @@ export default class UsersComponent implements OnInit {
         this.total.set(response.total);
       },
       error: () => {
-        this.toastrService.showError('Error al obtener usuarios.', 'Malas noticias');
+        this.toastrService.showError(
+          'Error al obtener usuarios.',
+          'Malas noticias'
+        );
       },
     });
   }
@@ -112,5 +120,9 @@ export default class UsersComponent implements OnInit {
     this.page.set(event.pageIndex);
     this.limit.set(event.pageSize);
     this.loadUsers();
+  }
+
+  onSearch(filtros: Record<string, any>) {
+    console.log('Buscar con: ', filtros);
   }
 }

@@ -18,22 +18,23 @@
       <mat-label class="caviar-bold">Rol</mat-label>
       <mat-select matInput formControlName="role">
         @for(rol of roles; track $index) {
-        <mat-option [value]="rol">{{ rol | titlecase }}</mat-option>
+        <mat-option [value]="rol">
+          <p class="caviar-bold">{{ rol | titlecase }}</p>
+        </mat-option>
         }
       </mat-select>
     </mat-form-field>
 
     <div class="form-actions">
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        class="caviar-bold"
-      >
-        {{ editing ? "Actualizar" : "Crear" }}
+      <button mat-raised-button color="primary" type="submit">
+        <p class="caviar-bold">
+          {{ editing ? "Actualizar" : "Crear" }}
+        </p>
       </button>
 
-      <button mat-button routerLink="/admin/users">Cancelar</button>
+      <button mat-button routerLink="/admin/users">
+        <p class="caviar-bold">Cancelar</p>
+      </button>
     </div>
   </form>
 </div>

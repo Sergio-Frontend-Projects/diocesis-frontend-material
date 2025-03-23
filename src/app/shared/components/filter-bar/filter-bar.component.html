@@ -1,0 +1,39 @@
+<form [formGroup]="form" class="filter-bar">
+  <div class="filter-fields">
+    @for(filter of filters(); track $index){
+    <ng-container>
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label class="caviar-bold">{{ filter.label }}</mat-label>
+
+        @if (filter.type === 'text') {
+        <input matInput [formControlName]="filter.key" />
+        } @if (filter.type === 'select' || filter.type === 'boolean') {
+        <mat-select [formControlName]="filter.key">
+          @for(option of filter.options; track $index) {
+          <mat-option [value]="option.value">
+            <p class="caviar-bold">{{ option.label }}</p>
+          </mat-option>
+          }
+        </mat-select>
+        } @if(filter.type === 'date') {
+        <input matInput [formControlName]="filter.key" type="date" />
+        }
+      </mat-form-field>
+    </ng-container>
+    }
+  </div>
+
+  <div class="filter-buttons">
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="onSearch()"
+    >
+      <p class="caviar-bold">Buscar</p>
+    </button>
+    <button mat-button type="button" (click)="onClear()">
+      <p class="caviar-bold">Limpiar</p>
+    </button>
+  </div>
+</form>
