@@ -10,8 +10,10 @@ export class UserService {
   private http = inject(HttpClient);
   private api = `${environment.apiUrl}/users/`;
 
-  getUsers() {
-    return this.http.get<User[]>(this.api);
+  getUsersPaginated(page: number, limit: number) {
+    return this.http.get<{ data: User[]; total: number }>(
+      `${this.api}?page=${page + 1}&limit=${limit}`
+    );
   }
 
   getUserById(id: string) {

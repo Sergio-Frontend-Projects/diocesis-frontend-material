@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router';
 import { UserService } from '../../../core/services/user.service';
 import { User } from '../../../core/models/user.model';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { PageEvent } from '@angular/material/paginator';
+import { PaginatorComponent } from "../../../shared/components/paginator/paginator.component";
 
 @Component({
   selector: 'app-users',
@@ -18,7 +20,8 @@ import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialo
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-  ],
+    PaginatorComponent
+],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
@@ -27,6 +30,9 @@ export default class UsersComponent implements OnInit {
   private dialog = inject(MatDialog);
 
   users = signal<User[]>([]);
+  total = signal(0);
+  page = signal(0);
+  limit = signal(10);
 
   displayedColumns = ['isActive', 'username', 'email', 'actions'];
 
@@ -58,7 +64,12 @@ export default class UsersComponent implements OnInit {
   }
 
   loadUsers() {
-    this.userService.getUsers().subscribe((data) => this.users.set(data));
+    this.userService
+      .getUsersPaginated(this.page(), this.limit())
+      .subscribe((response) => {
+        this.users.set(response.data);
+        this.total.set(response.total);
+      });
   }
 
   deleteUser(id: string) {
@@ -90,5 +101,11 @@ export default class UsersComponent implements OnInit {
     this.userService.createUsersByCsv(formData).subscribe(() => {
       this.loadUsers();
     });
+  }
+
+  onPageChange(event: PageEvent) {
+    this.page.set(event.pageIndex);
+    this.limit.set(event.pageSize);
+    this.loadUsers();
   }
 }
