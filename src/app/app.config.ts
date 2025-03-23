@@ -10,15 +10,16 @@ import {
 } from '@angular/platform-browser/animations';
 
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getEsPaginationIntl } from './shared/i18n/custom-paginator-intl';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideAnimations(),
     importProvidersFrom(BrowserAnimationsModule),
     { provide: MatPaginatorIntl, useValue: getEsPaginationIntl() },
