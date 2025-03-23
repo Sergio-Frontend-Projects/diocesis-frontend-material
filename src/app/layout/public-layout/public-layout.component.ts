@@ -5,6 +5,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
+import { PublicHeaderComponent } from '@public/components/public-header/public-header.component';
 
 @Component({
   selector: 'app-public-layout',
@@ -15,6 +16,7 @@ import { RouterModule } from '@angular/router';
     MatToolbarModule,
     MatIconModule,
     MatListModule,
+    PublicHeaderComponent,
   ],
   templateUrl: './public-layout.component.html',
   styleUrl: './public-layout.component.scss',
