@@ -67,3 +67,14 @@ h2[mat-dialog-title].caviar-bold {
 #toast-container.toast-top-right {
   margin-top: 60px;
 }
+
+// HOVER EN MENÚ SUPERIOR (mat-menu-item)
+::ng-deep .mat-menu-panel .mat-menu-item:hover,
+::ng-deep .mat-menu-panel .mat-menu-item.cdk-focused {
+  background-color: rgba(247, 200, 115, 0.2) !important; // hover amarillo
+  color: #434343 !important; // texto negro
+}
+
+::ng-deep .mat-menu-panel .mat-menu-item:hover mat-icon {
+  color: #434343 !important;
+}
