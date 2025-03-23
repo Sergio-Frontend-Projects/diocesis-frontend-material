@@ -21,11 +21,11 @@ export class UserService {
   }
 
   createUser(data: Partial<User>) {
-    return this.http.post<User>(this.api, data);
+    return this.http.post<User>(`${this.api}/`, data);
   }
 
   createUsersByCsv(formData: FormData) {
-    return this.http.post<any>(this.api, formData);
+    return this.http.post<any>(`${this.api}/`, formData);
   }
 
   updateUser(id: string, data: Partial<User>) {

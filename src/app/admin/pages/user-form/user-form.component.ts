@@ -8,6 +8,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UserService } from '../../../core/services/user.service';
 import { User, UserRole } from '../../../core/models/user.model';
 import { USER_ROLES } from '../../../core/constants/user.constants';
+import { ToastrService } from '../../../core/services/toastr.service';
 
 @Component({
   selector: 'app-user-form',
@@ -25,7 +26,10 @@ import { USER_ROLES } from '../../../core/constants/user.constants';
 })
 export default class UserFormComponent implements OnInit {
   fb = inject(FormBuilder);
+
   userService = inject(UserService);
+  toastrService = inject(ToastrService);
+
   router = inject(Router);
   route = inject(ActivatedRoute);
 
@@ -34,6 +38,7 @@ export default class UserFormComponent implements OnInit {
   form = this.fb.group({
     username: ['', Validators.required],
     email: ['', Validators.required],
+    password: [''],
     role: ['user', Validators.required],
   });
 
@@ -62,14 +67,25 @@ export default class UserFormComponent implements OnInit {
       role: (formValue.role ?? 'user') as UserRole,
     };
 
-    if (this.editing && this.userId) {
-      this.userService.updateUser(this.userId, payload).subscribe(() => {
-        this.router.navigateByUrl('/admin/users');
-      });
-    } else {
-      this.userService.createUser(payload).subscribe(() => {
-        this.router.navigateByUrl('/admin/users');
-      });
+    if (!this.editing && formValue.password) {
+      (payload as any).password = formValue.password;
     }
+
+    const action = this.editing
+      ? this.userService.updateUser(this.userId!, payload)
+      : this.userService.createUser(payload);
+
+    action.subscribe({
+      next: () => {
+        this.toastrService.showSuccess(
+          this.editing ? 'Usuario actualizado' : 'Usuario creado',
+          'Éxito'
+        );
+        this.router.navigateByUrl('/admin/users');
+      },
+      error: ()=> {
+        this.toastrService.showError('Error al guardar el usuario', 'Malas noticias');
+      }
+    });
   }
 }
