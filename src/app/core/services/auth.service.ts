@@ -3,6 +3,11 @@ import { inject, Injectable, signal } from '@angular/core';
 import { tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
+interface Token {
+  access: string;
+  refresh: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -13,11 +18,14 @@ export class AuthService {
 
   login(username: string, password: string) {
     return this.http
-      .post<{ token: string }>(`${environment.apiUrl}`, { username, password })
+      .post<Token>(`${environment.apiUrl}/token/login/`, {
+        username,
+        password,
+      })
       .pipe(
         tap((res) => {
-          localStorage.setItem('token', res.token);
-          this.token.set(res.token);
+          localStorage.setItem('token', res.access);
+          this.token.set(res.access);
         })
       );
   }
