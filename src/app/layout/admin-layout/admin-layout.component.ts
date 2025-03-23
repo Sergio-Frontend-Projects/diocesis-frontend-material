@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -6,20 +7,23 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import {
   Router,
   RouterLink,
   RouterModule,
   RouterOutlet,
 } from '@angular/router';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../core/services/auth.service';
 
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+interface Options {
+  routerLink: string;
+  text: string;
+}
 
 @Component({
   selector: 'app-admin-layout',
@@ -46,6 +50,18 @@ export default class AdminLayoutComponent {
 
   isSmallScreen = signal(false);
   sidenavOpened = signal(true);
+
+  menuOptions: Options[] = [
+    { routerLink: '/admin/users', text: 'Usuarios' },
+    { routerLink: '/admin/users', text: 'Banners y vídeos' },
+    { routerLink: '/admin/users', text: 'Padres' },
+    { routerLink: '/admin/users', text: 'Decanatos' },
+    { routerLink: '/admin/users', text: 'Colonias' },
+    { routerLink: '/admin/users', text: 'Parroquias' },
+    { routerLink: '/admin/users', text: 'Noticias' },
+    { routerLink: '/admin/users', text: 'Artículos' },
+    { routerLink: '/admin/users', text: 'Documentos' },
+  ];
 
   constructor() {
     effect(() => {

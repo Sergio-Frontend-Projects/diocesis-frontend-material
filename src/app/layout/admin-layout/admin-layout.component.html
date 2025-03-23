@@ -6,13 +6,15 @@
     class="sidenav"
   >
     <mat-nav-list>
+      @for(option of menuOptions; track $index) {
       <a
         mat-list-item
-        routerLink="/admin/users"
+        [routerLink]="option.routerLink"
         aria-current="page"
         href="#"
-        ><p class="caviar-bold">Usuarios</p>
+        ><p class="caviar-bold">{{ option.text }}</p>
       </a>
+      }
     </mat-nav-list>
   </mat-sidenav>
 
