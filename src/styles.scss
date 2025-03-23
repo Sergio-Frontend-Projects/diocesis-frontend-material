@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+
 @font-face {
   font-family: "CaviarDreamsNormal";
   src: url("assets/fonts/CaviarDreams.ttf") format("truetype");
@@ -56,5 +57,13 @@ body {
 }
 
 h2[mat-dialog-title].caviar-bold {
-  font-family: 'CaviarDreamsBold'
+  font-family: "CaviarDreamsBold";
+}
+
+#toast-container > div {
+  font-family: "CaviarDreamsBold", sans-serif;
+}
+
+#toast-container.toast-top-right {
+  margin-top: 60px;
 }

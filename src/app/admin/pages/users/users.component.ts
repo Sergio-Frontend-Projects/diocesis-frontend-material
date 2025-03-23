@@ -9,7 +9,8 @@ import { UserService } from '../../../core/services/user.service';
 import { User } from '../../../core/models/user.model';
 import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { PageEvent } from '@angular/material/paginator';
-import { PaginatorComponent } from "../../../shared/components/paginator/paginator.component";
+import { PaginatorComponent } from '../../../shared/components/paginator/paginator.component';
+import { ToastrService } from '../../../core/services/toastr.service';
 
 @Component({
   selector: 'app-users',
@@ -20,13 +21,14 @@ import { PaginatorComponent } from "../../../shared/components/paginator/paginat
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-    PaginatorComponent
-],
+    PaginatorComponent,
+  ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
 })
 export default class UsersComponent implements OnInit {
   private userService = inject(UserService);
+  private toastrService = inject(ToastrService);
   private dialog = inject(MatDialog);
 
   users = signal<User[]>([]);
@@ -64,12 +66,15 @@ export default class UsersComponent implements OnInit {
   }
 
   loadUsers() {
-    this.userService
-      .getUsersPaginated(this.page(), this.limit())
-      .subscribe((response) => {
+    this.userService.getUsersPaginated(this.page(), this.limit()).subscribe({
+      next: (response) => {
         this.users.set(response.data);
         this.total.set(response.total);
-      });
+      },
+      error: () => {
+        this.toastrService.showError('Error al obtener usuarios.', 'Malas noticias');
+      },
+    });
   }
 
   deleteUser(id: string) {

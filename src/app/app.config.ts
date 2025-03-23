@@ -14,6 +14,7 @@ import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { getEsPaginationIntl } from './shared/i18n/custom-paginator-intl';
+import { provideToastr } from 'ngx-toastr';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,6 +22,13 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
     provideAnimations(),
+    provideToastr({
+      positionClass: 'toast-top-right',
+      timeOut: 3000,
+      closeButton: true,
+      progressBar: true,
+      newestOnTop: true,
+    }),
     importProvidersFrom(BrowserAnimationsModule),
     { provide: MatPaginatorIntl, useValue: getEsPaginationIntl() },
   ],
