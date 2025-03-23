@@ -26,6 +26,7 @@ import { UserService } from '../../core/services/user.service';
 interface Options {
   routerLink: string;
   text: string;
+  icon: string;
 }
 
 @Component({
@@ -57,15 +58,15 @@ export default class AdminLayoutComponent implements OnInit {
   user = signal<User | null>(null);
 
   menuOptions: Options[] = [
-    { routerLink: '/admin/users', text: 'Usuarios' },
-    { routerLink: '/admin/users', text: 'Banners y vídeos' },
-    { routerLink: '/admin/users', text: 'Padres' },
-    { routerLink: '/admin/users', text: 'Decanatos' },
-    { routerLink: '/admin/users', text: 'Colonias' },
-    { routerLink: '/admin/users', text: 'Parroquias' },
-    { routerLink: '/admin/users', text: 'Noticias' },
-    { routerLink: '/admin/users', text: 'Artículos' },
-    { routerLink: '/admin/users', text: 'Documentos' },
+    { routerLink: '/admin/users', text: 'Usuarios', icon: 'group' },
+    // { routerLink: '/admin', text: 'Banners y vídeos', icon: 'slideshow' },
+    // { routerLink: '/admin', text: 'Padres', icon: 'church' },
+    // { routerLink: '/admin', text: 'Decanatos', icon: 'account_tree' },
+    // { routerLink: '/admin', text: 'Colonias', icon: 'map' },
+    // { routerLink: '/admin', text: 'Parroquias', icon: 'location_on' },
+    // { routerLink: '/admin', text: 'Noticias', icon: 'campaign' },
+    // { routerLink: '/admin', text: 'Artículos', icon: 'article' },
+    // { routerLink: '/admin', text: 'Documentos', icon: 'folder' },
   ];
 
   constructor() {

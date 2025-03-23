@@ -58,10 +58,37 @@
   color: #333;
 }
 
+mat-nav-list a.mat-list-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 48px;
+}
+
+mat-icon[matListIcon] {
+  font-size: 24px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  color: #333;
+}
+
+.nav-item-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 mat-icon {
   color: #f8f8f8;
 }
 
 mat-sidenav-content {
   background: #f8f8f8;
+}
+
+.active-link {
+  background: #FAEBCD; // gris claro o tu color secundario
+  border-left: 4px solid #f7c873; // color del sidenav si quieres
+  padding-left: 12px;
 }

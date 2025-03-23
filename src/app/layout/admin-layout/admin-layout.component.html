@@ -17,9 +17,15 @@
       <a
         mat-list-item
         [routerLink]="option.routerLink"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
         aria-current="page"
         href="#"
-        ><p class="caviar-bold">{{ option.text }}</p>
+      >
+        <div class="nav-item-content">
+          <mat-icon matListIcon>{{ option.icon }}</mat-icon>
+          <span class="caviar-bold">{{ option.text }}</span>
+        </div>
       </a>
       }
     </mat-nav-list>
