@@ -3,7 +3,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { FilterConfig } from '@core/models/filter-config.model';
@@ -12,7 +12,6 @@ import { ToastrService } from '@core/services/toastr.service';
 import { UserService } from '@core/services/user.service';
 import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
 import { FilterBarComponent } from '@shared/components/filter-bar/filter-bar.component';
-import { PaginatorComponent } from '@shared/components/paginator/paginator.component';
 
 @Component({
   selector: 'app-users',
@@ -23,8 +22,8 @@ import { PaginatorComponent } from '@shared/components/paginator/paginator.compo
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-    PaginatorComponent,
     FilterBarComponent,
+    MatPaginatorModule,
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss',
@@ -59,19 +58,21 @@ export default class UsersComponent implements OnInit {
     this.loadUsers();
   }
 
-  loadUsers() {
-    this.userService.getUsersPaginated(this.page(), this.limit()).subscribe({
-      next: (response) => {
-        this.users.set(response.results);
-        this.total.set(response.count);
-      },
-      error: () => {
-        this.toastrService.showError(
-          'Error al obtener usuarios.',
-          'Malas noticias'
-        );
-      },
-    });
+  loadUsers(username: string | null = null, estado: boolean | null = null) {
+    this.userService
+      .getUsersPaginated(this.page(), this.limit(), username, estado)
+      .subscribe({
+        next: (response) => {
+          this.users.set(response.results);
+          this.total.set(response.count);
+        },
+        error: () => {
+          this.toastrService.showError(
+            'Error al obtener usuarios.',
+            'Malas noticias'
+          );
+        },
+      });
   }
 
   deleteUser(user: User) {
@@ -116,6 +117,7 @@ export default class UsersComponent implements OnInit {
   }
 
   onSearch(filtros: Record<string, any>) {
-    console.log('Buscar con: ', filtros);
+    const { username, isActive } = filtros;
+    this.loadUsers(username, isActive);
   }
 }

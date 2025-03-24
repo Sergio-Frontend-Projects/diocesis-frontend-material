@@ -87,8 +87,6 @@ export default class AdminLayoutComponent implements OnInit {
     if (!userId) return;
 
     this.userService.getUserById(userId).subscribe((u) => {
-      console.log(u);
-
       this.user.set(u);
     });
   }

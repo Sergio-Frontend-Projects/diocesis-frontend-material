@@ -10,13 +10,23 @@ export class UserService {
   private http = inject(HttpClient);
   private api = `${environment.apiUrl}/users`;
 
-  getUsersPaginated(page: number, limit: number) {
+  getUsersPaginated(
+    page: number,
+    limit: number,
+    username: string | null,
+    estado: boolean | null
+  ) {
+    let url = `${this.api}/usuarios/?page=${page + 1}&page_size=${limit}`;
+
+    if (username !== null) url += `&username=${username}`;
+    if (estado !== null) url += `&isActive=${estado}`;
+
     return this.http.get<{
       count: number;
       next: string | null;
       previous: string | null;
       results: User[];
-    }>(`${this.api}/usuarios/?page=${page + 1}&page_size=${limit}`);
+    }>(url);
   }
 
   getUserById(id: string) {
