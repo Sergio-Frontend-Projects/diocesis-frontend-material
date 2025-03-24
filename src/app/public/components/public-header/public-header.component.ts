@@ -1,6 +1,14 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal, viewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  inject,
+  OnDestroy,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,7 +18,6 @@ import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink, RouterModule } from '@angular/router';
 import { NavigationItem } from '@core/models/navigation.model';
-
 
 @Component({
   selector: 'app-public-header',
@@ -24,14 +31,19 @@ import { NavigationItem } from '@core/models/navigation.model';
     MatListModule,
     MatButtonModule,
     MatExpansionModule,
-    MatMenuModule
+    MatMenuModule,
   ],
   templateUrl: './public-header.component.html',
   styleUrl: './public-header.component.scss',
 })
-export class PublicHeaderComponent {
+export class PublicHeaderComponent implements AfterViewInit, OnDestroy {
   isMobile = signal(false);
+  collapsed = signal(false);
+
   sidenav = viewChild<MatSidenav>('sidenav');
+  menuContainer = viewChild<ElementRef<HTMLDivElement>>('menuContainer');
+
+  private resizeObserver?: ResizeObserver;
 
   breakpointObserver = inject(BreakpointObserver);
 
@@ -63,7 +75,11 @@ export class PublicHeaderComponent {
         { icon: 'person', label: 'Presbiteros', route: '/home' },
         { icon: 'location_on', label: 'Parroquias', route: '/home' },
         { icon: 'person_pin', label: 'Diáconos Permanentes', route: '/home' },
-        { icon: 'person_pin_circle', label: 'Diáconos Transitorios', route: '/home' },
+        {
+          icon: 'person_pin_circle',
+          label: 'Diáconos Transitorios',
+          route: '/home',
+        },
       ],
     },
     {
@@ -101,10 +117,32 @@ export class PublicHeaderComponent {
         this.isMobile.set(result.matches);
       });
   }
+  ngAfterViewInit(): void {
+    this.resizeObserver = new ResizeObserver(() => this.checkOverflow());
+    this.resizeObserver.observe(this.menuContainer()!.nativeElement);
+
+    setTimeout(() => this.checkOverflow(), 0);
+
+    window.addEventListener('resize', () => this.checkOverflow());
+  }
+
+  ngOnDestroy(): void {
+    this.resizeObserver?.disconnect();
+    window.removeEventListener('resize', () => this.checkOverflow());
+  }
 
   closeSidenav() {
     if (this.sidenav()?.opened) {
       this.sidenav()?.close();
     }
+  }
+
+  checkOverflow() {
+    if (this.menuContainer()?.nativeElement) return;
+
+    const el = this.menuContainer()!.nativeElement;
+    const hasOverflow = el.scrollWidth > el.clientWidth;
+
+    this.collapsed.set(hasOverflow);
   }
 }

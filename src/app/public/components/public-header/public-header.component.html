@@ -1,4 +1,5 @@
 <mat-sidenav-container class="sidenav-container">
+  <!-- Menú lateral para móvil o versión colapsada -->
   <mat-sidenav #sidenav mode="over" class="mobile-sidenav">
     <mat-nav-list>
       <mat-accordion class="nav-accordion" multi="false">
@@ -11,7 +12,7 @@
               <span class="nav-label caviar-bold">{{ item.label }}</span>
             </div>
           </a>
-          }@else {
+          } @else {
           <mat-expansion-panel class="nav-dropdown" hideToggle>
             <mat-expansion-panel-header>
               <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
@@ -19,7 +20,7 @@
             </mat-expansion-panel-header>
 
             <mat-nav-list>
-              @for(child of item.children; track $index){
+              @for(child of item.children; track $index) {
               <a
                 mat-list-item
                 [routerLink]="child.route"
@@ -41,7 +42,9 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
+    <!-- Toolbar superior -->
     <mat-toolbar color="primary" class="public-toolbar">
+      <!-- Logo -->
       <div class="logo-container">
         <img src="images/logo-normal-transparente.png" alt="Logo" />
         <span class="logo-text caviar-bold">Diócesis de Ciudad Obregón</span>
@@ -49,8 +52,9 @@
 
       <span class="spacer"></span>
 
-      @if (!isMobile()) {
-      <nav class="menu">
+      <!-- Navegación en escritorio -->
+      @if (!isMobile() && !collapsed()) {
+      <nav class="menu" #menuContainer>
         @for(item of menuItems; track $index){ @if (!item.children) {
         <a mat-button [routerLink]="item.route">
           <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
@@ -75,7 +79,10 @@
         </mat-menu>
         } }
       </nav>
-      } @else {
+      }
+
+      <!-- Botón hamburguesa (móvil o colapsado) -->
+      @if (isMobile() || collapsed()) {
       <button
         mat-icon-button
         class="mobile-menu-btn"
