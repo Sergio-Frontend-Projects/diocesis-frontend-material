@@ -103,7 +103,7 @@ export default class UsersComponent implements OnInit {
     if (file.type !== 'text/csv') return;
 
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('archivo_csv', file);
 
     this.userService.createUsersByCsv(formData).subscribe(() => {
       this.loadUsers();

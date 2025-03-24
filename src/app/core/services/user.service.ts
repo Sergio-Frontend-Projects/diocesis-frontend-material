@@ -38,7 +38,7 @@ export class UserService {
   }
 
   createUsersByCsv(formData: FormData) {
-    return this.http.post<any>(`${this.api}/`, formData);
+    return this.http.post<any>(`${this.api}/usuarios/cargar-por-csv/`, formData);
   }
 
   updateUser(id: string, data: Partial<User>) {
