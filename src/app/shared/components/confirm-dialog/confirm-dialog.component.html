@@ -11,6 +11,6 @@
     <p class="caviar-bold">Cancelar</p>
   </button>
   <button mat-raised-button color="warn" (click)="dialogRef.close(true)">
-    <p class="caviar-bold">Desactivar</p>
+    <p class="caviar-bold">{{ data.buttonContent || "Desactivar" }}</p>
   </button>
 </mat-dialog-actions>

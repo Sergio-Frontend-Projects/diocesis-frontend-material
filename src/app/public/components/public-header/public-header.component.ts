@@ -43,8 +43,6 @@ export class PublicHeaderComponent implements AfterViewInit, OnDestroy {
   sidenav = viewChild<MatSidenav>('sidenav');
   menuContainer = viewChild<ElementRef<HTMLDivElement>>('menuContainer');
 
-  private resizeObserver?: ResizeObserver;
-
   breakpointObserver = inject(BreakpointObserver);
 
   menuItems: NavigationItem[] = [
@@ -117,32 +115,24 @@ export class PublicHeaderComponent implements AfterViewInit, OnDestroy {
         this.isMobile.set(result.matches);
       });
   }
+
   ngAfterViewInit(): void {
-    this.resizeObserver = new ResizeObserver(() => this.checkOverflow());
-    this.resizeObserver.observe(this.menuContainer()!.nativeElement);
-
-    setTimeout(() => this.checkOverflow(), 0);
-
-    window.addEventListener('resize', () => this.checkOverflow());
+    this.checkFixedBreakpoint();
+    window.addEventListener('resize', this.checkFixedBreakpoint);
   }
 
   ngOnDestroy(): void {
-    this.resizeObserver?.disconnect();
-    window.removeEventListener('resize', () => this.checkOverflow());
+    window.removeEventListener('resize', this.checkFixedBreakpoint);
   }
+
+  checkFixedBreakpoint = () => {
+    const isNarrow = window.matchMedia('(max-width: 1536px)').matches;
+    this.collapsed.set(isNarrow);
+  };
 
   closeSidenav() {
     if (this.sidenav()?.opened) {
       this.sidenav()?.close();
     }
-  }
-
-  checkOverflow() {
-    if (this.menuContainer()?.nativeElement) return;
-
-    const el = this.menuContainer()!.nativeElement;
-    const hasOverflow = el.scrollWidth > el.clientWidth;
-
-    this.collapsed.set(hasOverflow);
   }
 }

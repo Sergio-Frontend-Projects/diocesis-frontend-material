@@ -11,17 +11,20 @@ export class UserService {
   private api = `${environment.apiUrl}/users`;
 
   getUsersPaginated(page: number, limit: number) {
-    return this.http.get<{ data: User[]; total: number }>(
-      `${this.api}/?page=${page + 1}&page_size=${limit}`
-    );
+    return this.http.get<{
+      count: number;
+      next: string | null;
+      previous: string | null;
+      results: User[];
+    }>(`${this.api}/usuarios/?page=${page + 1}&page_size=${limit}`);
   }
 
   getUserById(id: string) {
-    return this.http.get<User>(`${this.api}/${id}/`);
+    return this.http.get<User>(`${this.api}/usuarios/${id}/`);
   }
 
   createUser(data: Partial<User>) {
-    return this.http.post<User>(`${this.api}/`, data);
+    return this.http.post<User>(`${this.api}/usuarios/`, data);
   }
 
   createUsersByCsv(formData: FormData) {
@@ -29,10 +32,10 @@ export class UserService {
   }
 
   updateUser(id: string, data: Partial<User>) {
-    return this.http.put(`${this.api}/${id}/`, data);
+    return this.http.put(`${this.api}/usuarios/${id}/`, data);
   }
 
   deleteUser(id: string) {
-    return this.http.delete(`${this.api}/${id}/`);
+    return this.http.put(`${this.api}/usuarios/cambiar-estado/${id}/`, {});
   }
 }

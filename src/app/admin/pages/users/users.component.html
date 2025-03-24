@@ -8,7 +8,7 @@
   />
 
   <div class="actions">
-    <button mat-raised-button color="primary" routerLink="add">
+    <button mat-raised-button color="accent" routerLink="add">
       <mat-icon>person_add</mat-icon>
       <p class="caviar-bold">Nuevo usuario</p>
     </button>
@@ -41,14 +41,14 @@
 
     <ng-container matColumnDef="username">
       <th mat-header-cell *matHeaderCellDef class="caviar-bold">Nombre</th>
-      <td mat-cell *matCellDef="let user" class="caviar-normal">
+      <td mat-cell *matCellDef="let user" class="caviar-bold">
         {{ user.username }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="email">
       <th mat-header-cell *matHeaderCellDef class="caviar-bold">Email</th>
-      <td mat-cell *matCellDef="let user" class="caviar-normal">
+      <td mat-cell *matCellDef="let user" class="caviar-bold">
         {{ user.email }}
       </td>
     </ng-container>
@@ -59,8 +59,21 @@
         <button mat-icon-button [routerLink]="['edit', user.id]">
           <mat-icon>edit</mat-icon>
         </button>
-        <button mat-icon-button color="warn" (click)="deleteUser(user.id)">
+
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="deleteUser(user)"
+          *ngIf="user.isActive"
+        >
           <mat-icon>delete</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          (click)="deleteUser(user)"
+          *ngIf="!user.isActive"
+        >
+          <mat-icon>check</mat-icon>
         </button>
       </td>
     </ng-container>

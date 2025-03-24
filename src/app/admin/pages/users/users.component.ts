@@ -44,16 +44,6 @@ export default class UsersComponent implements OnInit {
   filters: FilterConfig[] = [
     { key: 'username', label: 'Nombre', type: 'text' },
     {
-      key: 'role',
-      label: 'Rol',
-      type: 'select',
-      options: [
-        { label: 'Todos', value: null },
-        { label: 'Admin', value: 'admin' },
-        { label: 'Usuario', value: 'user' },
-      ],
-    },
-    {
       key: 'isActive',
       label: 'Estado',
       type: 'boolean',
@@ -63,7 +53,6 @@ export default class UsersComponent implements OnInit {
         { label: 'Inactivo', value: false },
       ],
     },
-    { key: 'createdAt', label: 'Fecha de creación', type: 'date' },
   ];
 
   ngOnInit(): void {
@@ -73,8 +62,8 @@ export default class UsersComponent implements OnInit {
   loadUsers() {
     this.userService.getUsersPaginated(this.page(), this.limit()).subscribe({
       next: (response) => {
-        this.users.set(response.data);
-        this.total.set(response.total);
+        this.users.set(response.results);
+        this.total.set(response.count);
       },
       error: () => {
         this.toastrService.showError(
@@ -85,18 +74,22 @@ export default class UsersComponent implements OnInit {
     });
   }
 
-  deleteUser(id: string) {
+  deleteUser(user: User) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: 'Desactivar usuario',
-        message: '¿Estás seguro de que deseas desactivar este usuario?',
+        title: user.isActive ? 'Desactivar usuario' : 'Activar usuario',
+        message:
+          '¿Estás seguro de que deseas ' +
+          (user.isActive ? 'desactivar' : 'activar') +
+          ' este usuario?',
+        buttonContent: user.isActive ? 'Desactivar' : 'Activar',
       },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (!result) return;
-      this.userService.deleteUser(id).subscribe(() => {
-        this.users.update((users) => users.filter((u) => u.id !== id));
+      this.userService.deleteUser(user.id).subscribe(() => {
+        this.loadUsers();
       });
     });
   }
