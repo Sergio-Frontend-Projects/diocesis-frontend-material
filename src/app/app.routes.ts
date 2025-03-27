@@ -26,6 +26,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../app/admin/pages/user-form/user-form.component'),
       },
+      {
+        path: 'banners',
+        loadComponent: () =>
+          import('../app/admin/pages/banners/banners.component'),
+      },
     ],
   },
   {

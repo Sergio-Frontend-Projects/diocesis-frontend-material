@@ -1,0 +1,54 @@
+<h2 class="caviar-bold">Banners y videos</h2>
+
+<label class="file-upload-label">
+  <input
+    type="file"
+    id="fileInput"
+    (change)="onFileSelected($event)"
+    #fileInput
+    hidden
+  />
+
+  <div class="file-wrapper">
+    <button
+      mat-raised-button
+      color="accent"
+      type="button"
+      (click)="fileInput.click()"
+    >
+      <p class="caviar-bold">Seleccionar archivo</p>
+    </button>
+
+    <span class="selected-file" *ngIf="selectedFileName()">
+      {{ selectedFileName() }}
+    </span>
+  </div>
+</label>
+
+<button
+  mat-raised-button
+  color="primary"
+  (click)="uploadSelectedFile(fileInput)"
+  [disabled]="!selectedFile()"
+  style="margin-left: 12px"
+>
+  <p class="caviar-bold">Subir archivo</p>
+</button>
+
+<div class="banners-grid">
+  @for(banner of banners(); track banner.id) {
+  <mat-card>
+    <ng-container *ngIf="banner.isImage; else videoTpl">
+      <img [src]="banner.url" alt="Banner" />
+    </ng-container>
+
+    <ng-template #videoTpl>
+      <video [src]="banner.url" controls></video>
+    </ng-template>
+
+    <button mat-icon-button color="warn" (click)="deleteBanner(banner.id)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card>
+  }
+</div>

@@ -59,7 +59,7 @@ export default class AdminLayoutComponent implements OnInit {
 
   menuOptions: Options[] = [
     { routerLink: '/admin/users', text: 'Usuarios', icon: 'group' },
-    // { routerLink: '/admin', text: 'Banners y vídeos', icon: 'slideshow' },
+    { routerLink: '/admin/banners', text: 'Banners y vídeos', icon: 'slideshow' },
     // { routerLink: '/admin', text: 'Padres', icon: 'church' },
     // { routerLink: '/admin', text: 'Decanatos', icon: 'account_tree' },
     // { routerLink: '/admin', text: 'Colonias', icon: 'map' },
