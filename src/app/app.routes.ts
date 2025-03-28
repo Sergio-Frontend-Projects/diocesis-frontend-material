@@ -37,7 +37,12 @@ export const routes: Routes = [
     path: '',
     loadComponent: () =>
       import('../app/layout/public-layout/public-layout.component'),
-    children: [],
+    children: [
+      {
+        path: 'home',
+        loadComponent: () => import('../app/public/pages/home/home.component'),
+      },
+    ],
   },
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: '/home' },
 ];

@@ -1,0 +1,11 @@
+<div class="carrusel-container">
+  @for(item of banners(); track item.id) {
+  <div class="carrusel-item">
+    @if (item.isImage) {
+    <img [src]="item.url" alt="banner" />
+    }@else {
+    <video [src]="item.url" controls></video>
+    }
+  </div>
+  }
+</div>

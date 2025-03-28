@@ -3,7 +3,6 @@
 }
 
 .sidenav-container {
-  height: 100vh;
   z-index: 1000;
   position: relative;
 }
@@ -40,7 +39,8 @@
   max-width: 100%;
   gap: 16px;
 
-  a, .menu-dropdown button {
+  a,
+  .menu-dropdown button {
     color: #faebcd;
     text-transform: none;
     display: flex;
@@ -112,4 +112,21 @@ mat-nav-list {
   gap: 12px;
 }
 
+.mobile-sidenav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 300px;
+  z-index: 2000;
+}
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1500;
+}
