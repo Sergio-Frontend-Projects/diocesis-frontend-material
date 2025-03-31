@@ -1,11 +1,43 @@
-<div class="carrusel-container">
-  @for(item of banners(); track item.id) {
-  <div class="carrusel-item">
-    @if (item.isImage) {
-    <img [src]="item.url" alt="banner" />
-    }@else {
-    <video [src]="item.url" controls></video>
-    }
-  </div>
-  }
-</div>
+<splide
+  #splideRef
+  class="custom-carrusel"
+  [options]="{
+    type: 'loop',
+    autoplay: true,
+    interval: 5000,
+    pauseOnHover: true,
+    speed: 1000,
+    arrows: true,
+    pagination: true,
+  }"
+>
+  <splide-slide *ngFor="let item of banners()">
+    <ng-container *ngIf="item.isImage; else videoTpl">
+      <img [src]="item.url" alt="img carrusel" />
+    </ng-container>
+
+    <ng-template #videoTpl>
+      <div
+        class="video-wrapper"
+        (mousemove)="onUserInteracts()"
+        (touchstart)="onUserInteracts()"
+      >
+        <video
+          #videoRef
+          [src]="item.url"
+          (play)="handleVideoPlay()"
+          (pause)="handleVideoPause()"
+        ></video>
+
+        <button
+          class="play-btn"
+          type="button"
+          (click)="toggleVideo(videoRef)"
+          [class.show]="showPlayButton()"
+        >
+          <mat-icon>{{ videoRef.paused ? "play_arrow" : "pause" }}</mat-icon>
+        </button>
+      </div>
+    </ng-template>
+  </splide-slide>
+</splide>

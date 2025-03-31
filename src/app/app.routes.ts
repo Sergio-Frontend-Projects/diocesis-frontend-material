@@ -42,7 +42,11 @@ export const routes: Routes = [
         path: 'home',
         loadComponent: () => import('../app/public/pages/home/home.component'),
       },
+      {
+        path: '**',
+        redirectTo: 'home',
+      },
     ],
   },
-  { path: '**', redirectTo: '/home' },
+  { path: '**', redirectTo: '' },
 ];
