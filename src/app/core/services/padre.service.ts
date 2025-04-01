@@ -16,20 +16,27 @@ export class PadreService {
     firstName: string | null,
     lastName: string | null
   ) {
-    let url = `${this.api}/`;
+    let url = `${this.api}/?page=${page + 1}&page_size=${limit}`;
 
     if (firstName !== null) url += `&first_name=${firstName}`;
     if (lastName !== null) url += `&last_name=${lastName}`;
 
-    return this.http.get<{
-      count: number;
-      next: string | null;
-      previous: string | null;
-      results: Padre[];
-    }>(url);
+    return this.http.get<Padre[]>(url);
+  }
+
+  getPadreById(id: string) {
+    return this.http.get<Padre>(`${this.api}/${id}/`);
+  }
+
+  createPadre(data: FormData) {
+    return this.http.post(`${this.api}/`, data);
+  }
+
+  updatePadre(id: string, data: FormData) {
+    return this.http.put(`${this.api}/${id}/`, data);
   }
 
   deletePadre(id: string) {
-    return this.http.put(`${this.api}/${id}/`, {});
+    return this.http.delete(`${this.api}/${id}/`);
   }
 }

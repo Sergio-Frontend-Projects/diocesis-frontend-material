@@ -17,11 +17,6 @@ export const routes: Routes = [
         loadComponent: () => import('../app/admin/pages/users/users.component'),
       },
       {
-        path: 'padres',
-        loadComponent: () =>
-          import('../app/admin/pages/padres/padres.component'),
-      },
-      {
         path: 'users/add',
         loadComponent: () =>
           import('../app/admin/pages/user-form/user-form.component'),
@@ -30,6 +25,21 @@ export const routes: Routes = [
         path: 'users/edit/:id',
         loadComponent: () =>
           import('../app/admin/pages/user-form/user-form.component'),
+      },
+      {
+        path: 'padres',
+        loadComponent: () =>
+          import('../app/admin/pages/padres/padres.component'),
+      },
+      {
+        path: 'padres/add',
+        loadComponent: () =>
+          import('../app/admin/pages/padre-form/padre-form.component'),
+      },
+      {
+        path: 'padres/edit/:id',
+        loadComponent: () =>
+          import('../app/admin/pages/padre-form/padre-form.component'),
       },
       {
         path: 'banners',

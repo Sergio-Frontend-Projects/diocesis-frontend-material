@@ -1,0 +1,46 @@
+<div class="form-container">
+  <h2 class="caviar-bold">
+    {{ editing ? "Editar padre" : "Nuevo padre" }}
+  </h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="padre-form">
+    <mat-form-field appearance="outline">
+      <mat-label class="caviar-bold">Nombre</mat-label>
+      <input matInput formControlName="firstName" placeholder="Ej. Juan" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label class="caviar-bold">Apellidos</mat-label>
+      <input matInput formControlName="lastName" placeholder="Ej. Pérez" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha de nacimiento</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="birthDate" />
+      <mat-datepicker-toggle matSuffix [for]="picker" />
+      <mat-datepicker #picker />
+    </mat-form-field>
+
+    <div class="upload-container">
+      <label for="fileInput">Foto (opcional):</label>
+      <input
+        id="fileInput"
+        type="file"
+        accept="image/*"
+        (change)="onFileChange($event)"
+      />
+    </div>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit">
+        <p class="caviar-bold">
+          {{ editing ? "Actualizar" : "Crear" }}
+        </p>
+      </button>
+
+      <button mat-button routerLink="/admin/padres">
+        <p class="caviar-bold">Cancelar</p>
+      </button>
+    </div>
+  </form>
+</div>

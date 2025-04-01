@@ -4,6 +4,17 @@
   gap: 16px;
 }
 
+.table-container {
+  overflow-x: auto;
+}
+
+.padre-avatar {
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 table {
   width: 100%;
 }

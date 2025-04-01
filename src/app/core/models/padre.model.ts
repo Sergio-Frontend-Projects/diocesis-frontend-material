@@ -2,7 +2,7 @@ export interface Padre {
   id: string;
   firstName: string;
   lastName: string;
-  birthDate: Date;
+  birthDate: string;
   picture?: string | null;
   isActive: boolean;
   createdAt: string;

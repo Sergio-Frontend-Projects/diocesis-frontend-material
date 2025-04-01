@@ -60,10 +60,8 @@ export default class PadresComponent implements OnInit {
       .getPadresPaginated(this.page(), this.limit(), firstName, lastName)
       .subscribe({
         next: (response) => {
-          console.log(response.results);
-
-          this.padres.set(response.results);
-          this.total.set(response.count);
+          this.padres.set(response);
+          //this.total.set(response.count);
         },
         error: () => {
           this.toastrService.showError(
