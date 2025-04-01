@@ -4,4 +4,5 @@ export interface Banner {
   isImage: boolean;
   createdAt: Date;
   createdBy: null | string;
+  isActive: boolean;
 }
