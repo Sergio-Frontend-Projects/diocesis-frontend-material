@@ -1,101 +1,98 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { FilterConfig } from '@core/models/filter-config.model';
-import { Padre } from '@core/models/padre.model';
+import { Noticia } from '@core/models/noticia.model';
 import { CleanUrlPipe } from '@core/pipes/clean-url.pipe';
-import { PadreService } from '@core/services/padre.service';
+import { NoticiaService } from '@core/services/noticia.service';
 import { ToastrService } from '@core/services/toastr.service';
 import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
 import { FilterBarComponent } from '@shared/components/filter-bar/filter-bar.component';
 
 @Component({
-  selector: 'app-padres',
+  selector: 'app-noticias',
   imports: [
     CommonModule,
     RouterModule,
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
+    MatChipsModule,
     MatTableModule,
     MatPaginatorModule,
     FilterBarComponent,
     CleanUrlPipe,
   ],
-  templateUrl: './padres.component.html',
-  styleUrl: './padres.component.scss',
+  templateUrl: './noticias.component.html',
+  styleUrl: './noticias.component.scss',
 })
-export default class PadresComponent implements OnInit {
-  private padreService = inject(PadreService);
+export default class NoticiasComponent implements OnInit {
+  private noticiaService = inject(NoticiaService);
   private toastrService = inject(ToastrService);
+
   private dialog = inject(MatDialog);
 
-  padres = signal<Padre[]>([]);
+  noticias = signal<Noticia[]>([]);
   recordedFilters = signal<Record<string, any>>({});
   total = signal(0);
   page = signal(0);
   limit = signal(10);
 
-  displayedColumns = [
-    'isActive',
-    'picture',
-    'fullName',
-    'birthDate',
-    'actions',
-  ];
+  displayedColumns = ['isActive', 'picture', 'title', 'tags', 'actions'];
 
   filters: FilterConfig[] = [
-    { key: 'first_name', label: 'Nombre', type: 'text' },
-    { key: 'last_name', label: 'Apellido', type: 'text' },
+    { key: 'title', label: 'Título', type: 'text' },
+    { key: 'tags', label: 'Tags', type: 'text' },
   ];
 
   ngOnInit(): void {
-    this.loadPadres();
+    this.loadNoticias();
   }
 
-  loadPadres() {
-    this.padreService
-      .getPadresPaginated(this.page(), this.limit(), this.recordedFilters())
+  loadNoticias() {
+    this.noticiaService
+      .getNoticiasPaginated(this.page(), this.limit(), this.recordedFilters())
       .subscribe({
-        next: (response) => {
-          this.padres.set(response.results);
-          this.total.set(response.count);
+        next: (res) => {
+          this.noticias.set(res.results);
+          this.total.set(res.count);
         },
         error: () => {
           this.toastrService.showError(
-            'Error al obtener padres.',
+            'Error al cargar noticias',
             'Malas noticias'
           );
         },
       });
   }
 
-  deletePadre(padre: Padre) {
+  deleteNoticia(noticia: Noticia) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: padre.isActive ? 'Desactivar padre' : 'Activar padre',
+        title: noticia.isActive ? 'Desactivar noticia' : 'Activar noticia',
         message:
           '¿Estás seguro de que deseas ' +
-          (padre.isActive ? 'desactivar' : 'activar') +
-          ' este padre?',
-        buttonContent: padre.isActive ? 'Desactivar' : 'Activar',
+          (noticia.isActive ? 'desactivar' : 'activar') +
+          ' esta noticia?',
+        buttonContent: noticia.isActive ? 'Desactivar' : 'Activar',
       },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (!result) return;
 
-      const action = padre.isActive
-        ? this.padreService.deletePadre(padre.id)
-        : this.padreService.activatePadre(padre.id);
+      const action = noticia.isActive
+        ? this.noticiaService.deleteNoticia(noticia.id)
+        : this.noticiaService.activateNoticia(noticia.id);
 
       action.subscribe(() => {
-        this.loadPadres();
+        this.loadNoticias();
       });
     });
   }
@@ -103,11 +100,11 @@ export default class PadresComponent implements OnInit {
   onPageChange(event: PageEvent) {
     this.page.set(event.pageIndex);
     this.limit.set(event.pageSize);
-    this.loadPadres();
+    this.loadNoticias();
   }
 
   onSearch(filtros: Record<string, any>) {
     this.recordedFilters.set(filtros);
-    this.loadPadres();
+    this.loadNoticias();
   }
 }

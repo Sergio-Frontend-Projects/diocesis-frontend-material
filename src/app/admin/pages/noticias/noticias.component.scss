@@ -1,0 +1,43 @@
+.noticias-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.active {
+  background-color: #4caf50;
+}
+
+.inactive {
+  background-color: #f44336;
+}
+
+.actions {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+
+.news-img {
+  height: 48px;
+  width: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+}
