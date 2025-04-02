@@ -1,0 +1,49 @@
+<h2 class="caviar-bold section-title">Noticias</h2>
+
+<splide
+  class="noticias-slider"
+  [options]="{
+    type: 'slide',
+    gap: '1rem',
+    perPage: 4,
+    perMove: 1,
+    breakpoints: {
+      '1280': {perPage: 3},
+      '960': {perPage: 2},
+      '600': {perPage: 1},
+    },
+    pagination: true,
+    arrows: true
+  }"
+>
+  <splide-slide *ngFor="let noticia of noticias()">
+    <div class="noticia-card">
+      <img
+        *ngIf="noticia.picture"
+        [src]="noticia.picture | cleanUrl"
+        alt="Imagen noticia"
+        class="noticia-img"
+      />
+
+      <div class="noticia-content">
+        <h3 class="noticia-title caviar-bold">
+          {{ noticia.title }}
+        </h3>
+
+        <p class="noticia-resumen caviar-normal">
+          {{ shortContent(noticia.content) }}
+        </p>
+
+        <button
+          mat-raised-button
+          color="accent"
+          class="ver-mas-btn"
+          [routerLink]="['/noticias', noticia.id]"
+        >
+          <p class="caviar-bold-italic">Ver más</p>
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+  </splide-slide>
+</splide>
