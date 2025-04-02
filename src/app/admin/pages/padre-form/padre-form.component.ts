@@ -89,10 +89,6 @@ export default class PadreFormComponent implements OnInit {
 
     if (file !== null) formData.append('picture', file);
 
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
-    }
-
     const action = this.editing
       ? this.padreService.updatePadre(this.padreId!, formData)
       : this.padreService.createPadre(formData);

@@ -8,6 +8,7 @@ import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { FilterConfig } from '@core/models/filter-config.model';
 import { Padre } from '@core/models/padre.model';
+import { CleanUrlPipe } from '@core/pipes/clean-url.pipe';
 import { PadreService } from '@core/services/padre.service';
 import { ToastrService } from '@core/services/toastr.service';
 import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog.component';
@@ -24,6 +25,7 @@ import { FilterBarComponent } from '@shared/components/filter-bar/filter-bar.com
     MatTableModule,
     MatPaginatorModule,
     FilterBarComponent,
+    CleanUrlPipe
   ],
   templateUrl: './padres.component.html',
   styleUrl: './padres.component.scss',
@@ -60,8 +62,10 @@ export default class PadresComponent implements OnInit {
       .getPadresPaginated(this.page(), this.limit(), firstName, lastName)
       .subscribe({
         next: (response) => {
-          this.padres.set(response);
-          //this.total.set(response.count);
+          this.padres.set(response.results);
+          this.total.set(response.count);
+
+          console.log(this.padres())
         },
         error: () => {
           this.toastrService.showError(
@@ -86,7 +90,12 @@ export default class PadresComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (!result) return;
-      this.padreService.deletePadre(padre.id).subscribe(() => {
+
+      const action = padre.isActive
+        ? this.padreService.deletePadre(padre.id)
+        : this.padreService.activatePadre(padre.id);
+
+      action.subscribe(() => {
         this.loadPadres();
       });
     });

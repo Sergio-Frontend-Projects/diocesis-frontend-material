@@ -21,7 +21,12 @@ export class PadreService {
     if (firstName !== null) url += `&first_name=${firstName}`;
     if (lastName !== null) url += `&last_name=${lastName}`;
 
-    return this.http.get<Padre[]>(url);
+    return this.http.get<{
+      count: number;
+      next: string | null;
+      previous: string | null;
+      results: Padre[];
+    }>(url);
   }
 
   getPadreById(id: string) {
@@ -30,6 +35,10 @@ export class PadreService {
 
   createPadre(data: FormData) {
     return this.http.post(`${this.api}/`, data);
+  }
+
+  activatePadre(id: string) {
+    return this.http.post(`${this.api}/habilitar/${id}/`, {});
   }
 
   updatePadre(id: string, data: FormData) {
