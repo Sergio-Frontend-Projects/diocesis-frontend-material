@@ -35,6 +35,7 @@
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss",
               "node_modules/ngx-toastr/toastr.css",
+              "node_modules/@splidejs/splide/dist/css/splide.min.css",
               "node_modules/swiper/swiper-bundle.min.css"
             ],
             "scripts": []
