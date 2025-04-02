@@ -61,10 +61,10 @@ export default class AdminLayoutComponent implements OnInit {
     { routerLink: '/admin/users', text: 'Usuarios', icon: 'group' },
     { routerLink: '/admin/banners', text: 'Banners y vídeos', icon: 'slideshow' },
     { routerLink: '/admin/padres', text: 'Padres', icon: 'church' },
+    { routerLink: '/admin', text: 'Noticias', icon: 'campaign' },
     // { routerLink: '/admin', text: 'Decanatos', icon: 'account_tree' },
     // { routerLink: '/admin', text: 'Colonias', icon: 'map' },
     // { routerLink: '/admin', text: 'Parroquias', icon: 'location_on' },
-    // { routerLink: '/admin', text: 'Noticias', icon: 'campaign' },
     // { routerLink: '/admin', text: 'Artículos', icon: 'article' },
     // { routerLink: '/admin', text: 'Documentos', icon: 'folder' },
   ];

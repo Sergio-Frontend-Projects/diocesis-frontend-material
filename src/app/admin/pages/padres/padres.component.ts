@@ -25,7 +25,7 @@ import { FilterBarComponent } from '@shared/components/filter-bar/filter-bar.com
     MatTableModule,
     MatPaginatorModule,
     FilterBarComponent,
-    CleanUrlPipe
+    CleanUrlPipe,
   ],
   templateUrl: './padres.component.html',
   styleUrl: './padres.component.scss',
@@ -36,6 +36,7 @@ export default class PadresComponent implements OnInit {
   private dialog = inject(MatDialog);
 
   padres = signal<Padre[]>([]);
+  recordedFilters = signal<Record<string, any>>({});
   total = signal(0);
   page = signal(0);
   limit = signal(10);
@@ -49,23 +50,23 @@ export default class PadresComponent implements OnInit {
   ];
 
   filters: FilterConfig[] = [
-    { key: 'firstName', label: 'Nombre', type: 'text' },
-    { key: 'lastName', label: 'Apellido', type: 'text' },
+    { key: 'first_name', label: 'Nombre', type: 'text' },
+    { key: 'last_name', label: 'Apellido', type: 'text' },
   ];
 
   ngOnInit(): void {
     this.loadPadres();
   }
 
-  loadPadres(firstName: string | null = null, lastName: string | null = null) {
+  loadPadres() {
     this.padreService
-      .getPadresPaginated(this.page(), this.limit(), firstName, lastName)
+      .getPadresPaginated(this.page(), this.limit(), this.recordedFilters())
       .subscribe({
         next: (response) => {
           this.padres.set(response.results);
           this.total.set(response.count);
 
-          console.log(this.padres())
+          console.log(this.padres());
         },
         error: () => {
           this.toastrService.showError(
@@ -108,7 +109,7 @@ export default class PadresComponent implements OnInit {
   }
 
   onSearch(filtros: Record<string, any>) {
-    const { firstName, lastName } = filtros;
-    this.loadPadres(firstName, lastName);
+    this.recordedFilters.set(filtros);
+    this.loadPadres();
   }
 }

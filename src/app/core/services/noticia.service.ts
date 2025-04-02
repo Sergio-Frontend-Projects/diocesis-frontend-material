@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Padre } from '@core/models/padre.model';
+import { Noticia } from '@core/models/noticia.model';
 import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PadreService {
+export class NoticiaService {
   private http = inject(HttpClient);
-  private api = `${environment.apiUrl}/padres`;
+  private api = `${environment.apiUrl}/noticias`;
 
-  getPadresPaginated(
+  getNoticiasPaginated(
     page: number,
     limit: number,
     filters: Record<string, any> = {}
@@ -30,27 +30,27 @@ export class PadreService {
       count: number;
       next: string | null;
       previous: string | null;
-      results: Padre[];
+      results: Noticia[];
     }>(`${this.api}/?${params.toString()}`);
   }
 
-  getPadreById(id: string) {
-    return this.http.get<Padre>(`${this.api}/${id}/`);
+  getNoticiaById(id: string) {
+    return this.http.get<Noticia>(`${this.api}/${id}/`);
   }
 
-  createPadre(data: FormData) {
+  createNoticia(data: FormData) {
     return this.http.post(`${this.api}/`, data);
   }
 
-  activatePadre(id: string) {
+  activateNoticia(id: string) {
     return this.http.post(`${this.api}/habilitar/${id}/`, {});
   }
 
-  updatePadre(id: string, data: FormData) {
+  updateNoticia(id: string, data: FormData) {
     return this.http.put(`${this.api}/${id}/`, data);
   }
 
-  deletePadre(id: string) {
+  deleteNoticia(id: string) {
     return this.http.delete(`${this.api}/${id}/`);
   }
 }

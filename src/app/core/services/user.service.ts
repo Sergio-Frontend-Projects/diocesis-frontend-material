@@ -13,20 +13,25 @@ export class UserService {
   getUsersPaginated(
     page: number,
     limit: number,
-    username: string | null,
-    estado: boolean | null
+    filters: Record<string, any> = {}
   ) {
-    let url = `${this.api}/usuarios/?page=${page + 1}&page_size=${limit}`;
+    const params = new URLSearchParams({
+      page: (page + 1).toString(),
+      page_size: limit.toString(),
+    });
 
-    if (username !== null) url += `&username=${username}`;
-    if (estado !== null) url += `&isActive=${estado}`;
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== null && value !== undefined && value !== '') {
+        params.append(key, value);
+      }
+    });
 
     return this.http.get<{
       count: number;
       next: string | null;
       previous: string | null;
       results: User[];
-    }>(url);
+    }>(`${this.api}/usuarios/?${params.toString()}`);
   }
 
   getUserById(id: string) {
@@ -38,7 +43,10 @@ export class UserService {
   }
 
   createUsersByCsv(formData: FormData) {
-    return this.http.post<any>(`${this.api}/usuarios/cargar-por-csv/`, formData);
+    return this.http.post<any>(
+      `${this.api}/usuarios/cargar-por-csv/`,
+      formData
+    );
   }
 
   updateUser(id: string, data: Partial<User>) {

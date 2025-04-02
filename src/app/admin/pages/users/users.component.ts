@@ -34,6 +34,7 @@ export default class UsersComponent implements OnInit {
   private dialog = inject(MatDialog);
 
   users = signal<User[]>([]);
+  recordedFilters = signal<Record<string, any>>({});
   total = signal(0);
   page = signal(0);
   limit = signal(10);
@@ -58,9 +59,9 @@ export default class UsersComponent implements OnInit {
     this.loadUsers();
   }
 
-  loadUsers(username: string | null = null, estado: boolean | null = null) {
+  loadUsers() {
     this.userService
-      .getUsersPaginated(this.page(), this.limit(), username, estado)
+      .getUsersPaginated(this.page(), this.limit(), this.recordedFilters())
       .subscribe({
         next: (response) => {
           this.users.set(response.results);
@@ -117,7 +118,7 @@ export default class UsersComponent implements OnInit {
   }
 
   onSearch(filtros: Record<string, any>) {
-    const { username, isActive } = filtros;
-    this.loadUsers(username, isActive);
+    this.recordedFilters.set(filtros);
+    this.loadUsers();
   }
 }
