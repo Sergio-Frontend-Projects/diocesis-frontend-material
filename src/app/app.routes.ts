@@ -73,6 +73,10 @@ export const routes: Routes = [
         loadComponent: () => import('../app/public/pages/home/home.component'),
       },
       {
+        path: 'noticia/:id',
+        loadComponent: () => import('../app/public/pages/noticia-detalle/noticia-detalle.component')
+      },
+      {
         path: '**',
         redirectTo: 'home',
       },

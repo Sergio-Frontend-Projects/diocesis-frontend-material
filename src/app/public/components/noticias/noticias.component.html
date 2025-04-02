@@ -3,7 +3,9 @@
 <splide
   class="noticias-slider"
   [options]="{
-    type: 'slide',
+    type: 'loop',
+    autoplay: true,
+    interval: 5000,
     gap: '1rem',
     perPage: 4,
     perMove: 1,
@@ -38,7 +40,7 @@
           mat-raised-button
           color="accent"
           class="ver-mas-btn"
-          [routerLink]="['/noticias', noticia.id]"
+          [routerLink]="['/noticia', noticia.id]"
         >
           <p class="caviar-bold-italic">Ver más</p>
           <mat-icon>arrow_forward</mat-icon>

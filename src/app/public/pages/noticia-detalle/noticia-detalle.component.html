@@ -1,0 +1,24 @@
+<section class="noticia-detalle" *ngIf="noticia()">
+  <h1 class="noticia-titulo caviar-bold">
+    {{ noticia()?.title }}
+  </h1>
+
+  <img
+    *ngIf="noticia()?.picture"
+    [src]="noticia()?.picture! | cleanUrl"
+    alt="Imagen de noticia"
+    class="noticia-img"
+  />
+
+  <div class="noticia-contenido caviar-normal">
+    {{ noticia()?.content }}
+  </div>
+
+  <mat-chip-listbox *ngIf="noticia()?.tags?.length" class="tags-list">
+    <mat-chip *ngFor="let tag of noticia()?.tags">
+      <p class="caviar-bold-italic">
+        {{ tag }}
+      </p>
+    </mat-chip>
+  </mat-chip-listbox>
+</section>
