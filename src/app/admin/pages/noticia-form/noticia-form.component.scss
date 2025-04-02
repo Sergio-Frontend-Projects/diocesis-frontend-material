@@ -1,0 +1,34 @@
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.noticia-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  input[type="file"] {
+    border: 1px dashed #ccc;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+}
+
+.form-acions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

@@ -1,0 +1,57 @@
+<div class="form-container">
+  <h2 class="caviar-bold">
+    {{ editing ? "Editar noticia" : "Crear noticia" }}
+  </h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="noticia-form">
+    <mat-form-field appearance="outline">
+      <mat-label class="caviar-bold">Título</mat-label>
+      <input
+        matInput
+        formControlName="title"
+        placeholder="Título de la noticia"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label class="caviar-bold">Contenido</mat-label>
+      <textarea
+        matInput
+        formControlName="content"
+        rows="6"
+        placeholder="Contenido de la noticia"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label class="caviar-bold">Etiquetas (separadas por coma)</mat-label>
+      <input
+        matInput
+        formControlName="tags"
+        placeholder="ej. Papa, Vaticano, Obispo"
+      />
+    </mat-form-field>
+
+    <div class="upload-container">
+      <label for="fileInput">Imagen (opcional):</label>
+      <input
+        id="fileInput"
+        type="file"
+        accept="image/*"
+        (change)="onFileChange($event)"
+      />
+    </div>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit">
+        <p class="caviar-bold">
+          {{ editing ? "Actualizar" : "Crear" }}
+        </p>
+      </button>
+
+      <button mat-button routerLink="/admin/noticias">
+        <p class="caviar-bold">Cancelar</p>
+      </button>
+    </div>
+  </form>
+</div>

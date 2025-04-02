@@ -52,6 +52,16 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../app/admin/pages/noticias/noticias.component'),
       },
+      {
+        path: 'noticias/add',
+        loadComponent: () =>
+          import('../app/admin/pages/noticia-form/noticia-form.component'),
+      },
+      {
+        path: 'noticias/edit/:id',
+        loadComponent: () =>
+          import('../app/admin/pages/noticia-form/noticia-form.component'),
+      },
     ],
   },
   {
