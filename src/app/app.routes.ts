@@ -41,11 +41,10 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../app/admin/pages/padre-form/padre-form.component'),
       },
-      // ! CAMBIAR POR CARRUSEL
       {
-        path: 'banners',
+        path: 'carrusel',
         loadComponent: () =>
-          import('../app/admin/pages/banners/banners.component'),
+          import('./admin/pages/carrusel/carrusel.component'),
       },
       {
         path: 'noticias',

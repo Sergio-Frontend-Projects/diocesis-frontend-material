@@ -3,21 +3,21 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { BannerService } from '@core/services/banner.service';
-import { Banner } from '@core/models/banner.model';
+import { CarruselService } from '@core/services/carrusel.service';
+import { Carrusel } from '@core/models/carrusel.model';
 import { ToastrService } from '@core/services/toastr.service';
 
 @Component({
-  selector: 'app-banners',
+  selector: 'app-carrusel',
   imports: [CommonModule, MatButtonModule, MatIconModule, MatCardModule],
-  templateUrl: './banners.component.html',
-  styleUrl: './banners.component.scss',
+  templateUrl: './carrusel.component.html',
+  styleUrl: './carrusel.component.scss',
 })
-export default class BannersComponent implements OnInit {
-  private bannerService = inject(BannerService);
+export default class CarruselComponent implements OnInit {
+  private bannerService = inject(CarruselService);
   private toastrService = inject(ToastrService);
 
-  banners = signal<Banner[]>([]);
+  banners = signal<Carrusel[]>([]);
   selectedFile = signal<File | null>(null);
   selectedFileName = signal<string>('');
 

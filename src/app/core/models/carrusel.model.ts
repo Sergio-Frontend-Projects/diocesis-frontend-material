@@ -1,4 +1,4 @@
-export interface Banner {
+export interface Carrusel {
   id: string;
   url: string;
   isImage: boolean;

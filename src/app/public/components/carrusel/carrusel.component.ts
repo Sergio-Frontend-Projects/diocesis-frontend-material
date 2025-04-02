@@ -8,8 +8,8 @@ import {
   viewChild,
 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { Banner } from '@core/models/banner.model';
-import { BannerService } from '@core/services/banner.service';
+import { Carrusel } from '@core/models/carrusel.model';
+import { CarruselService } from '@core/services/carrusel.service';
 import { NgxSplideComponent, NgxSplideModule } from 'ngx-splide';
 import type { Splide } from '@splidejs/splide';
 
@@ -21,10 +21,10 @@ import type { Splide } from '@splidejs/splide';
   styleUrl: './carrusel.component.scss',
 })
 export class CarruselComponent implements OnInit, AfterViewInit {
-  private bannerService = inject(BannerService);
+  private bannerService = inject(CarruselService);
   private playButtonTimeout?: ReturnType<typeof setTimeout>;
 
-  banners = signal<Banner[]>([]);
+  banners = signal<Carrusel[]>([]);
   showPlayButton = signal(true);
 
   splideRef = viewChild.required<NgxSplideComponent>('splideRef');
