@@ -5,10 +5,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Noticia } from '@core/models/noticia.model';
 import { CleanUrlPipe } from '@core/pipes/clean-url.pipe';
 import { NoticiaService } from '@core/services/noticia.service';
+import { AyudaFormComponent } from '@public/components/ayuda-form/ayuda-form.component';
 
 @Component({
   selector: 'app-noticia-detalle',
-  imports: [CommonModule, MatChipsModule, CleanUrlPipe],
+  imports: [CommonModule, MatChipsModule, CleanUrlPipe, AyudaFormComponent],
   templateUrl: './noticia-detalle.component.html',
   styleUrl: './noticia-detalle.component.scss',
 })

@@ -91,10 +91,6 @@ export default class NoticiaFormComponent implements OnInit {
 
     if (file !== null) formData.append('picture', file);
 
-    for (const element of formData.entries()) {
-      console.log(element);
-    }
-
     const action = this.editing
       ? this.noticiaService.updateNoticia(this.noticiaId!, formData)
       : this.noticiaService.createNoticia(formData);
