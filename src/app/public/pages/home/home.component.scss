@@ -8,3 +8,14 @@
   background-color: #fff;
   text-align: center;
 }
+
+.buscadores {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem 1rem;
+
+  @media(min-width: 768px) {
+    padding: 3rem 2rem;
+  }
+}

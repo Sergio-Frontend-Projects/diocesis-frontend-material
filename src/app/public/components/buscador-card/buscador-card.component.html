@@ -1,0 +1,12 @@
+<div class="card-container">
+  <h2 class="card-title caviar-bold">{{ title() }}</h2>
+  <div class="separator"></div>
+
+  <img [src]="imageUrl()" alt="imagen" class="icon-image" />
+
+  <a [routerLink]="link()">
+    <button mat-button class="action-button">
+      <p class="caviar-bold">IR AL BUSCADOR <mat-icon>search</mat-icon></p>
+    </button>
+  </a>
+</div>
