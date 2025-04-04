@@ -74,7 +74,15 @@ export const routes: Routes = [
       },
       {
         path: 'noticia/:id',
-        loadComponent: () => import('../app/public/pages/noticia-detalle/noticia-detalle.component')
+        loadComponent: () =>
+          import(
+            '../app/public/pages/noticia-detalle/noticia-detalle.component'
+          ),
+      },
+      {
+        path: 'padres',
+        loadComponent: () =>
+          import('../app/public/pages/padre-search/padre-search.component'),
       },
       {
         path: '**',

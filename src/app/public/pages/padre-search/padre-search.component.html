@@ -1,0 +1,35 @@
+<div class="padre-search-container">
+  <h2 class="section-title caviar-bold">Buscador de padres</h2>
+
+  <app-filter-bar
+    [filters]="filters"
+    (search)="onSearch($event)"
+    (clear)="onClear()"
+  />
+
+  <p *ngIf="padres().length === 0" class="caviar-bold">
+    No se encontraron resultados
+  </p>
+
+  @if(padres().length > 0) {
+
+  <div class="results">
+    <div class="padre-card" *ngFor="let padre of padres()">
+      <img [src]="padre.picture ?? '' | cleanUrl" alt="Foto del padre" />
+      <h3 class="caviar-bold">{{ padre.firstName }} {{ padre.lastName }}</h3>
+      <p class="caviar-bold">
+        <strong>Fecha de naciemiento:</strong>
+        {{ padre.birthDate | date : "dd/MM/yyyy" }}
+      </p>
+    </div>
+  </div>
+
+  <mat-paginator
+    [length]="total()"
+    [pageSize]="limit()"
+    [pageIndex]="page()"
+    (page)="onPageChange($event)"
+    showFirstLastButtons
+  />
+  }
+</div>
