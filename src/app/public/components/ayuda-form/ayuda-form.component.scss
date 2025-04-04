@@ -1,0 +1,71 @@
+.ayuda-container {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 0 16px;
+
+  .ayuda-titulo {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #434343;
+    margin-bottom: 16px;
+
+    strong {
+      color: #2c003e;
+    }
+  }
+}
+
+.ayuda-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ayuda-header {
+  background: #2c003e;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+
+  .ayuda-header-titulo {
+    font-size: 1rem;
+  }
+}
+
+.ayuda-form {
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .ayuda-subtitulo {
+    color: #2c003e;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+
+  mat-form-field {
+    width: 100%;
+
+    mat-label {
+      font-weight: normal;
+    }
+  }
+
+  .btn-enviar {
+    background-color: #2c003e;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    &:hover {
+      background-color: #3f004d;
+    }
+  }
+}

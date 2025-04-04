@@ -1,1 +1,40 @@
-<p>ayuda-form works!</p>
+<div class="ayuda-container">
+  <h2 class="ayuda-titulo caviar-bold">
+    <strong>Ayúdanos</strong> a seguir informando
+  </h2>
+
+  <div class="ayuda-card">
+    <div class="ayuda-header">
+      <span class="caviar-bold ayuda-header-titulo">Datos</span>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="ayuda-form">
+      <p class="ayuda-subtitulo caviar-normal">Introduce tu información</p>
+
+      <mat-form-field appearance="fill">
+        <mat-label class="caviar-bold">Nombre(s):</mat-label>
+        <input matInput formControlName="firstName" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label class="caviar-bold">Apellidos:</mat-label>
+        <input matInput formControlName="lastName" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label class="caviar-bold">Correo:</mat-label>
+        <input matInput formControlName="email" type="email" />
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="accent"
+        class="btn-enviar"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        <p class="caviar-bold">Enviar</p>
+      </button>
+    </form>
+  </div>
+</div>
