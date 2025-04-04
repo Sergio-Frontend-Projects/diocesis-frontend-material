@@ -1,0 +1,12 @@
+<div class="padre-detalle" *ngIf="padre()">
+  <img [src]="padre()?.picture ?? '' | cleanUrl" alt="Foto del padre" />
+
+  <h2 class="caviar-bold">
+    {{ padre()?.firstName }} {{ padre()?.lastName }}
+  </h2>
+
+  <p class="caviar-normal">
+    <strong>Fecha de nacimiento:</strong>
+    {{ padre()?.birthDate | date : "dd/MM/yyyy" }}
+  </p>
+</div>

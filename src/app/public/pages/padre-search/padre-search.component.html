@@ -14,14 +14,18 @@
   @if(padres().length > 0) {
 
   <div class="results">
-    <div class="padre-card" *ngFor="let padre of padres()">
+    <a
+      class="padre-card"
+      *ngFor="let padre of padres()"
+      [routerLink]="['/padres', padre.id]"
+    >
       <img [src]="padre.picture ?? '' | cleanUrl" alt="Foto del padre" />
       <h3 class="caviar-bold">{{ padre.firstName }} {{ padre.lastName }}</h3>
       <p class="caviar-bold">
         <strong>Fecha de naciemiento:</strong>
         {{ padre.birthDate | date : "dd/MM/yyyy" }}
       </p>
-    </div>
+    </a>
   </div>
 
   <mat-paginator

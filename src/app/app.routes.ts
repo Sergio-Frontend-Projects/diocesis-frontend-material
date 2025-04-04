@@ -85,6 +85,11 @@ export const routes: Routes = [
           import('../app/public/pages/padre-search/padre-search.component'),
       },
       {
+        path: 'padres/:id',
+        loadComponent: () =>
+          import('../app/public/pages/padre-detalle/padre-detalle.component'),
+      },
+      {
         path: '**',
         redirectTo: 'home',
       },

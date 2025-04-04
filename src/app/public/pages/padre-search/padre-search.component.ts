@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { RouterModule } from '@angular/router';
 import { FilterConfig } from '@core/models/filter-config.model';
 import { Padre } from '@core/models/padre.model';
 import { CleanUrlPipe } from '@core/pipes/clean-url.pipe';
@@ -10,7 +11,13 @@ import { FilterBarComponent } from '@shared/components/filter-bar/filter-bar.com
 
 @Component({
   selector: 'app-padre-search',
-  imports: [CleanUrlPipe, CommonModule, FilterBarComponent, MatPaginatorModule],
+  imports: [
+    CleanUrlPipe,
+    CommonModule,
+    FilterBarComponent,
+    MatPaginatorModule,
+    RouterModule,
+  ],
   templateUrl: './padre-search.component.html',
   styleUrl: './padre-search.component.scss',
 })
