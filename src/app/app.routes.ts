@@ -61,6 +61,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../app/admin/pages/noticia-form/noticia-form.component'),
       },
+      {
+        path: 'colonias',
+        loadComponent: () =>
+          import('../app/admin/pages/colonias/colonias.component'),
+      },
     ],
   },
   {
