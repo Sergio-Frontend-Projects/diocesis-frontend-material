@@ -1,0 +1,95 @@
+<div class="parroquia-form-container">
+  <h2 class="section-title caviar-bold">
+    {{ editing ? "Editar parroquia" : "Agregar parroquia" }}
+  </h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-grid">
+    <mat-form-field appearance="outline">
+      <mat-label class="caviar-bold">Nombre</mat-label>
+      <input matInput formControlName="name" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label class="caviar-bold">Fecha de apertura</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="openingDate"
+        required
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker" />
+      <mat-datepicker #picker startView="multi-year" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label class="caviar-bold">Dirección</mat-label>
+      <input matInput formControlName="address" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label class="caviar-bold">Código Postal</mat-label>
+      <input matInput formControlName="zipCode" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label class="caviar-bold">Localidad</mat-label>
+      <input matInput formControlName="town" required />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label class="caviar-bold">Colonia</mat-label>
+      <mat-select formControlName="coloniaId" required>
+        <mat-option *ngFor="let colonia of colonias()" [value]="colonia.id">
+          <p class="caviar-bold">{{ colonia.name | titlecase }}</p>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label class="caviar-bold">Decanato</mat-label>
+      <mat-select formControlName="decanatoId" required>
+        <mat-option *ngFor="let decanato of decanatos()" [value]="decanato.id">
+          <p class="caviar-bold">{{ decanato.name | titlecase }}</p>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label class="caviar-bold">Padre encargado</mat-label>
+      <mat-select formControlName="padreId" required>
+        <mat-option *ngFor="let padre of padres()" [value]="padre.id">
+          <p class="caviar-bold">
+            {{ padre.firstName | titlecase }} {{ padre.lastName | titlecase }}
+          </p>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="upload-container">
+      <label for="fileInput">Foto (opcional):</label>
+      <input
+        id="fileInput"
+        type="file"
+        accept="image/*"
+        (change)="onFileChange($event)"
+      />
+    </div>
+
+    <div class="form-actions">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        <p class="caviar-bold">
+          {{ editing ? "Actualizar" : "Crear" }}
+        </p>
+      </button>
+
+      <button mat-button routerLink="/admin/padres">
+        <p class="caviar-bold">Cancelar</p>
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,90 @@
+.parroquia-form-container {
+  padding: 32px;
+  background-color: #f8f8f8;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+  .section-title {
+    margin-bottom: 32px;
+    font-size: 1.8rem;
+    color: #434343;
+    font-family: "CaviarDreamsBold", sans-serif;
+    text-align: center;
+  }
+
+  form.form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  mat-form-field {
+    width: 100%;
+
+    ::ng-deep .mat-form-field-outline {
+      color: #f7c873;
+    }
+
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+      border-color: #f7c873;
+    }
+
+    ::ng-deep .mat-form-field-label {
+      color: #434343;
+    }
+
+    ::ng-deep .mat-select-value {
+      font-family: "CaviarDreamsBold", sans-serif;
+    }
+  }
+
+  .upload-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: "CaviarDreamsBold", sans-serif;
+    grid-column: span 1;
+
+    @media (min-width: 768px) {
+      grid-column: span 2;
+    }
+
+    input[type='file'] {
+      border: 1px dashed #ccc;
+      padding: 10px;
+      border-radius: 6px;
+      background-color: #fff;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    label {
+      font-weight: bold;
+      color: #434343;
+    }
+  }
+
+  .form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+
+    button {
+      font-family: "CaviarDreamsBold", sans-serif;
+    }
+
+    button[mat-button] {
+      color: #434343;
+    }
+  }
+}

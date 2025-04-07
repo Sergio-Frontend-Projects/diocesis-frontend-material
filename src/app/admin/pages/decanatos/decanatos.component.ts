@@ -53,8 +53,6 @@ export default class DecanatosComponent implements OnInit {
         next: (res) => {
           this.decanatos.set(res.results);
           this.total.set(res.count);
-
-          console.log(res.results);
         },
         error: () => {
           this.toastrService.showError(

@@ -1,0 +1,31 @@
+.parroquias-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.active {
+  background-color: #4caf50;
+}
+
+.inactive {
+  background-color: #f44336;
+}
+
+.actions {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}

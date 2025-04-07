@@ -91,6 +91,21 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../app/admin/pages/decanato-form/decanato-form.component'),
       },
+      {
+        path: 'parroquias',
+        loadComponent: () =>
+          import('../app/admin/pages/parroquias/parroquias.component'),
+      },
+      {
+        path: 'parroquias/add',
+        loadComponent: () =>
+          import('../app/admin/pages/parroquia-form/parroquia-form.component'),
+      },
+      {
+        path: 'parroquias/edit/:id',
+        loadComponent: () =>
+          import('../app/admin/pages/parroquia-form/parroquia-form.component'),
+      },
     ],
   },
   {
