@@ -6,8 +6,8 @@ import { RouterModule } from '@angular/router';
 import { Noticia } from '@core/models/noticia.model';
 import { CleanUrlPipe } from '@core/pipes/clean-url.pipe';
 import { NoticiaService } from '@core/services/noticia.service';
-import { NgxSplideComponent, NgxSplideModule } from 'ngx-splide';
-import type { Splide } from '@splidejs/splide';
+import { NgxSplideModule } from 'ngx-splide';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-noticias',
@@ -18,6 +18,7 @@ import type { Splide } from '@splidejs/splide';
     MatIconModule,
     CleanUrlPipe,
     NgxSplideModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './noticias.component.html',
   styleUrl: './noticias.component.scss',
@@ -25,10 +26,17 @@ import type { Splide } from '@splidejs/splide';
 export class NoticiasComponent implements OnInit {
   private noticiaService = inject(NoticiaService);
   noticias = signal<Noticia[]>([]);
+  isLoading = signal(true);
 
   ngOnInit(): void {
-    this.noticiaService.getNoticiasPaginated(0, 10).subscribe((res) => {
-      this.noticias.set(res.results.filter((n) => n.isActive));
+    this.noticiaService.getNoticiasPaginated(0, 10).subscribe({
+      next: (res) => {
+        this.noticias.set(res.results.filter((n) => n.isActive));
+        this.isLoading.set(false);
+      },
+      error: () => {
+        this.isLoading.set(false); // ocultar aunque haya error
+      },
     });
   }
 

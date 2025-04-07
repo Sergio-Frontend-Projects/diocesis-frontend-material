@@ -1,5 +1,11 @@
 <h2 class="caviar-bold section-title">Noticias</h2>
 
+@if (isLoading()) {
+<div class="loader-container">
+  <mat-progress-spinner mode="indeterminate" color="accent" diameter="48">
+  </mat-progress-spinner>
+</div>
+} @else {
 <splide
   class="noticias-slider"
   [options]="{
@@ -49,3 +55,4 @@
     </div>
   </splide-slide>
 </splide>
+}

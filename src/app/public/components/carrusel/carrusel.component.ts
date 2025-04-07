@@ -12,11 +12,17 @@ import { Carrusel } from '@core/models/carrusel.model';
 import { CarruselService } from '@core/services/carrusel.service';
 import { NgxSplideComponent, NgxSplideModule } from 'ngx-splide';
 import type { Splide } from '@splidejs/splide';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-carrusel',
   standalone: true,
-  imports: [CommonModule, MatIconModule, NgxSplideModule],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    NgxSplideModule,
+  ],
   templateUrl: './carrusel.component.html',
   styleUrl: './carrusel.component.scss',
 })
@@ -26,12 +32,21 @@ export class CarruselComponent implements OnInit, AfterViewInit {
 
   banners = signal<Carrusel[]>([]);
   showPlayButton = signal(true);
+  isLoading = signal(true);
 
   splideRef = viewChild.required<NgxSplideComponent>('splideRef');
   splideInstance?: Splide;
 
   ngOnInit(): void {
-    this.bannerService.getAll().subscribe((data) => this.banners.set(data));
+    this.bannerService.getAll().subscribe({
+      next: (res) => {
+        this.banners.set(res);
+        this.isLoading.set(false);
+      },
+      error: () => {
+        this.isLoading.set(false); // ocultar aunque haya error
+      },
+    });
   }
 
   ngAfterViewInit(): void {

@@ -4,19 +4,19 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { RouterModule } from '@angular/router';
 import { FilterConfig } from '@core/models/filter-config.model';
 import { Padre } from '@core/models/padre.model';
-import { CleanUrlPipe } from '@core/pipes/clean-url.pipe';
 import { PadreService } from '@core/services/padre.service';
 import { ToastrService } from '@core/services/toastr.service';
+import { PadreCardComponent } from '@public/components/padre-card/padre-card.component';
 import { FilterBarComponent } from '@shared/components/filter-bar/filter-bar.component';
 
 @Component({
   selector: 'app-padre-search',
   imports: [
-    CleanUrlPipe,
     CommonModule,
     FilterBarComponent,
     MatPaginatorModule,
     RouterModule,
+    PadreCardComponent,
   ],
   templateUrl: './padre-search.component.html',
   styleUrl: './padre-search.component.scss',

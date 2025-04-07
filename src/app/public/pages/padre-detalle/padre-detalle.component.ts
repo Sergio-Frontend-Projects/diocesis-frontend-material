@@ -4,10 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Padre } from '@core/models/padre.model';
 import { CleanUrlPipe } from '@core/pipes/clean-url.pipe';
 import { PadreService } from '@core/services/padre.service';
+import { SocialButtonsComponent } from '@shared/components/social-buttons/social-buttons.component';
 
 @Component({
   selector: 'app-padre-detalle',
-  imports: [CommonModule, CleanUrlPipe],
+  imports: [CommonModule, CleanUrlPipe, SocialButtonsComponent],
   templateUrl: './padre-detalle.component.html',
   styleUrl: './padre-detalle.component.scss',
 })

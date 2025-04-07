@@ -1,0 +1,17 @@
+<img
+  [src]="padre().picture ?? '' | cleanUrl"
+  alt="Foto del padre"
+  class="padre-img"
+/>
+<h3 class="caviar-bold">{{ padre().firstName }} {{ padre().lastName }}</h3>
+<p class="caviar-bold">
+  <strong>Fecha de naciemiento:</strong>
+  {{ padre().birthDate | date : "dd/MM/yyyy" }}
+</p>
+
+<app-social-buttons
+  [email]="padre().email ?? ''"
+  [facebook]="padre().facebook ?? ''"
+  [twitter]="padre().twitter ?? ''"
+  [instagram]="padre().instagram ?? ''"
+/>

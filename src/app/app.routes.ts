@@ -66,6 +66,16 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../app/admin/pages/colonias/colonias.component'),
       },
+      {
+        path: 'colonias/add',
+        loadComponent: () =>
+          import('../app/admin/pages/colonia-form/colonia-form.component'),
+      },
+      {
+        path: 'colonias/edit/:id',
+        loadComponent: () =>
+          import('../app/admin/pages/colonia-form/colonia-form.component'),
+      },
     ],
   },
   {

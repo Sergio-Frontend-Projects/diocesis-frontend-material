@@ -1,0 +1,32 @@
+<div class="social-buttons">
+  <a
+    *ngIf="email()"
+    [href]="'mailto:' + email()"
+    target="_blank"
+    aria-label="Correo"
+  >
+    <img src="icons/email-9-svgrepo-com.svg" alt="" />
+  </a>
+
+  <a
+    *ngIf="facebook()"
+    [href]="facebook()"
+    target="_blank"
+    aria-label="Facebook"
+  >
+    <img src="icons/facebook-svgrepo-com.svg" alt="" />
+  </a>
+
+  <a *ngIf="twitter()" [href]="twitter()" target="_blank" aria-label="X">
+    <img src="icons/twitter-svgrepo-com.svg" alt="" />
+  </a>
+
+  <a
+    *ngIf="instagram()"
+    [href]="instagram()"
+    target="_blank"
+    aria-label="instagram"
+  >
+    <img src="icons/instagram-svgrepo-com.svg" alt="" />
+  </a>
+</div>

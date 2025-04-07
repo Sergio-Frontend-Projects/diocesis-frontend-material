@@ -41,6 +41,10 @@ export default class PadreFormComponent implements OnInit {
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
     birthDate: ['', Validators.required],
+    email: [''],
+    facebook: [''],
+    twitter: [''],
+    instagram: [''],
   });
 
   editing = false;
@@ -58,6 +62,10 @@ export default class PadreFormComponent implements OnInit {
               firstName: padre.firstName,
               lastName: padre.lastName,
               birthDate: padre.birthDate,
+              email: padre.email,
+              facebook: padre.facebook,
+              twitter: padre.twitter,
+              instagram: padre.instagram,
             });
           });
       }
@@ -81,6 +89,12 @@ export default class PadreFormComponent implements OnInit {
 
     formData.append('firstName', formValue.firstName ?? '');
     formData.append('lastName', formValue.lastName ?? '');
+
+    formData.append('email', formValue.email ?? '');
+    formData.append('facebook', formValue.facebook ?? '');
+    formData.append('twitter', formValue.twitter ?? '');
+    formData.append('instagram', formValue.instagram ?? '');
+
     formData.append(
       'birthDate',
       new Date(formValue.birthDate ?? '').toISOString().split('T')[0]

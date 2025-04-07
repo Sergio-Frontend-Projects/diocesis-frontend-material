@@ -1,3 +1,10 @@
+@if (isLoading()) {
+<div class="loader-container">
+  <mat-progress-spinner mode="indeterminate" color="accent" diameter="48">
+  </mat-progress-spinner>
+</div>
+
+} @else {
 <splide
   #splideRef
   class="custom-carrusel"
@@ -41,3 +48,4 @@
     </ng-template>
   </splide-slide>
 </splide>
+}

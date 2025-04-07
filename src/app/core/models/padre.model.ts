@@ -3,8 +3,12 @@ export interface Padre {
   firstName: string;
   lastName: string;
   birthDate: string;
-  picture?: string | null;
   isActive: boolean;
+  picture?: string | null;
+  email?: string | null;
+  facebook?: string | null;
+  twitter?: string | null;
+  instagram?: string | null;
   createdAt: string;
   updatedAt: string | null;
   deletedAt: string | null;

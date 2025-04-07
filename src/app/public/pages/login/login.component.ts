@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -25,20 +25,28 @@ export default class LoginComponent {
     password: ['', Validators.required],
   });
 
+  isLoading = signal(false);
+
   onSubmit() {
     if (this.form.invalid) return;
 
     const { username, password } = this.form.value;
 
+    this.isLoading.set(true)
+
     this.auth.login(username!, password!).subscribe({
       next: () => {
         this.toastrService.showSuccess(username!, 'Bienvenido');
         this.router.navigateByUrl('/admin/users');
+        this.isLoading.set(false)
+
       },
       error: (err) => {
         console.warn(err.error.detail);
         this.toastrService.showError(err.error.detail, 'Error');
-      }
+        this.isLoading.set(false)
+
+      },
     });
   }
 }

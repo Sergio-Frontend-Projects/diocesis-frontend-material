@@ -19,12 +19,7 @@
       *ngFor="let padre of padres()"
       [routerLink]="['/padres', padre.id]"
     >
-      <img [src]="padre.picture ?? '' | cleanUrl" alt="Foto del padre" />
-      <h3 class="caviar-bold">{{ padre.firstName }} {{ padre.lastName }}</h3>
-      <p class="caviar-bold">
-        <strong>Fecha de naciemiento:</strong>
-        {{ padre.birthDate | date : "dd/MM/yyyy" }}
-      </p>
+      <app-padre-card [padre]="padre" />
     </a>
   </div>
 

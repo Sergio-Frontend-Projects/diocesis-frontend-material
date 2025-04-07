@@ -1,0 +1,28 @@
+<div class="form-container">
+  <h2 class="caviar-bold">
+    {{ editing ? "Editar colonia" : "Crear colonia" }}
+  </h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="colonia-form">
+    <mat-form-field appearance="outline">
+      <mat-label class="caviar-bold">Nombre</mat-label>
+      <input
+        matInput
+        formControlName="name"
+        placeholder="Nombre de la colonia"
+      />
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit">
+        <p class="caviar-bold">
+          {{ editing ? "Actualizar" : "Crear" }}
+        </p>
+      </button>
+
+      <button mat-button routerLink="/admin/colonias">
+        <p class="caviar-bold">Cancelar</p>
+      </button>
+    </div>
+  </form>
+</div>

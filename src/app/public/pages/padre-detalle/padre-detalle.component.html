@@ -1,9 +1,18 @@
 <div class="padre-detalle" *ngIf="padre()">
-  <img [src]="padre()?.picture ?? '' | cleanUrl" alt="Foto del padre" />
+  <img
+    [src]="padre()?.picture ?? '' | cleanUrl"
+    alt="Foto del padre"
+    class="padre-img"
+  />
 
-  <h2 class="caviar-bold">
-    {{ padre()?.firstName }} {{ padre()?.lastName }}
-  </h2>
+  <app-social-buttons
+    [email]="padre()?.email ?? ''"
+    [facebook]="padre()?.facebook ?? ''"
+    [twitter]="padre()?.twitter ?? ''"
+    [instagram]="padre()?.instagram ?? ''"
+  />
+
+  <h2 class="caviar-bold">{{ padre()?.firstName }} {{ padre()?.lastName }}</h2>
 
   <p class="caviar-normal">
     <strong>Fecha de nacimiento:</strong>
