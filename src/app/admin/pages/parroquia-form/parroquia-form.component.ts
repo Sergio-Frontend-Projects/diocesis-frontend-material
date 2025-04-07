@@ -123,8 +123,8 @@ export default class ParroquiaFormComponent implements OnInit {
     formData.append('address', formValue.address ?? '');
     formData.append('zipCode', formValue.zipCode ?? '');
     formData.append('town', formValue.town ?? '');
-    formData.append('coloniaId', formValue.coloniaId ?? '');
     formData.append('decanatoId', formValue.decanatoId ?? '');
+    formData.append('coloniaId', formValue.coloniaId ?? '');
     formData.append('padreId', formValue.padreId ?? '');
 
     if (file !== null) formData.append('picture', file);
