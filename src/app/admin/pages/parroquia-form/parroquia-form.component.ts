@@ -74,8 +74,6 @@ export default class ParroquiaFormComponent implements OnInit {
   ngOnInit(): void {
     this.loadListas();
 
-    console.log(this.colonias());
-
     this.parroquiaId = this.route.snapshot.paramMap.get('id') ?? '';
 
     if (this.parroquiaId !== '') {
