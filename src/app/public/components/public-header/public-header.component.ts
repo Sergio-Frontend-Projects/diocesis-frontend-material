@@ -70,7 +70,7 @@ export class PublicHeaderComponent implements AfterViewInit, OnDestroy {
       label: 'Directorio',
       icon: 'contacts',
       children: [
-        { icon: 'person', label: 'Presbiteros', route: '/home' },
+        { icon: 'person', label: 'Presbiteros', route: '/home/padres' },
         { icon: 'location_on', label: 'Parroquias', route: '/home' },
         { icon: 'person_pin', label: 'Diáconos Permanentes', route: '/home' },
         {

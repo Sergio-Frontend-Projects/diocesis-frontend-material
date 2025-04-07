@@ -1,0 +1,80 @@
+<div class="decanato-container">
+  <h2 class="caviar-bold">Gestión de decanatos</h2>
+
+  <app-filter-bar
+    [filters]="filters"
+    (search)="onSearch($event)"
+    (clear)="onSearch({})"
+  />
+
+  <div class="actions">
+    <button mat-raised-button routerLink="add">
+      <mat-icon>add</mat-icon>
+      <p class="caviar-bold">Crear decanato</p>
+    </button>
+  </div>
+
+  <div class="table-container">
+    <table
+      mat-table
+      [dataSource]="decanatos()"
+      class="mat-elevation-z2"
+      multiTemplateDataRows
+    >
+      <ng-container matColumnDef="isActive">
+        <th mat-header-cell *matHeaderCellDef class="caviar-bold">Estado</th>
+        <td mat-cell *matCellDef="let decanato">
+          <span
+            class="status-indicator"
+            [class.active]="decanato.isActive"
+            [class.inactive]="!decanato.isActive"
+          ></span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="caviar-bold">Nombre</th>
+        <td mat-cell *matCellDef="let decanato">
+          {{ decanato.name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef class="caviar-bold">Acciones</th>
+        <td mat-cell *matCellDef="let decanato">
+          <button mat-icon-button [routerLink]="['edit', decanato.id]">
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="deleteColonia(decanato)"
+            *ngIf="decanato.isActive"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            (click)="deleteColonia(decanato)"
+            *ngIf="!decanato.isActive"
+          >
+            <mat-icon>check</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+
+  <mat-paginator
+    [length]="total()"
+    [pageSize]="limit()"
+    [pageIndex]="page()"
+    [pageSizeOptions]="[5, 10, 20, 50]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons
+  />
+</div>

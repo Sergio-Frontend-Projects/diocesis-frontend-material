@@ -76,6 +76,21 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../app/admin/pages/colonia-form/colonia-form.component'),
       },
+      {
+        path: 'decanatos',
+        loadComponent: () =>
+          import('../app/admin/pages/decanatos/decanatos.component'),
+      },
+      {
+        path: 'decanatos/add',
+        loadComponent: () =>
+          import('../app/admin/pages/decanato-form/decanato-form.component'),
+      },
+      {
+        path: 'decanatos/edit/:id',
+        loadComponent: () =>
+          import('../app/admin/pages/decanato-form/decanato-form.component'),
+      },
     ],
   },
   {
