@@ -11,9 +11,7 @@
     No se encontraron resultados
   </p>
 
-  @if(padres().length > 0) {
-
-  <div class="results">
+  <div class="results" *ngIf="padres().length > 0">
     <a
       class="padre-card"
       *ngFor="let padre of padres()"
@@ -30,5 +28,4 @@
     (page)="onPageChange($event)"
     showFirstLastButtons
   />
-  }
 </div>

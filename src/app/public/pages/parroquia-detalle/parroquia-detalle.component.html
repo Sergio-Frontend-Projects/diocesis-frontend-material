@@ -1,0 +1,44 @@
+<div class="parroquia-detalle" *ngIf="parroquia()">
+  <img
+    [src]="parroquia()?.picture ?? '' | cleanUrl"
+    alt="Foto de la parroquia"
+    class="parroquia-img"
+  />
+
+  <h2 class="caviar-bold">{{ parroquia()?.name }}</h2>
+
+  <p class="caviar-normal">
+    <strong>Fecha de inauguración:</strong>
+    {{ parroquia()?.openingDate | date : "dd/MM/yyyy" }}
+  </p>
+
+  <p class="caviar-normal">
+    <strong>Dirección:</strong>
+    {{ parroquia()?.address }}
+  </p>
+
+  <p class="caviar-normal">
+    <strong>Código postal:</strong>
+    {{ parroquia()?.zipCode }}
+  </p>
+
+  <p class="caviar-normal">
+    <strong>Localidad:</strong>
+    {{ parroquia()?.town }}
+  </p>
+
+  <p class="caviar-normal">
+    <strong>Decanato:</strong>
+    {{ decanato()?.name }}
+  </p>
+
+  <p class="caviar-normal">
+    <strong>Colonia:</strong>
+    {{ colonia()?.name }}
+  </p>
+
+  <p class="caviar-normal">
+    <strong>Padre encargado:</strong>
+    {{ padre()?.firstName }} {{ padre()?.lastName }}
+  </p>
+</div>

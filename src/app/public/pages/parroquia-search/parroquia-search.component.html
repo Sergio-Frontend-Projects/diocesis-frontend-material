@@ -1,0 +1,31 @@
+<div class="parroquia-search-container">
+  <h2 class="section-title caviar-bold">Buscador de parroquias</h2>
+
+  <app-filter-bar
+    [filters]="filters"
+    (search)="onSearch($event)"
+    (clear)="onClear()"
+  />
+
+  <p *ngIf="parroquias().length === 0" class="caviar-bold">
+    No se encontraron resultados
+  </p>
+
+  <div class="results" *ngIf="parroquias().length > 0">
+    <a
+      class="parroquia-card"
+      *ngFor="let parroquia of parroquias()"
+      [routerLink]="['/parroquias', parroquia.id]"
+    >
+      <app-parroquia-card [parroquia]="parroquia" />
+    </a>
+  </div>
+
+  <mat-paginator
+    [length]="total()"
+    [pageSize]="limit()"
+    [pageIndex]="page()"
+    (page)="onPageChange($event)"
+    showFirstLastButtons
+  />
+</div>

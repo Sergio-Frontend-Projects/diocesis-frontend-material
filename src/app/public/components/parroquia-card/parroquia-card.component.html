@@ -1,0 +1,10 @@
+<img
+  [src]="parroquia().picture ?? '' | cleanUrl"
+  alt="Foto de la parroquia"
+  class="parroquia-img"
+/>
+<h3 class="caviar-bold">{{ parroquia().name }}</h3>
+<p class="caviar-bold">
+  <strong>Fecha de inauguración:</strong>
+  {{ parroquia().openingDate | date : "dd/MM/yyyy" }}
+</p>

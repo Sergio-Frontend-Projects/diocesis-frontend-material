@@ -135,6 +135,16 @@ export const routes: Routes = [
           import('../app/public/pages/padre-detalle/padre-detalle.component'),
       },
       {
+        path: 'parroquias',
+        loadComponent: () =>
+          import('../app/public/pages/parroquia-search/parroquia-search.component'),
+      },
+      {
+        path: 'parroquias/:id',
+        loadComponent: () =>
+          import('../app/public/pages/parroquia-detalle/parroquia-detalle.component'),
+      },
+      {
         path: '**',
         redirectTo: 'home',
       },
