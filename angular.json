@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "diocesis-frontend-tailwind": {
+    "diocesis-frontend-material": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -57,10 +57,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "diocesis-frontend-tailwind:build:production"
+              "buildTarget": "diocesis-frontend-material:build:production"
             },
             "development": {
-              "buildTarget": "diocesis-frontend-tailwind:build:development"
+              "buildTarget": "diocesis-frontend-material:build:development"
             }
           },
           "defaultConfiguration": "development"
