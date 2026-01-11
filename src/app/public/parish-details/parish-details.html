@@ -1,0 +1,179 @@
+@if (isLoading()) {
+  <div class="container mx-auto flex min-h-96 items-center justify-center px-4">
+    <p class="text-custom-brown text-lg font-medium">Cargando información...</p>
+  </div>
+} @else if (parish(); as parroquia) {
+  <article class="container mx-auto max-w-6xl px-4 py-8">
+    <div class="bg-custom-white overflow-hidden rounded-lg shadow-xl">
+      <div class="grid grid-cols-1 gap-8 p-8 lg:grid-cols-3">
+        <!-- Columna izquierda: Foto -->
+        <div class="flex flex-col items-center">
+          <!-- Foto de la parroquia -->
+          <div class="mb-6 h-64 w-64 overflow-hidden rounded-lg">
+            @if (parroquia.picture) {
+              <img
+                [src]="parroquia.picture | cleanUrl"
+                [alt]="parroquia.name"
+                class="h-full w-full object-cover"
+              />
+            } @else {
+              <div class="bg-custom-brown/10 flex h-full w-full items-center justify-center">
+                <lucide-angular
+                  [img]="iconsService.parishPlaceholder"
+                  [size]="128"
+                  class="text-custom-brown/30"
+                />
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Columna derecha: Información -->
+        <div class="lg:col-span-2">
+          <!-- Información General -->
+          <div class="mb-8">
+            <h2 class="text-custom-brown mb-4 border-b-2 border-gray-200 pb-2 text-xl font-bold">
+              INFORMACIÓN GENERAL
+            </h2>
+            <h1 class="text-custom-brown mb-4 text-2xl font-bold">{{ parroquia.name }}</h1>
+
+            <div class="text-custom-brown/70 space-y-3">
+              @if (parroquia.address) {
+                <div class="flex items-start gap-2">
+                  <lucide-angular [img]="iconsService.mapPin" [size]="20" class="mt-1 shrink-0" />
+                  <div>
+                    <p>{{ parroquia.address }}</p>
+                    @if (parroquia.town || parroquia.zipCode) {
+                      <p>
+                        {{ parroquia.town }}
+                        @if (parroquia.zipCode) {
+                          , C.P. {{ parroquia.zipCode }}
+                        }
+                      </p>
+                    }
+                  </div>
+                </div>
+              }
+
+              @if (parroquia.openingDate) {
+                <div class="flex items-center gap-2">
+                  <lucide-angular [img]="iconsService.calendar" [size]="20" />
+                  <span>Fecha de apertura: {{ parroquia.openingDate | date: 'dd/MM/yyyy' }}</span>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Ubicación -->
+          <div class="mb-8">
+            <h2 class="text-custom-brown mb-4 border-b-2 border-gray-200 pb-2 text-xl font-bold">
+              UBICACIÓN
+            </h2>
+            <div class="text-custom-brown space-y-3">
+              @if (decant(); as decanato) {
+                <div class="flex items-center gap-2">
+                  <lucide-angular [img]="iconsService.building" [size]="20" />
+                  <span><strong>Decanato:</strong> {{ decanato.name }}</span>
+                </div>
+              }
+
+              @if (colony(); as colonia) {
+                <div class="flex items-center gap-2">
+                  <lucide-angular [img]="iconsService.home" [size]="20" />
+                  <span><strong>Colonia:</strong> {{ colonia.name }}</span>
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Párroco -->
+          @if (reverend(); as padre) {
+            <div>
+              <h2 class="text-custom-brown mb-4 border-b-2 border-gray-200 pb-2 text-xl font-bold">
+                PÁRROCO
+              </h2>
+              <div class="flex items-start gap-4">
+                <div class="h-20 w-20 shrink-0 overflow-hidden rounded-full">
+                  @if (padre.picture) {
+                    <img
+                      [src]="padre.picture | cleanUrl"
+                      [alt]="padre.firstName + ' ' + padre.lastName"
+                      class="h-full w-full object-cover"
+                    />
+                  } @else {
+                    <div class="bg-custom-brown/10 flex h-full w-full items-center justify-center">
+                      <lucide-angular
+                        [img]="iconsService.avatarPlaceholder"
+                        [size]="40"
+                        class="text-custom-brown/30"
+                      />
+                    </div>
+                  }
+                </div>
+                <div class="text-custom-brown">
+                  <p class="text-lg font-semibold">
+                    Pbro. {{ padre.firstName }} {{ padre.lastName }}
+                  </p>
+                  @if (padre.email || padre.facebook || padre.instagram || padre.twitter) {
+                    <div class="mt-3 flex flex-wrap items-center gap-2">
+                      @if (padre.email) {
+                        <a
+                          [href]="'mailto:' + padre.email"
+                          class="hover:bg-custom-yellow/20 rounded-lg border border-gray-200 p-2 transition-colors"
+                          [attr.aria-label]="'Email del párroco'"
+                        >
+                          <img src="/svgs/email.svg" alt="Email" class="h-5 w-5" />
+                        </a>
+                      }
+                      @if (padre.facebook) {
+                        <a
+                          [href]="padre.facebook"
+                          target="_blank"
+                          class="hover:bg-custom-yellow/20 rounded-lg border border-gray-200 p-2 transition-colors"
+                          [attr.aria-label]="'Facebook del párroco'"
+                        >
+                          <img src="/svgs/facebook.svg" alt="Facebook" class="h-5 w-5" />
+                        </a>
+                      }
+                      @if (padre.instagram) {
+                        <a
+                          [href]="padre.instagram"
+                          target="_blank"
+                          class="hover:bg-custom-yellow/20 rounded-lg border border-gray-200 p-2 transition-colors"
+                          [attr.aria-label]="'Instagram del párroco'"
+                        >
+                          <img src="/svgs/instagram.svg" alt="Instagram" class="h-5 w-5" />
+                        </a>
+                      }
+                      @if (padre.twitter) {
+                        <a
+                          [href]="padre.twitter"
+                          target="_blank"
+                          class="hover:bg-custom-yellow/20 rounded-lg border border-gray-200 p-2 transition-colors"
+                          [attr.aria-label]="'Twitter del párroco'"
+                        >
+                          <img src="/svgs/twitter.svg" alt="Twitter" class="h-5 w-5" />
+                        </a>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón volver -->
+    <div class="mt-8">
+      <a
+        routerLink="/parroquias"
+        class="bg-custom-brown hover:bg-custom-brown/80 inline-flex items-center gap-2 rounded-lg px-6 py-3 text-white transition-colors"
+      >
+        <lucide-angular [img]="iconsService.previous" [size]="20" />
+        <span>Volver al buscador</span>
+      </a>
+    </div>
+  </article>
+}

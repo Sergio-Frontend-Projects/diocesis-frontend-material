@@ -1,0 +1,376 @@
+<div class="section-spacing">
+  <div class="page-header">
+    <app-title title="Parroquias" description="Gestión de parroquias" />
+
+    <div class="actions-bar">
+      <button class="btn-primary btn-full" (click)="openCreateParish()">
+        <div class="flex items-center justify-center gap-2">
+          <lucide-icon
+            [img]="iconsService.addInformation"
+            size="15"
+            color="black"
+            aria-hidden="true"
+          />
+          <span>Crear Parroquia</span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <div class="search-bar">
+    <div class="flex items-center gap-2">
+      <label for="search-parishes-by-title" class="sr-only">Buscar parroquias por nombre</label>
+      <lucide-icon
+        [img]="iconsService.search"
+        size="15"
+        color="black"
+        aria-hidden="true"
+      ></lucide-icon>
+      <input
+        id="search-newspapers-by-title"
+        type="search"
+        placeholder="Buscar por nombre..."
+        [value]="searchName()"
+        (input)="updateNameSearch($event)"
+        class="input-search"
+        aria-label="Buscar por nombre"
+      />
+    </div>
+    <div class="flex items-center gap-2">
+      <label for="search-parishes-by-tags" class="sr-only">Buscar parroquias por ciudad</label>
+      <input
+        id="search-parishes-by-tags"
+        type="search"
+        placeholder="Buscar por ciudad..."
+        [value]="searchCity()"
+        (input)="updateCitySearch($event)"
+        class="input-search"
+        aria-label="Buscar por ciudad"
+      />
+    </div>
+    <select
+      id="filter-status"
+      [value]="activeFilterValue()"
+      (change)="updateFilterActive($event)"
+      class="select-full"
+      aria-label="Filtrar por estado"
+    >
+      <option class="font-bold" value="">Todos</option>
+      <option class="font-bold" value="true">Activos</option>
+      <option class="font-bold" value="false">Inactivos</option>
+    </select>
+  </div>
+
+  @if (parishesService.parishes().length > 0) {
+    <div class="table-container overflow-x-auto">
+      <table class="min-w-full table-auto">
+        <thead class="bg-neutral-50 text-neutral-600">
+          <tr>
+            <th class="w-1/6 border-b border-neutral-300 px-6 py-4 text-center font-bold">Foto</th>
+            <th class="w-1/4 border-b border-neutral-300 px-6 py-4 text-left font-bold">Nombre</th>
+            <th class="w-1/4 border-b border-neutral-300 px-6 py-4 text-left font-bold">
+              Dirección
+            </th>
+            <th class="w-1/4 border-b border-neutral-300 px-6 py-4 text-left font-bold">
+              Responsable
+            </th>
+            <th class="w-1/4 border-b border-neutral-300 px-6 py-4 text-left font-bold">
+              Decanato
+            </th>
+            <th class="w-1/6 border-b border-neutral-300 px-6 py-4 text-left font-bold">Estado</th>
+            <th class="w-1/6 border-b border-neutral-300 px-6 py-4 text-right font-bold">
+              Acciones
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of parishesService.parishes(); track row.id) {
+            <tr class="hover:bg-neutral-100">
+              <td class="w-1/6 border-b border-neutral-300 px-6 py-4 text-center">
+                @if (row.picture) {
+                  <img
+                    [src]="row.picture | cleanUrl"
+                    alt="Foto de {{ row.name }}"
+                    class="mx-auto h-12 w-12 rounded-lg border border-neutral-300 object-cover"
+                  />
+                } @else {
+                  <lucide-icon
+                    [img]="iconsService.picture"
+                    size="40"
+                    color="gray"
+                    class="mx-auto rounded-lg border border-neutral-300"
+                    aria-hidden="true"
+                  />
+                }
+              </td>
+              <td class="w-1/4 truncate border-b border-neutral-300 px-6 py-4">{{ row.name }}</td>
+              <td class="w-1/4 border-b border-neutral-300 px-6 py-4">
+                {{ row.address }}, {{ chargeColonyRowInfo(row.coloniaId) }} ,{{ row.town }}
+              </td>
+              <td class="w-1/4 border-b border-neutral-300 px-6 py-4">
+                {{ chargeReverendRowInfo(row.padreId) }}
+              </td>
+              <td class="w-1/4 border-b border-neutral-300 px-6 py-4">
+                {{ chargeDecantRowInfo(row.decanatoId) }}
+              </td>
+              <td class="w-1/6 border-b border-neutral-300 px-6 py-4">
+                <div
+                  class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm"
+                  [class]="
+                    row.isActive
+                      ? 'border-green-200 bg-green-100 text-green-800'
+                      : 'border-red-200 bg-red-100 text-red-800'
+                  "
+                >
+                  <lucide-icon
+                    [img]="row.isActive ? iconsService.active : iconsService.inactive"
+                    size="20"
+                    [color]="row.isActive ? 'green' : 'red'"
+                  ></lucide-icon>
+
+                  <span>
+                    {{ row.isActive ? 'Activo' : 'Inactivo' }}
+                  </span>
+                </div>
+              </td>
+              <td class="w-1/6 border-b border-neutral-300 px-6 py-4">
+                <div class="flex flex-wrap items-center justify-end gap-2">
+                  <!-- Editar -->
+                  <button class="btn-table-warning" (click)="openEditParish(row)">
+                    <div class="flex items-center justify-center gap-1">
+                      <lucide-icon [img]="iconsService.edit" size="15" />
+                      <span class="hidden text-xs 2xl:inline"> Editar </span>
+                    </div>
+                  </button>
+                  <!-- Desactivar -->
+                  <button
+                    class="btn-table"
+                    [class]="
+                      !row.isActive
+                        ? 'border-green-200 bg-green-100 text-green-800'
+                        : 'border-red-200 bg-red-100 text-red-800'
+                    "
+                    (click)="confirmToggleParish(row, row.isActive ? 'deactivate' : 'activate')"
+                    [attr.aria-label]="
+                      (row.isActive ? 'Desactivar' : 'Activar') + ' parroquia ' + row.name
+                    "
+                  >
+                    <div class="flex items-center justify-center gap-1">
+                      <lucide-icon
+                        [img]="row.isActive ? iconsService.disable : iconsService.active"
+                        size="15"
+                        [color]="row.isActive ? 'red' : 'green'"
+                      ></lucide-icon>
+                      <span class="hidden text-xs 2xl:inline">
+                        {{ row.isActive ? 'Desactivar' : 'Activar' }}
+                      </span>
+                    </div>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <app-pagination
+      [total]="parishesService.totalParishes()"
+      [pageFrom]="pageFrom()"
+      [pageTo]="pageTo()"
+      [canPrev]="canPrev()"
+      [canNext]="canNext()"
+      [currentLimit]="pagination().limit"
+      (previousPage)="prevPage()"
+      (nextPage)="nextPage()"
+      (limitChange)="changeLimit($event)"
+    />
+  } @else {
+    <app-empty-state />
+  }
+
+  <app-modal
+    [isOpen]="mode() !== null"
+    [title]="modalTitle()"
+    [maxWidth]="'max-w-6xl'"
+    [showActions]="true"
+    [loading]="saving()"
+    [confirmDisabled]="!isCreateFormValid()"
+    [confirmText]="mode() === 'create' ? 'Crear' : 'Guardar'"
+    (close)="closeModal()"
+    (cancel)="closeModal()"
+    (confirm)="save()"
+  >
+    <form class="max-h-[80vh] space-y-4 overflow-y-auto" (submit)="$event.preventDefault()">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <div class="mb-2">
+            <label for="name" class="mb-2 block text-sm font-medium">Nombre</label>
+            <input
+              id="name"
+              type="text"
+              class="w-full rounded-xl border border-black/10 px-3 py-2"
+              [value]="createForm().name"
+              (input)="updateCreateFormField('name', $event)"
+              required
+            />
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="mb-2">
+              <label for="openingDate" class="mb-2 block text-sm font-medium"
+                >Fecha de Apertura</label
+              >
+              <input
+                id="openingDate"
+                type="date"
+                class="w-full rounded-xl border border-black/10 px-3 py-2"
+                [value]="createForm().openingDate"
+                (input)="updateCreateFormField('openingDate', $event)"
+                required
+              />
+            </div>
+
+            <div class="mb-2">
+              <label for="zipCode" class="mb-2 block text-sm font-medium">Código Postal</label>
+              <input
+                id="zipCode"
+                type="text"
+                class="w-full rounded-xl border border-black/10 px-3 py-2"
+                [value]="createForm().zipCode"
+                (input)="updateCreateFormField('zipCode', $event)"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="mb-2">
+            <label for="address" class="mb-2 block text-sm font-medium">Dirección</label>
+            <input
+              id="address"
+              type="text"
+              class="w-full rounded-xl border border-black/10 px-3 py-2"
+              [value]="createForm().address"
+              (input)="updateCreateFormField('address', $event)"
+              required
+            />
+          </div>
+
+          <div class="mb-2">
+            <label for="town" class="mb-2 block text-sm font-medium">Ciudad</label>
+            <input
+              id="town"
+              type="text"
+              class="w-full rounded-xl border border-black/10 px-3 py-2"
+              [value]="createForm().town"
+              (input)="updateCreateFormField('town', $event)"
+              required
+            />
+          </div>
+
+          <div class="mb-2">
+            <label for="photo" class="mb-2 block text-sm font-medium">Foto</label>
+            <input
+              #photoInput
+              id="photo"
+              type="file"
+              class="hidden"
+              (change)="onPhotoUpload($event)"
+            />
+            <button
+              type="button"
+              class="w-full rounded-xl border border-black/10 bg-gray-200 px-3 py-2 hover:bg-gray-300"
+              (click)="photoInput.click()"
+            >
+              Seleccionar fotografía
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-4 flex items-center justify-center">
+          <div class="flex items-center justify-center">
+            @if (photoPreview() !== null) {
+              <img
+                [src]="photoPreview()"
+                alt="Vista previa de la foto"
+                class="h-auto w-auto max-w-xs rounded-lg border border-black/10"
+              />
+            } @else {
+              <lucide-icon
+                [img]="iconsService.picture"
+                size="256"
+                color="gray"
+                aria-hidden="true"
+              />
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <div>
+            <label for="padre" class="mb-2 block text-sm font-medium">Padre</label>
+            <select
+              id="padre"
+              class="w-full rounded-xl border border-black/10 px-3 py-2"
+              [value]="createForm().padreId"
+              (change)="updateCreateFormField('padreId', $event)"
+              required
+            >
+              <option value="" disabled>Seleccione un padre</option>
+              @for (padre of reverendsService.reverends(); track padre.id) {
+                <option [value]="padre.id">{{ padre.firstName }} {{ padre.lastName }}</option>
+              }
+            </select>
+          </div>
+
+          <div>
+            <label for="decanato" class="mb-2 block text-sm font-medium">Decanato</label>
+            <select
+              id="decanato"
+              class="w-full rounded-xl border border-black/10 px-3 py-2"
+              [value]="createForm().decanatoId"
+              (change)="updateCreateFormField('decanatoId', $event)"
+              required
+            >
+              <option value="" disabled>Seleccione un decanato</option>
+              @for (decanato of decantsService.decants(); track decanato.id) {
+                <option [value]="decanato.id">{{ decanato.name }}</option>
+              }
+            </select>
+          </div>
+
+          <div>
+            <label for="colonia" class="mb-2 block text-sm font-medium">Colonia</label>
+            <select
+              id="colonia"
+              class="w-full rounded-xl border border-black/10 px-3 py-2"
+              [value]="createForm().coloniaId"
+              (change)="updateCreateFormField('coloniaId', $event)"
+              required
+            >
+              <option value="" disabled>Seleccione una colonia</option>
+              @for (colonia of coloniesService.colonies(); track colonia.id) {
+                <option [value]="colonia.id">{{ colonia.name }}</option>
+              }
+            </select>
+          </div>
+        </div>
+      </div>
+    </form>
+  </app-modal>
+
+  <app-modal
+    [isOpen]="confirmingToggle()"
+    [title]="toggleConfirmTitle()"
+    [maxWidth]="'max-w-md'"
+    [showActions]="true"
+    confirmText="Confirmar"
+    (close)="closeToggleConfirmation()"
+    (cancel)="closeToggleConfirmation()"
+    (confirm)="executeToggle()"
+  >
+    <p class="text-sm text-neutral-600">{{ toggleConfirmMessage() }}</p>
+  </app-modal>
+</div>

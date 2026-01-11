@@ -1,0 +1,43 @@
+<div
+  class="bg-custom-white group flex h-full flex-col items-center rounded-lg p-8 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+>
+  <!-- Icono -->
+  <div class="mb-6 flex h-32 w-32 items-center justify-center">
+    <img [src]="iconPath()" [alt]="title()" class="h-full w-full object-contain" />
+  </div>
+
+  <!-- Título -->
+  <h3 class="text-custom-brown mb-3 text-center text-2xl font-bold">
+    {{ title() }}
+  </h3>
+
+  <!-- Descripción (opcional) -->
+  @if (description()) {
+    <p class="text-custom-brown/70 mb-6 text-center text-sm">
+      {{ description() }}
+    </p>
+  }
+
+  <!-- Botón -->
+  <a
+    [routerLink]="routerLink()"
+    class="bg-custom-yellow hover:bg-custom-yellow/80 text-custom-brown mt-auto flex items-center gap-2 rounded-lg px-6 py-3 font-medium no-underline transition-colors"
+  >
+    <span class="font-bold">{{ buttonText() }}</span>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="transition-transform group-hover:translate-x-1"
+    >
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.3-4.3" />
+    </svg>
+  </a>
+</div>

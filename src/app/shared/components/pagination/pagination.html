@@ -1,0 +1,63 @@
+<nav class="pagination-container" aria-label="Paginación">
+  <div class="pagination-info" role="status" aria-live="polite">
+    <span class="hidden md:inline">Mostrando </span>{{ pageFrom() }} - {{ pageTo() }} de
+    {{ total() }}
+  </div>
+
+  <div class="flex items-center gap-2">
+    <button
+      type="button"
+      [disabled]="!canPrev()"
+      (click)="previousPage.emit()"
+      class="pagination-btn"
+      [class.opacity-50]="!canPrev()"
+      [class.cursor-not-allowed]="!canPrev()"
+      aria-label="Ir a la página anterior"
+    >
+      <div class="flex items-center gap-2">
+        <lucide-icon
+          [img]="iconsService.previous"
+          size="15"
+          color="black"
+          aria-hidden="true"
+        ></lucide-icon>
+        <span class="hidden md:inline">Anterior</span>
+      </div>
+    </button>
+    <button
+      type="button"
+      [disabled]="!canNext()"
+      (click)="nextPage.emit()"
+      class="pagination-btn"
+      [class.opacity-50]="!canNext()"
+      [class.cursor-not-allowed]="!canNext()"
+      aria-label="Ir a la página siguiente"
+    >
+      <div class="flex items-center gap-2">
+        <span class="hidden md:inline">Siguiente</span>
+        <lucide-icon
+          [img]="iconsService.next"
+          size="15"
+          color="black"
+          aria-hidden="true"
+        ></lucide-icon>
+      </div>
+    </button>
+
+    @if (showLimitSelector()) {
+      <label for="pageSizeSelect" class="sr-only">Elementos por página</label>
+      <select
+        id="pageSizeSelect"
+        [value]="currentLimit()"
+        (change)="limitChange.emit($event)"
+        class="rounded-xl border border-black/10 px-3 py-2"
+        aria-label="Seleccionar número de elementos por página"
+      >
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    }
+  </div>
+</nav>

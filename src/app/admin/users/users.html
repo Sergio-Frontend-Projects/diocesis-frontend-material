@@ -1,0 +1,317 @@
+<div class="section-spacing">
+  <div class="page-header">
+    <app-title title="Usuarios" description="Administra los usuarios del sistema" />
+
+    <div class="actions-bar">
+      <button
+        class="w-full cursor-pointer rounded-xl border border-green-200 bg-green-100 px-3 py-2 text-green-800 transition-all hover:bg-green-50 disabled:cursor-not-allowed disabled:opacity-50 sm:px-4 md:w-auto"
+        (click)="onDownloadTemplate()"
+        aria-label="Plantilla de carga masiva por CSV"
+      >
+        <div class="flex items-center justify-center gap-2">
+          <lucide-icon
+            [img]="iconsService.download"
+            size="15"
+            color="green"
+            aria-hidden="true"
+          ></lucide-icon>
+          <span class="text-sm sm:text-base">Plantilla CSV</span>
+        </div>
+      </button>
+
+      <input
+        #csvInput
+        type="file"
+        accept=".csv,text/csv"
+        class="hidden"
+        (change)="onCsvSelected($event)"
+        aria-label="Seleccionar archivo CSV para carga masiva de usuarios"
+      />
+      <button
+        class="w-full cursor-pointer rounded-xl border border-black px-3 py-2 transition-all hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-50 sm:px-4 md:w-auto"
+        (click)="csvInput.click()"
+        aria-label="Carga masiva por CSV"
+      >
+        <div class="flex items-center justify-center gap-2">
+          <lucide-icon
+            [img]="iconsService.upload"
+            size="15"
+            color="black"
+            aria-hidden="true"
+          ></lucide-icon>
+          <span class="text-sm sm:text-base">Cargar masiva (CSV)</span>
+        </div>
+      </button>
+
+      <button class="btn-primary btn-full" (click)="openCreateUser()">
+        <div class="flex items-center justify-center gap-2">
+          <lucide-icon [img]="iconsService.addUser" size="15" color="black" aria-hidden="true" />
+          <span>Crear Usuario</span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <div class="search-bar">
+    <div class="flex items-center gap-2">
+      <label for="search-users" class="sr-only">Buscar usuarios por nombre</label>
+      <lucide-icon
+        [img]="iconsService.search"
+        size="15"
+        color="black"
+        aria-hidden="true"
+      ></lucide-icon>
+      <input
+        id="search-users"
+        type="search"
+        placeholder="Buscar por nombre..."
+        [value]="search()"
+        (input)="updateSearch($event)"
+        class="input-search"
+        aria-label="Buscar usuarios por nombre"
+      />
+    </div>
+
+    <select
+      id="filter-status"
+      [value]="activeFilterValue()"
+      (change)="updateFilterActive($event)"
+      class="select-full"
+      aria-label="Filtrar por estado"
+    >
+      <option class="font-bold" value="">Todos</option>
+      <option class="font-bold" value="true">Activos</option>
+      <option class="font-bold" value="false">Inactivos</option>
+    </select>
+  </div>
+
+  @if (usersService.users().length > 0) {
+    <div class="table-container">
+      <table class="min-w-200 table-fixed">
+        <thead class="bg-neutral-50 text-neutral-600">
+          <tr>
+            <th class="w-1/4 px-4 py-3 text-left font-bold">Email</th>
+            <th class="w-1/5 px-4 py-3 text-left font-bold">Nombre</th>
+            <th class="w-28 px-4 py-3 text-left font-bold">Estado</th>
+            <th class="px-4 py-3 text-right font-bold">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of usersService.users(); track row.id) {
+            <tr
+              class="animate-fade-in animate-duration-300 hover:bg-custom-yellow/50 border-t border-black/5 transition-all"
+            >
+              <td class="w-1/4 truncate px-4 py-3" [title]="row.email">{{ row.email }}</td>
+              <td class="w-1/4 truncate px-4 py-3" [title]="row.username">{{ row.username }}</td>
+              <td class="w-28 px-4 py-3">
+                <div
+                  class="inline-flex items-center gap-2 rounded-full border px-2 py-1 text-xs"
+                  [class]="
+                    row.isActive
+                      ? 'border-green-200 bg-green-100 text-green-800'
+                      : 'border-red-200 bg-red-100 text-red-800'
+                  "
+                >
+                  <lucide-icon
+                    [img]="row.isActive ? iconsService.active : iconsService.inactive"
+                    size="20"
+                    [color]="row.isActive ? 'green' : 'red'"
+                  ></lucide-icon>
+
+                  <span class="">
+                    {{ row.isActive ? 'Activo' : 'Inactivo' }}
+                  </span>
+                </div>
+              </td>
+              <td class="py3 px-4">
+                <div class="flex flex-wrap items-center justify-end gap-2">
+                  <button class="btn-table-warning" (click)="openEditUser(row)">
+                    <div class="flex items-center justify-center gap-1">
+                      <lucide-icon [img]="iconsService.edit" size="15" />
+                      <span class="hidden text-xs 2xl:inline"> Editar </span>
+                    </div>
+                  </button>
+                  <button
+                    class="btn-table"
+                    [class]="
+                      !row.isActive
+                        ? 'border-green-200 bg-green-100 text-green-800'
+                        : 'border-red-200 bg-red-100 text-red-800'
+                    "
+                    (click)="confirmToggleUser(row, row.isActive ? 'deactivate' : 'activate')"
+                    [attr.aria-label]="
+                      (row.isActive ? 'Desactivar' : 'Activar') + ' usuario ' + row.email
+                    "
+                  >
+                    <div class="flex items-center justify-center gap-1">
+                      <lucide-icon
+                        [img]="row.isActive ? iconsService.disable : iconsService.active"
+                        size="15"
+                        [color]="row.isActive ? 'red' : 'green'"
+                      ></lucide-icon>
+                      <span class="hidden text-xs 2xl:inline">
+                        {{ row.isActive ? 'Desactivar' : 'Activar' }}
+                      </span>
+                    </div>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <app-pagination
+      [total]="usersService.totalUsers()"
+      [pageFrom]="pageFrom()"
+      [pageTo]="pageTo()"
+      [canPrev]="canPrev()"
+      [canNext]="canNext()"
+      [currentLimit]="pagination().limit"
+      (previousPage)="prevPage()"
+      (nextPage)="nextPage()"
+      (limitChange)="changeLimit($event)"
+    />
+  } @else {
+    <app-empty-state />
+  }
+
+  <app-modal
+    [isOpen]="mode() === 'create'"
+    [title]="modalTitle()"
+    [maxWidth]="'max-w-md'"
+    [showActions]="true"
+    [loading]="saving()"
+    [confirmDisabled]="!isCreateFormValid()"
+    confirmText="Crear"
+    (close)="closeModal()"
+    (cancel)="closeModal()"
+    (confirm)="save()"
+  >
+    <form class="space-y-4" (submit)="$event.preventDefault()">
+      <div>
+        <label for="username" class="mb-2 block text-sm font-medium">Nombre</label>
+        <input
+          id="username"
+          type="text"
+          class="w-full rounded-xl border border-black/10 px-3 py-2"
+          [value]="createForm().username"
+          (input)="updateCreateFormName($event)"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="user-email" class="mb-2 block text-sm font-medium">Email</label>
+        <input
+          id="user-email"
+          type="email"
+          class="w-full rounded-xl border border-black/10 px-3 py-2"
+          [value]="createForm().email"
+          (input)="updateCreateFormEmail($event)"
+          placeholder="usuario@ejemplo.com"
+          required
+          autocomplete="email"
+        />
+      </div>
+
+      <div>
+        <label for="user-password" class="mb-2 block text-sm font-medium">Contraseña</label>
+        <input
+          id="user-password"
+          type="password"
+          class="w-full rounded-xl border border-black/10 px-3 py-2"
+          [value]="createForm().password"
+          (input)="updateCreateFormPassword($event)"
+          placeholder="Mínimo 6 caracteres"
+          required
+          minlength="6"
+          autocomplete="new-password"
+        />
+      </div>
+
+      <label for="role" class="text-sm font-medium text-neutral-700">
+        Rol <span class="text-red-500">*</span>
+      </label>
+      <select
+        id="role"
+        class="w-full rounded-xl border border-black/10 px-3 py-2 focus:ring-2 focus:ring-black/20 focus:outline-none"
+        [value]="createForm().role"
+        (change)="updateCreateFormRole($event)"
+      >
+        <option value="">Selecciona un rol</option>
+        @for (role of USER_ROLES; track $index) {
+          <option [value]="role">{{ role }}</option>
+        }
+      </select>
+    </form>
+  </app-modal>
+
+  <app-modal
+    [isOpen]="mode() === 'edit'"
+    [title]="modalTitle()"
+    [maxWidth]="'max-w-md'"
+    [showActions]="true"
+    [loading]="saving()"
+    [confirmDisabled]="!isEditFormValid()"
+    confirmText="Guardar"
+    (close)="closeModal()"
+    (cancel)="closeModal()"
+    (confirm)="update()"
+  >
+    <form class="space-y-4" (submit)="$event.preventDefault()">
+      <div>
+        <label for="username" class="mb-2 block text-sm font-medium">Nombre</label>
+        <input
+          id="username"
+          type="text"
+          class="w-full rounded-xl border border-black/10 px-3 py-2"
+          [value]="editForm().username"
+          (input)="updateEditName($event)"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="user-email" class="mb-2 block text-sm font-medium">Email</label>
+        <input
+          id="user-email"
+          type="email"
+          class="w-full rounded-xl border border-black/10 px-3 py-2"
+          [value]="editForm().email"
+          (input)="updateEditEmail($event)"
+          placeholder="usuario@ejemplo.com"
+          required
+          autocomplete="email"
+        />
+      </div>
+
+      <label for="role" class="text-sm font-medium text-neutral-700"> Rol </label>
+      <select
+        id="role"
+        class="w-full rounded-xl border border-black/10 px-3 py-2 focus:ring-2 focus:ring-black/20 focus:outline-none"
+        [value]="editForm().role"
+        (change)="updateEditRole($event)"
+      >
+        <option value="">Selecciona un rol</option>
+        @for (role of USER_ROLES; track $index) {
+          <option [value]="role">{{ role }}</option>
+        }
+      </select>
+    </form>
+  </app-modal>
+
+  <app-modal
+    [isOpen]="confirmingToggle()"
+    [title]="toggleConfirmTitle()"
+    [maxWidth]="'max-w-md'"
+    [showActions]="true"
+    confirmText="Confirmar"
+    (close)="closeToggleConfirmation()"
+    (cancel)="closeToggleConfirmation()"
+    (confirm)="executeToggle()"
+  >
+    <p class="text-sm text-neutral-600">{{ toggleConfirmMessage() }}</p>
+  </app-modal>
+</div>

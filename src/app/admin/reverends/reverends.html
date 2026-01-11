@@ -1,0 +1,378 @@
+<div class="section-spacing">
+  <div class="page-header">
+    <app-title title="Padres" description="Adminstra los padres pertecientes a la congregación" />
+
+    <div class="actions-bar">
+      <button class="btn-primary btn-full" (click)="openCreateReverend()">
+        <div class="flex items-center justify-center gap-2">
+          <lucide-icon [img]="iconsService.addUser" size="15" color="black" aria-hidden="true" />
+          <span>Crear Padre</span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <div class="search-bar">
+    <div class="flex items-center gap-2">
+      <label for="search-users-by-name" class="sr-only">Buscar padres por nombre</label>
+      <lucide-icon
+        [img]="iconsService.search"
+        size="15"
+        color="black"
+        aria-hidden="true"
+      ></lucide-icon>
+      <input
+        id="search-users-by-name"
+        type="search"
+        placeholder="Buscar por nombre..."
+        [value]="searchName()"
+        (input)="updateNameSearch($event)"
+        class="input-search"
+        aria-label="Buscar usuarios por nombre"
+      />
+    </div>
+    <div class="flex items-center gap-2">
+      <label for="search-users-by-lastname" class="sr-only">Buscar padres por apellido</label>
+      <input
+        id="search-users-by-lastname"
+        type="search"
+        placeholder="Buscar por apellido..."
+        [value]="searchLastName()"
+        (input)="updateLastNameSearch($event)"
+        class="input-search"
+        aria-label="Buscar usuarios por apellido"
+      />
+    </div>
+
+    <select
+      id="filter-status"
+      [value]="activeFilterValue()"
+      (change)="updateFilterActive($event)"
+      class="select-full"
+      aria-label="Filtrar por estado"
+    >
+      <option class="font-bold" value="">Todos</option>
+      <option class="font-bold" value="true">Activos</option>
+      <option class="font-bold" value="false">Inactivos</option>
+    </select>
+  </div>
+
+  @if (reverendsService.reverends().length > 0) {
+    <div class="table-container overflow-x-auto">
+      <table class="min-w-full table-auto">
+        <thead class="bg-neutral-50 text-neutral-600">
+          <tr>
+            <th class="px-4 py-3 text-center font-bold">Foto</th>
+            <th class="px-4 py-3 text-left font-bold">Nombre</th>
+            <th class="px-4 py-3 text-left font-bold">Estado</th>
+            <th class="px-4 py-3 text-left font-bold">Cumpleaños</th>
+            <th class="px-4 py-3 text-left font-bold">Redes Sociales</th>
+            <th class="px-4 py-3 text-right font-bold">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of reverendsService.reverends(); track row.id) {
+            <tr
+              class="animate-fade-in animate-duration-300 hover:bg-custom-yellow/50 border-t border-black/5 transition-all"
+            >
+              <td class="px-4 py-3 text-center" [title]="row.picture">
+                @if (row.picture) {
+                  <img
+                    [src]="row.picture | cleanUrl"
+                    alt="Foto de {{ row.firstName }} {{ row.lastName }}"
+                    class="mx-auto h-8 w-8 rounded-full object-cover"
+                  />
+                } @else {
+                  <lucide-icon
+                    [img]="iconsService.avatarPlaceholder"
+                    size="32"
+                    color="gray"
+                    class="mx-auto"
+                    aria-hidden="true"
+                  />
+                }
+              </td>
+              <td class="truncate px-4 py-3" [title]="row.firstName + ' ' + row.lastName">
+                {{ row.firstName }} {{ row.lastName }}
+              </td>
+              <td class="px-4 py-3">
+                <div
+                  class="inline-flex items-center gap-2 rounded-full border px-2 py-1 text-xs"
+                  [class]="
+                    row.isActive
+                      ? 'border-green-200 bg-green-100 text-green-800'
+                      : 'border-red-200 bg-red-100 text-red-800'
+                  "
+                >
+                  <lucide-icon
+                    [img]="row.isActive ? iconsService.active : iconsService.inactive"
+                    size="20"
+                    [color]="row.isActive ? 'green' : 'red'"
+                  ></lucide-icon>
+
+                  <span>
+                    {{ row.isActive ? 'Activo' : 'Inactivo' }}
+                  </span>
+                </div>
+              </td>
+              <td class="truncate px-4 py-3" [title]="row.birthDate">
+                {{ row.birthDate | date: 'dd/MM/yyyy' }}
+              </td>
+              <td class="px-4 py-3">
+                <div class="grid grid-cols-2 items-start gap-2">
+                  <!-- Email -->
+                  @if (row.email) {
+                    <a class="btn-icon" [href]="'mailto:' + row.email">
+                      <div class="flex justify-center">
+                        <img
+                          src="/svgs/email.svg"
+                          alt="Email de {{ row.firstName }} {{ row.lastName }}"
+                          class="h-5 w-5"
+                        />
+                      </div>
+                    </a>
+                  }
+                  <!-- Facebook -->
+                  @if (row.facebook) {
+                    <a class="btn-icon" [href]="row.facebook" target="_blank">
+                      <div class="flex justify-center">
+                        <img
+                          src="/svgs/facebook.svg"
+                          alt="Facebook de {{ row.firstName }} {{ row.lastName }}"
+                          class="h-5 w-5"
+                        />
+                      </div>
+                    </a>
+                  }
+                  <!-- Instagram -->
+                  @if (row.instagram) {
+                    <a class="btn-icon" [href]="row.instagram" target="_blank">
+                      <div class="flex justify-center">
+                        <img
+                          src="/svgs/instagram.svg"
+                          alt="Instagram de {{ row.firstName }} {{ row.lastName }}"
+                          class="h-5 w-5"
+                        />
+                      </div>
+                    </a>
+                  }
+                  <!-- Twitter -->
+                  @if (row.twitter) {
+                    <a class="btn-icon" [href]="row.twitter" target="_blank">
+                      <div class="flex justify-center">
+                        <img
+                          src="/svgs/twitter.svg"
+                          alt="X de {{ row.firstName }} {{ row.lastName }}"
+                          class="h-5 w-5"
+                        />
+                      </div>
+                    </a>
+                  }
+                </div>
+              </td>
+
+              <td class="px-4 py-3">
+                <div class="flex flex-wrap items-center justify-end gap-2">
+                  <!-- Editar -->
+                  <button class="btn-table-warning" (click)="openEditReverend(row)">
+                    <div class="flex items-center justify-center gap-1">
+                      <lucide-icon [img]="iconsService.edit" size="15" />
+                      <span class="hidden text-xs 2xl:inline"> Editar </span>
+                    </div>
+                  </button>
+                  <!-- Desactivar -->
+                  <button
+                    class="btn-table"
+                    [class]="
+                      !row.isActive
+                        ? 'border-green-200 bg-green-100 text-green-800'
+                        : 'border-red-200 bg-red-100 text-red-800'
+                    "
+                    (click)="confirmToggleReverend(row, row.isActive ? 'deactivate' : 'activate')"
+                    [attr.aria-label]="
+                      (row.isActive ? 'Desactivar' : 'Activar') + ' padre ' + row.email
+                    "
+                  >
+                    <div class="flex items-center justify-center gap-1">
+                      <lucide-icon
+                        [img]="row.isActive ? iconsService.disable : iconsService.active"
+                        size="15"
+                        [color]="row.isActive ? 'red' : 'green'"
+                      ></lucide-icon>
+                      <span class="hidden text-xs 2xl:inline">
+                        {{ row.isActive ? 'Desactivar' : 'Activar' }}
+                      </span>
+                    </div>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <app-pagination
+      [total]="reverendsService.totalReverends()"
+      [pageFrom]="pageFrom()"
+      [pageTo]="pageTo()"
+      [canPrev]="canPrev()"
+      [canNext]="canNext()"
+      [currentLimit]="pagination().limit"
+      (previousPage)="prevPage()"
+      (nextPage)="nextPage()"
+      (limitChange)="changeLimit($event)"
+    />
+  } @else {
+    <app-empty-state />
+  }
+
+  <app-modal
+    [isOpen]="mode() !== null"
+    [title]="modalTitle()"
+    [maxWidth]="'max-w-6xl'"
+    [showActions]="true"
+    [loading]="saving()"
+    [confirmDisabled]="!isCreateFormValid()"
+    [confirmText]="mode() === 'create' ? 'Crear' : 'Guardar'"
+    (close)="closeModal()"
+    (cancel)="closeModal()"
+    (confirm)="save()"
+  >
+    <form class="max-h-[80vh] space-y-4 overflow-y-auto" (submit)="$event.preventDefault()">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <div class="mb-2 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div>
+              <label for="firstName" class="mb-2 block text-sm font-medium">Nombre</label>
+              <input
+                id="firstName"
+                type="text"
+                class="w-full rounded-xl border border-black/10 px-3 py-2"
+                [value]="createForm().firstName"
+                (input)="updateCreateFormField('firstName', $event)"
+                required
+              />
+            </div>
+            <div>
+              <label for="lastName" class="mb-2 block text-sm font-medium">Apellido(s)</label>
+              <input
+                id="lastName"
+                type="text"
+                class="w-full rounded-xl border border-black/10 px-3 py-2"
+                [value]="createForm().lastName"
+                (input)="updateCreateFormField('lastName', $event)"
+                required
+              />
+            </div>
+            <div>
+              <label for="birthDate" class="mb-2 block text-sm font-medium"
+                >Fecha de nacimiento</label
+              >
+              <input
+                id="birthDate"
+                type="date"
+                class="w-full rounded-xl border border-black/10 px-3 py-2"
+                [value]="createForm().birthDate"
+                (input)="updateCreateFormField('birthDate', $event)"
+                required
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="email" class="mb-2 block text-sm font-medium">Email</label>
+            <input
+              id="email"
+              type="email"
+              class="w-full rounded-xl border border-black/10 px-3 py-2"
+              [value]="createForm().email"
+              (input)="updateCreateFormField('email', $event)"
+            />
+          </div>
+
+          <div class="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div>
+              <label for="facebook" class="mb-2 block text-sm font-medium">Facebook</label>
+              <input
+                id="facebook"
+                type="text"
+                class="w-full rounded-xl border border-black/10 px-3 py-2"
+                [value]="createForm().facebook"
+                (input)="updateCreateFormField('facebook', $event)"
+              />
+            </div>
+            <div>
+              <label for="instagram" class="mb-2 block text-sm font-medium">Instagram</label>
+              <input
+                id="instagram"
+                type="text"
+                class="w-full rounded-xl border border-black/10 px-3 py-2"
+                [value]="createForm().instagram"
+                (input)="updateCreateFormField('instagram', $event)"
+              />
+            </div>
+            <div>
+              <label for="twitter" class="mt-2 mb-2 block text-sm font-medium">Twitter</label>
+              <input
+                id="twitter"
+                type="text"
+                class="w-full rounded-xl border border-black/10 px-3 py-2"
+                [value]="createForm().twitter"
+                (input)="updateCreateFormField('twitter', $event)"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label for="photo" class="mb-2 block text-sm font-medium">Foto</label>
+            <input
+              #photoInput
+              id="photo"
+              type="file"
+              class="hidden"
+              (change)="onPhotoUpload($event)"
+            />
+            <button
+              type="button"
+              class="w-full rounded-xl border border-black/10 bg-gray-200 px-3 py-2 hover:bg-gray-300"
+              (click)="photoInput.click()"
+            >
+              Seleccionar fotografía
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-4 flex items-center justify-center">
+          @if (photoPreview() !== null) {
+            <img
+              [src]="photoPreview()"
+              alt="Vista previa de la foto"
+              class="w-64 max-w-xs rounded-full border border-black/10"
+            />
+          } @else {
+            <lucide-icon
+              [img]="iconsService.avatarPlaceholder"
+              size="256"
+              color="gray"
+              aria-hidden="true"
+            />
+          }
+        </div>
+      </div>
+    </form>
+  </app-modal>
+
+  <app-modal
+    [isOpen]="confirmingToggle()"
+    [title]="toggleConfirmTitle()"
+    [maxWidth]="'max-w-md'"
+    [showActions]="true"
+    confirmText="Confirmar"
+    (close)="closeToggleConfirmation()"
+    (cancel)="closeToggleConfirmation()"
+    (confirm)="executeToggle()"
+  >
+    <p class="text-sm text-neutral-600">{{ toggleConfirmMessage() }}</p>
+  </app-modal>
+</div>

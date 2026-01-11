@@ -1,0 +1,83 @@
+@if (items().length > 0) {
+  <!-- Carrusel -->
+  <div class="relative w-full overflow-hidden rounded-lg shadow-2xl">
+    <!-- Contenedor de slides -->
+    <div class="relative aspect-video max-h-150 w-full bg-black">
+      @for (item of items(); track item.id; let i = $index) {
+        <div
+          class="absolute inset-0 transition-opacity duration-500"
+          [class.opacity-100]="i === currentIndex()"
+          [class.opacity-0]="i !== currentIndex()"
+          [class.pointer-events-none]="i !== currentIndex()"
+        >
+          @if (item.isImage) {
+            <!-- Imagen -->
+            <img [src]="item.url" alt="Slide {{ i + 1 }}" class="h-full w-full object-cover" />
+          } @else {
+            <!-- Video -->
+            <video
+              #carouselVideo
+              [src]="item.url"
+              class="h-full w-full object-cover"
+              [muted]="true"
+              playsinline
+              (ended)="onVideoEnded()"
+            ></video>
+          }
+        </div>
+      }
+
+      <!-- Overlay gradient -->
+      <div class="absolute inset-0 bg-linear-to-b from-transparent to-black/30"></div>
+    </div>
+
+    <!-- Controles de navegación -->
+    @if (items().length > 1) {
+      <!-- Botón anterior -->
+      <button
+        type="button"
+        (click)="previous()"
+        class="bg-custom-brown/80 hover:bg-custom-brown absolute top-1/2 left-4 -translate-y-1/2 rounded-full p-3 text-white transition-all hover:scale-110 disabled:opacity-50"
+        [disabled]="isTransitioning()"
+        aria-label="Anterior"
+      >
+        <lucide-angular [img]="iconsService.previous" [size]="24" />
+      </button>
+
+      <!-- Botón siguiente -->
+      <button
+        type="button"
+        (click)="next()"
+        class="bg-custom-brown/80 hover:bg-custom-brown absolute top-1/2 right-4 -translate-y-1/2 rounded-full p-3 text-white transition-all hover:scale-110 disabled:opacity-50"
+        [disabled]="isTransitioning()"
+        aria-label="Siguiente"
+      >
+        <lucide-angular [img]="iconsService.next" [size]="24" />
+      </button>
+
+      <!-- Indicadores -->
+      <div class="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
+        @for (item of items(); track item.id; let i = $index) {
+          <button
+            type="button"
+            (click)="goToSlide(i)"
+            class="h-3 rounded-full transition-all"
+            [class.w-8]="i === currentIndex()"
+            [class.w-3]="i !== currentIndex()"
+            [class.bg-custom-yellow]="i === currentIndex()"
+            [class.bg-white/50]="i !== currentIndex()"
+            [class.hover:bg-white]="i !== currentIndex()"
+            [attr.aria-label]="'Ir a slide ' + (i + 1)"
+          ></button>
+        }
+      </div>
+    }
+  </div>
+} @else {
+  <!-- Estado de carga -->
+  <div
+    class="bg-custom-brown/10 flex aspect-video max-h-150 w-full items-center justify-center rounded-lg"
+  >
+    <p class="text-custom-brown text-lg font-medium">Cargando contenido...</p>
+  </div>
+}

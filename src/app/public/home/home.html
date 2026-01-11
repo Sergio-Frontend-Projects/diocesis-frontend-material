@@ -1,0 +1,20 @@
+<div class="container mx-auto w-full space-y-8 px-4">
+  <app-carousel [items]="carouselContent()" />
+  <app-news-slider [news]="latestPosts()" />
+
+  <!-- Search Cards -->
+  <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
+    <app-search-card
+      title="PRESBÍTEROS"
+      iconPath="/svgs/priest-svgrepo-com.svg"
+      buttonText="IR AL BUSCADOR"
+      routerLink="/padres"
+    />
+    <app-search-card
+      title="PARROQUIAS"
+      iconPath="/svgs/church-svgrepo-com.svg"
+      buttonText="IR AL BUSCADOR"
+      routerLink="/parroquias"
+    />
+  </div>
+</div>

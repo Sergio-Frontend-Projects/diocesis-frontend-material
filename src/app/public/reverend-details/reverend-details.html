@@ -1,0 +1,119 @@
+@if (reverend(); as padre) {
+  <article class="container mx-auto max-w-6xl px-4 py-8">
+    <div class="bg-custom-white overflow-hidden rounded-lg shadow-xl">
+      <div class="grid grid-cols-1 gap-8 p-8 lg:grid-cols-3">
+        <!-- Columna izquierda: Foto y redes sociales -->
+        <div class="flex flex-col items-center">
+          <!-- Foto -->
+          <div class="mb-6 h-64 w-64 overflow-hidden rounded-full">
+            @if (padre.picture) {
+              <img
+                [src]="padre.picture | cleanUrl"
+                [alt]="padre.firstName + ' ' + padre.lastName"
+                class="h-full w-full object-cover"
+              />
+            } @else {
+              <div class="bg-custom-brown/10 flex h-full w-full items-center justify-center">
+                <lucide-angular
+                  [img]="iconsService.avatarPlaceholder"
+                  [size]="128"
+                  class="text-custom-brown/30"
+                />
+              </div>
+            }
+          </div>
+
+          <!-- Redes sociales -->
+          @if (padre.email || padre.facebook || padre.instagram || padre.twitter) {
+            <div class="flex flex-wrap items-center justify-center gap-3">
+              @if (padre.email) {
+                <a
+                  [href]="'mailto:' + padre.email"
+                  class="hover:bg-custom-yellow/20 rounded-lg border border-gray-200 p-3 transition-colors"
+                  [attr.aria-label]="'Email de ' + padre.firstName"
+                >
+                  <img src="/svgs/email.svg" alt="Email" class="h-6 w-6" />
+                </a>
+              }
+              @if (padre.facebook) {
+                <a
+                  [href]="padre.facebook"
+                  target="_blank"
+                  class="hover:bg-custom-yellow/20 rounded-lg border border-gray-200 p-3 transition-colors"
+                  [attr.aria-label]="'Facebook de ' + padre.firstName"
+                >
+                  <img src="/svgs/facebook.svg" alt="Facebook" class="h-6 w-6" />
+                </a>
+              }
+              @if (padre.instagram) {
+                <a
+                  [href]="padre.instagram"
+                  target="_blank"
+                  class="hover:bg-custom-yellow/20 rounded-lg border border-gray-200 p-3 transition-colors"
+                  [attr.aria-label]="'Instagram de ' + padre.firstName"
+                >
+                  <img src="/svgs/instagram.svg" alt="Instagram" class="h-6 w-6" />
+                </a>
+              }
+              @if (padre.twitter) {
+                <a
+                  [href]="padre.twitter"
+                  target="_blank"
+                  class="hover:bg-custom-yellow/20 rounded-lg border border-gray-200 p-3 transition-colors"
+                  [attr.aria-label]="'Twitter de ' + padre.firstName"
+                >
+                  <img src="/svgs/twitter.svg" alt="Twitter" class="h-6 w-6" />
+                </a>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Columna derecha: Información -->
+        <div class="lg:col-span-2">
+          <!-- Información General -->
+          <div class="mb-8">
+            <h2 class="text-custom-brown mb-4 border-b-2 border-gray-200 pb-2 text-xl font-bold">
+              INFORMACIÓN GENERAL
+            </h2>
+            <p class="text-custom-brown text-lg">
+              Pbro. {{ padre.firstName }} {{ padre.lastName }}
+            </p>
+            @if (padre.birthDate) {
+              <div class="text-custom-brown/70 mt-4 flex items-center gap-2">
+                <lucide-angular [img]="iconsService.calendar" [size]="20" />
+                <span>Fecha de nacimiento: {{ padre.birthDate | date: 'dd/MM/yyyy' }}</span>
+              </div>
+            }
+          </div>
+
+          <!-- Cargos -->
+          <div>
+            <h2 class="text-custom-brown mb-4 border-b-2 border-gray-200 pb-2 text-xl font-bold">
+              CARGOS
+            </h2>
+            <ul class="text-custom-brown list-inside list-disc space-y-2">
+              <!-- Aquí se mostrarían los cargos/parroquias si los tuviéramos en el modelo -->
+              <li>Información de cargo próximamente disponible</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón volver -->
+    <div class="mt-8">
+      <a
+        routerLink="/padres"
+        class="bg-custom-brown hover:bg-custom-brown/80 inline-flex items-center gap-2 rounded-lg px-6 py-3 text-white transition-colors"
+      >
+        <lucide-angular [img]="iconsService.previous" [size]="20" />
+        <span>Volver al buscador</span>
+      </a>
+    </div>
+  </article>
+} @else {
+  <div class="container mx-auto flex min-h-96 items-center justify-center px-4">
+    <p class="text-custom-brown text-lg font-medium">Cargando información...</p>
+  </div>
+}

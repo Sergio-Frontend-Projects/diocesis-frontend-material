@@ -1,0 +1,64 @@
+<div class="section-spacing">
+  <div class="page-header">
+    <app-title
+      title="Carrusel"
+      description="Administra el contenido que se desplegara en el carrusel del sitio web."
+    />
+
+    <div class="actions-bar">
+      <input
+        #csvInput
+        type="file"
+        class="hidden"
+        (change)="onFileSelected($event)"
+        aria-label="Seleccionar archivo CSV para carga masiva de usuarios"
+      />
+      <button
+        class="w-full cursor-pointer rounded-xl border border-black px-3 py-2 transition-all hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-50 sm:px-4 md:w-auto"
+        (click)="csvInput.click()"
+        aria-label="Carga masiva por CSV"
+      >
+        <div class="flex items-center justify-center gap-2">
+          <lucide-icon [img]="iconsService.upload" size="15" color="black" aria-hidden="true" />
+          <span class="text-sm sm:text-base">Cargar foto/video</span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  @if (media().length > 0) {
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      @for (file of media(); track file.id) {
+        <div class="group animate-fade-in-up animate-duration-500 relative break-inside-avoid">
+          @if (file.isImage) {
+            <img [src]="file.url" alt="Banner" class="w-full rounded-lg shadow-md" />
+          } @else {
+            <video [src]="file.url" controls class="w-full rounded-lg shadow-md"></video>
+          }
+          <button
+            class="absolute top-2 right-2 rounded bg-red-500 px-2 py-1 text-sm text-white opacity-0 transition-opacity group-hover:opacity-100"
+            (click)="openDeleteModal(file.id)"
+            aria-label="Eliminar archivo"
+          >
+            <lucide-icon [img]="iconsService.delete" size="15" color="white" aria-hidden="true" />
+          </button>
+        </div>
+      }
+    </div>
+  } @else {
+    <app-empty-state />
+  }
+
+  <app-modal
+    [isOpen]="confirmingDelete()"
+    [title]="'Confirmar eliminación'"
+    [maxWidth]="'max-w-md'"
+    [showActions]="true"
+    confirmText="Eliminar"
+    (close)="closeDeleteModal()"
+    (cancel)="closeDeleteModal()"
+    (confirm)="confirmDelete()"
+  >
+    <p class="text-sm text-neutral-600">¿Estás seguro de que deseas eliminar este archivo?</p>
+  </app-modal>
+</div>

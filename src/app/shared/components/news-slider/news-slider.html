@@ -1,0 +1,99 @@
+@if (news().length > 0) {
+  <div class="relative mt-12">
+    <!-- Título de la sección -->
+    <div class="mb-6 flex items-center justify-between">
+      <h2 class="text-custom-brown text-3xl font-bold">Últimas Noticias</h2>
+      <div class="flex gap-2">
+        <button
+          type="button"
+          (click)="scrollLeft()"
+          class="bg-custom-brown hover:bg-custom-brown/80 rounded-full p-2 text-white transition-all"
+          aria-label="Anterior"
+        >
+          <lucide-angular [img]="iconsService.previous" [size]="20" />
+        </button>
+        <button
+          type="button"
+          (click)="scrollRight()"
+          class="bg-custom-brown hover:bg-custom-brown/80 rounded-full p-2 text-white transition-all"
+          aria-label="Siguiente"
+        >
+          <lucide-angular [img]="iconsService.next" [size]="20" />
+        </button>
+      </div>
+    </div>
+
+    <!-- Contenedor de cards con scroll horizontal -->
+    <div
+      id="news-slider-container"
+      class="scrollbar-hide flex gap-6 overflow-x-auto pb-4"
+      style="scroll-snap-type: x mandatory"
+    >
+      @for (item of news(); track item.id) {
+        <article
+          class="bg-custom-white flex min-w-87.5 flex-col overflow-hidden rounded-lg shadow-lg transition-transform hover:scale-105"
+          style="scroll-snap-align: start"
+        >
+          <!-- Imagen -->
+          <div class="relative h-48 w-full overflow-hidden bg-gray-200">
+            @if (item.picture) {
+              <img
+                [src]="item.picture | cleanUrl"
+                [alt]="item.title"
+                class="h-full w-full object-cover"
+              />
+            } @else {
+              <div class="bg-custom-brown/10 flex h-full w-full items-center justify-center">
+                <lucide-angular
+                  [img]="iconsService.documentPlaceholder"
+                  [size]="48"
+                  class="text-custom-brown/30"
+                />
+              </div>
+            }
+          </div>
+
+          <!-- Contenido -->
+          <div class="flex flex-1 flex-col p-4">
+            <!-- Título -->
+            <h3 class="text-custom-brown mb-2 line-clamp-2 text-xl font-bold">
+              {{ item.title }}
+            </h3>
+
+            <!-- Contenido truncado -->
+            <p class="text-custom-brown/70 mb-4 flex-1 text-sm">
+              {{ truncateContent(item.content) }}
+            </p>
+
+            <!-- Tags -->
+            @if (item.tags.length > 0) {
+              <div class="mb-4 flex flex-wrap gap-2">
+                @for (tag of item.tags; track tag) {
+                  <span
+                    class="bg-custom-yellow/20 text-custom-brown rounded-full px-3 py-1 text-xs font-bold"
+                  >
+                    {{ tag }}
+                  </span>
+                }
+              </div>
+            }
+
+            <!-- Botón Ver más -->
+            <a
+              [routerLink]="['/noticia', item.id]"
+              [state]="{ title: item.title }"
+              class="bg-custom-brown hover:bg-custom-brown/80 flex items-center justify-center gap-2 rounded-md px-4 py-2 text-white no-underline transition-colors"
+            >
+              <span>Ver más</span>
+              <lucide-angular [img]="iconsService.next" [size]="16" />
+            </a>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+} @else {
+  <div class="bg-custom-brown/10 mt-12 flex h-64 w-full items-center justify-center rounded-lg">
+    <p class="text-custom-brown text-lg font-medium">Cargando noticias...</p>
+  </div>
+}
