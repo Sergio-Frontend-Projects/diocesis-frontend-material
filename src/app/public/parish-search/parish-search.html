@@ -28,7 +28,7 @@
     <div class="mb-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       @for (parroquia of parishesService.parishes(); track parroquia.id) {
         <a
-          [routerLink]="['/parroquias', parroquia.id]"
+          [routerLink]="['/directorio/parroquias', parroquia.id]"
           class="bg-custom-white group flex flex-col items-center rounded-lg p-6 no-underline shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
         >
           <!-- Foto -->

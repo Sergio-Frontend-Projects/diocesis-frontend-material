@@ -81,12 +81,12 @@ export const routes: Routes = [
           import('./public/reverend-details/reverend-details').then((m) => m.ReverendDetails),
       },
       {
-        path: 'parroquias',
+        path: 'directorio/parroquias',
         loadComponent: () =>
           import('./public/parish-search/parish-search').then((m) => m.ParishSearch),
       },
       {
-        path: 'parroquias/:id',
+        path: 'directorio/parroquias/:id',
         loadComponent: () =>
           import('./public/parish-details/parish-details').then((m) => m.ParishDetails),
       },

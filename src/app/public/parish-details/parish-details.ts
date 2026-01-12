@@ -45,7 +45,7 @@ export class ParishDetails implements OnInit {
 
     const param = this.route.snapshot.paramMap.get('id');
     if (!param) {
-      this.router.navigate(['/parroquias']);
+      this.router.navigate(['/directorio/parroquias']);
       return;
     }
 
@@ -82,7 +82,7 @@ export class ParishDetails implements OnInit {
 
   private updateUrlWithSlug(name: string, id: string): void {
     const slug = ParishDetails.generateSlug(name, id);
-    const url = `/parroquias/${slug}`;
+    const url = `/directorio/parroquias/${slug}`;
     window.history.replaceState({}, '', url);
     this.currentUrl.set(window.location.href);
   }
