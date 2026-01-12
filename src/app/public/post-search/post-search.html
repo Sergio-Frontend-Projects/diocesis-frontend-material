@@ -1,0 +1,106 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="mb-8">
+    <h1 class="text-custom-brown mb-2 text-4xl font-bold">Noticias</h1>
+    <p class="text-custom-brown/70 text-lg">
+      Mantente informado con las últimas noticias de nuestra diócesis
+    </p>
+  </div>
+
+  <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div class="relative">
+      <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+        <lucide-angular [img]="iconsService.search" [size]="20" class="text-custom-brown/50" />
+      </div>
+      <input
+        id="search-title"
+        type="search"
+        placeholder="Buscar por título..."
+        [value]="searchTitle()"
+        (input)="updateTitleSearch($event)"
+        class="text-custom-brown placeholder:text-custom-brown/50 focus:border-custom-yellow focus:ring-custom-yellow/20 w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:ring-2 focus:outline-none"
+      />
+    </div>
+    <div class="relative">
+      <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+        <lucide-angular [img]="iconsService.search" [size]="20" class="text-custom-brown/50" />
+      </div>
+      <input
+        id="search-tags"
+        type="search"
+        placeholder="Buscar por etiquetas..."
+        [value]="searchTags()"
+        (input)="updateTagsSearch($event)"
+        class="text-custom-brown placeholder:text-custom-brown/50 focus:border-custom-yellow focus:ring-custom-yellow/20 w-full rounded-lg border border-gray-300 py-3 pr-4 pl-10 focus:ring-2 focus:outline-none"
+      />
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="flex h-64 items-center justify-center">
+      <p class="text-custom-brown text-lg font-medium">Cargando noticias...</p>
+    </div>
+  } @else if (newspaperService.news().length > 0) {
+    <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      @for (noticia of newspaperService.news(); track noticia.id) {
+        <a
+          [routerLink]="['/noticia', noticia.id]"
+          class="bg-custom-white group flex flex-col overflow-hidden rounded-lg no-underline shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+        >
+          <div class="h-48 w-full overflow-hidden">
+            @if (noticia.picture) {
+              <img
+                [src]="noticia.picture | cleanUrl"
+                [alt]="noticia.title"
+                class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+            } @else {
+              <div class="bg-custom-brown/10 flex h-full w-full items-center justify-center">
+                <lucide-angular
+                  [img]="iconsService.picture"
+                  [size]="64"
+                  class="text-custom-brown/30"
+                />
+              </div>
+            }
+          </div>
+
+          <div class="flex flex-1 flex-col p-6">
+            <h3 class="text-custom-brown mb-3 line-clamp-2 text-xl font-bold">
+              {{ noticia.title }}
+            </h3>
+
+            <p class="text-custom-brown/70 mb-4 line-clamp-3 flex-1 text-sm">
+              {{ noticia.content }}
+            </p>
+
+            @if (noticia.tags && noticia.tags.length > 0) {
+              <div class="flex flex-wrap gap-2">
+                @for (tag of noticia.tags; track $index) {
+                  <span
+                    class="inline-block rounded-full bg-blue-100 px-2 py-1 text-xs font-bold text-blue-800"
+                  >
+                    {{ tag }}
+                  </span>
+                }
+              </div>
+            }
+          </div>
+        </a>
+      }
+    </div>
+
+    <app-pagination
+      [total]="newspaperService.totalNews()"
+      [pageFrom]="pageFrom()"
+      [pageTo]="pageTo()"
+      [canPrev]="canPrev()"
+      [canNext]="canNext()"
+      [currentLimit]="pagination().limit"
+      (previousPage)="prevPage()"
+      (nextPage)="nextPage()"
+      (limitChange)="changeLimit($event)"
+    />
+  } @else {
+    <app-empty-state />
+  }
+</div>

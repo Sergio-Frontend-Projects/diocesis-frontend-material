@@ -45,7 +45,7 @@
     <div class="mb-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       @for (padre of reverendsService.reverends(); track padre.id) {
         <a
-          [routerLink]="['/padres', padre.id]"
+          [routerLink]="['/directorio/padres', padre.id]"
           class="bg-custom-white group flex flex-col items-center rounded-lg p-6 no-underline shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
         >
           <!-- Foto -->

@@ -53,7 +53,7 @@ export class Layout {
       label: 'Directorio',
       icon: this.iconsService.phoneAgenda,
       children: [
-        { label: 'Presbítero', to: '/directorio/presbiteros', icon: this.iconsService.user },
+        { label: 'Presbítero', to: '/directorio/padres', icon: this.iconsService.user },
         { label: 'Parroquias', to: '/directorio/parroquias', icon: this.iconsService.reverends },
         {
           label: 'Diáconos Permanentes',
@@ -71,6 +71,7 @@ export class Layout {
       label: 'Noticias',
       icon: this.iconsService.megaphone,
       children: [
+        { label: 'Todas', to: '/noticias', icon: this.iconsService.newspaper },
         { label: 'Diócesis', to: '/noticias/diocesis', icon: this.iconsService.reverends },
         { label: 'Seminario', to: '/noticias/seminario', icon: this.iconsService.graduationCap },
         { label: 'Nacional', to: '/noticias/nacional', icon: this.iconsService.national },

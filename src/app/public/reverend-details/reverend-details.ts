@@ -27,7 +27,7 @@ export class ReverendDetails implements OnInit {
   ngOnInit(): void {
     const param = this.route.snapshot.paramMap.get('id');
     if (!param) {
-      this.router.navigate(['/padres']);
+      this.router.navigate(['/directorio/padres']);
       return;
     }
 
@@ -43,14 +43,14 @@ export class ReverendDetails implements OnInit {
         this.updateUrlWithSlug(data.firstName, data.lastName, id);
       },
       error: () => {
-        this.router.navigate(['/padres']);
+        this.router.navigate(['/directorio/padres']);
       },
     });
   }
 
   private updateUrlWithSlug(firstName: string, lastName: string, id: string): void {
     const slug = ReverendDetails.generateSlug(firstName, lastName, id);
-    const url = `/padres/${slug}`;
+    const url = `/directorio/padres/${slug}`;
     window.history.replaceState({}, '', url);
     this.currentUrl.set(window.location.href);
   }

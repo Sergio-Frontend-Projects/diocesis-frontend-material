@@ -71,12 +71,12 @@ export const routes: Routes = [
           import('./public/post-details/post-details').then((m) => m.PostDetails),
       },
       {
-        path: 'padres',
+        path: 'directorio/padres',
         loadComponent: () =>
           import('./public/reverend-search/reverend-search').then((m) => m.ReverendSearch),
       },
       {
-        path: 'padres/:id',
+        path: 'directorio/padres/:id',
         loadComponent: () =>
           import('./public/reverend-details/reverend-details').then((m) => m.ReverendDetails),
       },
@@ -89,6 +89,14 @@ export const routes: Routes = [
         path: 'parroquias/:id',
         loadComponent: () =>
           import('./public/parish-details/parish-details').then((m) => m.ParishDetails),
+      },
+      {
+        path: 'noticias',
+        loadComponent: () => import('./public/post-search/post-search').then((m) => m.PostSearch),
+      },
+      {
+        path: 'noticias/:tag',
+        loadComponent: () => import('./public/post-search/post-search').then((m) => m.PostSearch),
       },
       {
         path: '**',
