@@ -12,11 +12,7 @@ export class Carousel {
   private apiUrl = `${environment.apiUrl}/carrusel`;
 
   getAll(): Observable<Carrusel[]> {
-    const url = `${this.apiUrl}/`;
-
-    console.log(url);
-
-    return this.http.get<Carrusel[]>(url);
+    return this.http.get<Carrusel[]>(`${this.apiUrl}/`);
   }
 
   create(formData: FormData): Observable<Carrusel> {
