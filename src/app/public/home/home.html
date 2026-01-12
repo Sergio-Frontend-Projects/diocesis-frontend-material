@@ -1,5 +1,7 @@
 <div class="container mx-auto w-full space-y-8 px-4">
-  <app-carousel [items]="carouselContent()" />
+  @if (carouselContent().length > 0) {
+    <app-carousel [items]="carouselContent()" />
+  }
   <app-news-slider [news]="latestPosts()" />
 
   <!-- Search Cards -->
