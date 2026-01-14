@@ -50,7 +50,7 @@ export class Layout implements OnInit {
     { label: 'Decanatos', to: '/dashboard/decants', icon: this.iconsService.network },
     { label: 'Parroquias', to: '/dashboard/parishes', icon: this.iconsService.parish },
     { label: 'Artículos', to: '/dashboard/articles', icon: this.iconsService.articles },
-    // { label: 'Documentos', to: '/dashboard/documents', icon: this.iconsService.documents },
+    { label: 'Documentos', to: '/dashboard/documents', icon: this.iconsService.documents },
   ];
 
   open = signal(false);
