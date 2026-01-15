@@ -41,6 +41,30 @@ export class Decant {
       );
   }
 
+  getAllDecanatos(filters: Record<string, any> = {}) {
+    const params = new URLSearchParams();
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== null && value !== undefined && value !== '') {
+        params.append(key, value);
+      }
+    });
+
+    return this.http
+      .get<{
+        count: number;
+        next: string | null;
+        previous: string | null;
+        results: Decanato[];
+      }>(`${this.apiUrl}/?${params.toString()}`)
+      .pipe(
+        tap((res) => {
+          this.decants.set(Array.isArray(res.results) ? res.results : []);
+          this.totalDecants.set(res.count);
+        }),
+      );
+  }
+
   getDecanatoById(id: string) {
     return this.http.get<Decanato>(`${this.apiUrl}/${id}/`);
   }

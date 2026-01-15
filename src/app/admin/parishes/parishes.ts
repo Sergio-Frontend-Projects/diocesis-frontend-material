@@ -151,9 +151,9 @@ export class ParishesComponent implements OnInit {
     const { limit, offset } = this.pagination();
 
     combineLatest([
-      this.reverendsService.getPadresPaginated(0, 1000, { isActive: true }),
-      this.coloniesService.getColoniasPaginated(0, 1000, { isActive: true }),
-      this.decantsService.getDecanatosPaginated(0, 1000, { isActive: true }),
+      this.reverendsService.getAllPadres({ isActive: true }),
+      this.coloniesService.getAllColonias({ isActive: true }),
+      this.decantsService.getAllDecanatos({ isActive: true }),
       this.parishesService.getParroquiasPaginated(offset, limit, {
         isActive: this.filters().isActive,
       }),

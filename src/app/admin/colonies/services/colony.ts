@@ -41,6 +41,30 @@ export class Colony {
       );
   }
 
+  getAllColonias(filters: Record<string, any> = {}) {
+    const params = new URLSearchParams();
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== null && value !== undefined && value !== '') {
+        params.append(key, value);
+      }
+    });
+
+    return this.http
+      .get<{
+        count: number;
+        next: string | null;
+        previous: string | null;
+        results: Colonia[];
+      }>(`${this.apiUrl}/?${params.toString()}`)
+      .pipe(
+        tap((res) => {
+          this.colonies.set(Array.isArray(res.results) ? res.results : []);
+          this.totalColonies.set(res.count);
+        }),
+      );
+  }
+
   getColoniaById(id: string) {
     return this.http.get<Colonia>(`${this.apiUrl}/${id}/`);
   }
