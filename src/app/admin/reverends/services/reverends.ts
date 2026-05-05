@@ -50,16 +50,18 @@ export class Reverends {
       }
     });
 
+    const url = `${this.apiUrl}/?${params.toString()}`;
+
     return this.http
       .get<{
         count: number;
         next: string | null;
         previous: string | null;
         results: Padre[];
-      }>(`${this.apiUrl}/?${params.toString()}`)
+      }>(url)
       .pipe(
         tap((res) => {
-          this.reverends.set(Array.isArray(res.results) ? res.results : []);
+          this.reverends.set(Array.isArray(res) ? res : []);
           this.totalReverends.set(res.count);
         }),
       );
