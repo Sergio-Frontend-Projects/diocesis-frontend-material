@@ -1,4 +1,5 @@
 import { DocumentType } from '../../core/models/document.model';
+import { InstituteModality } from '../../core/models/institute-training.model';
 import { AppModuleName, UserRole } from '../../core/models/user.model';
 
 export type Mode = 'create' | 'edit' | null;
@@ -63,4 +64,20 @@ export interface DocumentForm {
   title: string;
   tags: string;
   type: DocumentType;
+}
+
+export interface TrainingForm {
+  name: string;
+  description: string;
+  modality: InstituteModality;
+}
+
+export interface CourseForm {
+  title: string;
+  description: string;
+  modality: InstituteModality;
+  capacitacionId: string;
+  startDate: string;
+  endDate: string;
+  meetingLink: string;
 }
