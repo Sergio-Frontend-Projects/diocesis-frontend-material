@@ -39,6 +39,7 @@ export class Layout {
           to: '/diocesis/instituto-biblico',
           icon: this.iconsService.institute,
         },
+        { label: 'ISMA', to: '/diocesis/isma', icon: this.iconsService.isma },
       ],
     },
     {

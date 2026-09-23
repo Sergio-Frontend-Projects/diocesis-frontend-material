@@ -20,6 +20,7 @@ import {
   GraduationCap,
   HandCoins,
   Heart,
+  HeartHandshake,
   History,
   House,
   IdCard,
@@ -106,4 +107,5 @@ export class IconsService {
   readonly building = Building;
   readonly church = Church;
   readonly institute = Library;
+  readonly isma = HeartHandshake;
 }

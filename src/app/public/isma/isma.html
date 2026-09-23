@@ -1,0 +1,67 @@
+<article class="container mx-auto max-w-4xl px-4 py-8">
+  @if (loading()) {
+    <p class="text-center">Cargando…</p>
+  } @else if (information(); as info) {
+    <div class="bg-custom-white overflow-hidden rounded-lg p-8 shadow-xl">
+      <h1 class="text-custom-brown text-3xl font-bold">ISMA</h1>
+
+      <section class="mt-6">
+        <h2 class="text-lg font-semibold">Introducción</h2>
+        <p class="mt-2 leading-relaxed whitespace-pre-line">{{ info.introduccion }}</p>
+      </section>
+
+      <section class="mt-6 border-t border-black/10 pt-6">
+        <h2 class="text-lg font-semibold">Documentación necesaria</h2>
+        <p class="mt-2 leading-relaxed whitespace-pre-line">
+          {{ info.documentacionNecesaria }}
+        </p>
+      </section>
+
+      <section class="mt-6 border-t border-black/10 pt-6">
+        <h2 class="text-lg font-semibold">Parroquia correspondiente</h2>
+        <p class="mt-2 leading-relaxed whitespace-pre-line">
+          {{ info.parroquiaCorrespondiente }}
+        </p>
+      </section>
+
+      <section class="mt-6 border-t border-black/10 pt-6">
+        <h2 class="text-lg font-semibold">Entrevista con el párroco</h2>
+        <p class="mt-2 leading-relaxed whitespace-pre-line">{{ info.entrevistaParroco }}</p>
+      </section>
+
+      <section class="mt-6 border-t border-black/10 pt-6">
+        <h2 class="text-lg font-semibold">Programa ISMA</h2>
+        <p class="mt-2 leading-relaxed whitespace-pre-line">{{ info.programaIsma }}</p>
+      </section>
+
+      <section class="mt-6 border-t border-black/10 pt-6">
+        <h2 class="text-lg font-semibold">Tiempos de anticipación</h2>
+        <p class="mt-2 leading-relaxed whitespace-pre-line">{{ info.tiemposAnticipacion }}</p>
+      </section>
+
+      @if (info.contactoTelefono1 || info.contactoTelefono2) {
+        <section class="mt-8 border-t border-black/10 pt-6">
+          <h2 class="text-lg font-semibold">Contacto</h2>
+          <ul class="mt-2 space-y-1 text-sm">
+            @if (info.contactoTelefono1) {
+              <li>
+                <a [href]="'tel:' + info.contactoTelefono1" class="underline">
+                  {{ info.contactoTelefono1 }}
+                </a>
+              </li>
+            }
+            @if (info.contactoTelefono2) {
+              <li>
+                <a [href]="'tel:' + info.contactoTelefono2" class="underline">
+                  {{ info.contactoTelefono2 }}
+                </a>
+              </li>
+            }
+          </ul>
+        </section>
+      }
+    </div>
+  } @else {
+    <p class="text-center">No se pudo cargar la información de ISMA.</p>
+  }
+</article>
