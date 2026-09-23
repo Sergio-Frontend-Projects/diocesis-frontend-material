@@ -94,6 +94,16 @@ export class Layout implements OnInit {
           to: '/dashboard/isma/information',
           requiredModuleAccess: 'isma',
         },
+        {
+          label: 'Casos especiales',
+          to: '/dashboard/isma/special-cases',
+          requiredModuleAccess: 'isma',
+        },
+        {
+          label: 'Preguntas frecuentes',
+          to: '/dashboard/isma/faq',
+          requiredModuleAccess: 'isma',
+        },
       ],
     },
   ];

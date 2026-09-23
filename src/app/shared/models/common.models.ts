@@ -98,3 +98,18 @@ export interface EventForm {
   cursoId: string;
   sedeId: string;
 }
+
+export interface SpecialCaseForm {
+  title: string;
+  order: number;
+  requisitosAdicionales: string;
+  documentosAdicionales: string;
+  excepciones: string;
+  contacto: string;
+}
+
+export interface FaqForm {
+  question: string;
+  answer: string;
+  order: number;
+}
