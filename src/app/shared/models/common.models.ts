@@ -1,4 +1,5 @@
 import { DocumentType } from '../../core/models/document.model';
+import { EventoType } from '../../core/models/institute-event.model';
 import { InstituteModality } from '../../core/models/institute-training.model';
 import { AppModuleName, UserRole } from '../../core/models/user.model';
 
@@ -80,4 +81,20 @@ export interface CourseForm {
   startDate: string;
   endDate: string;
   meetingLink: string;
+}
+
+export interface VenueForm {
+  name: string;
+  address: string;
+  mapsUrl: string;
+}
+
+export interface EventForm {
+  title: string;
+  description: string;
+  type: EventoType;
+  startDate: string;
+  endDate: string;
+  cursoId: string;
+  sedeId: string;
 }

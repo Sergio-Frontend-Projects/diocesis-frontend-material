@@ -77,6 +77,22 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'institute/venues',
+        canActivate: [moduleAccessGuard('instituto-biblico')],
+        loadComponent: () =>
+          import('./admin/institute-venues/institute-venues').then(
+            (m) => m.InstituteVenuesComponent,
+          ),
+      },
+      {
+        path: 'institute/events',
+        canActivate: [moduleAccessGuard('instituto-biblico')],
+        loadComponent: () =>
+          import('./admin/institute-events/institute-events').then(
+            (m) => m.InstituteEventsComponent,
+          ),
+      },
+      {
         path: '**',
         redirectTo: 'users',
       },

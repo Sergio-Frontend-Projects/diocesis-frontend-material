@@ -81,6 +81,11 @@ export class Layout {
         { label: 'Seminario', to: '/noticias/seminario', icon: this.iconsService.graduationCap },
         { label: 'Nacional', to: '/noticias/nacional', icon: this.iconsService.national },
         { label: 'Vaticano', to: '/noticias/vaticano', icon: this.iconsService.international },
+        {
+          label: 'Instituto Bíblico',
+          to: '/noticias/instituto-biblico',
+          icon: this.iconsService.institute,
+        },
       ],
     },
     { label: 'Seminario', to: '/seminario', icon: this.iconsService.graduationCap },
