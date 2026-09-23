@@ -1,5 +1,5 @@
 import { DocumentType } from '../../core/models/document.model';
-import { UserRole } from '../../core/models/user.model';
+import { AppModuleName, UserRole } from '../../core/models/user.model';
 
 export type Mode = 'create' | 'edit' | null;
 
@@ -8,6 +8,7 @@ export interface UserCreateForm {
   email: string;
   password: string;
   role: UserRole;
+  moduleAccess: AppModuleName[];
 }
 
 export interface UserEditForm {
@@ -15,6 +16,7 @@ export interface UserEditForm {
   email: string;
   password?: string;
   role: UserRole;
+  moduleAccess: AppModuleName[];
 }
 
 export interface ReverendForm {

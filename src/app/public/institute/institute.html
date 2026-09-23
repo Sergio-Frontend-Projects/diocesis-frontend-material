@@ -1,0 +1,35 @@
+<article class="container mx-auto max-w-4xl px-4 py-8">
+  @if (loading()) {
+    <p class="text-center">Cargando…</p>
+  } @else if (information(); as info) {
+    <div class="bg-custom-white overflow-hidden rounded-lg p-8 shadow-xl">
+      <h1 class="text-custom-brown text-3xl font-bold">{{ info.name }}</h1>
+
+      <p class="mt-6 leading-relaxed whitespace-pre-line">{{ info.description }}</p>
+
+      @if (info.contactEmail || info.contactPhone) {
+        <div class="mt-8 border-t border-black/10 pt-6">
+          <h2 class="text-lg font-semibold">Contacto</h2>
+          <ul class="mt-2 space-y-1 text-sm">
+            @if (info.contactEmail) {
+              <li>
+                <a [href]="'mailto:' + info.contactEmail" class="underline">
+                  {{ info.contactEmail }}
+                </a>
+              </li>
+            }
+            @if (info.contactPhone) {
+              <li>
+                <a [href]="'tel:' + info.contactPhone" class="underline">
+                  {{ info.contactPhone }}
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+  } @else {
+    <p class="text-center">No se pudo cargar la información del Instituto Bíblico.</p>
+  }
+</article>
