@@ -1,9 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideZonelessChangeDetection } from '@angular/core';
+import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { of } from 'rxjs';
 import { Institute } from './institute';
 import { InstituteInformationService } from '../../admin/institute-information/services/institute-information';
+import { InstituteCoursesService } from '../../admin/institute-courses/services/institute-courses';
+import { InstituteTrainingsService } from '../../admin/institute-trainings/services/institute-trainings';
+import { Curso } from '../../core/models/institute-course.model';
 import { InstitutoInformacion } from '../../core/models/institute-information.model';
+import { Capacitacion } from '../../core/models/institute-training.model';
 
 const row: InstitutoInformacion = {
   id: '00000000-0000-0000-0000-000000000001',
@@ -16,22 +20,74 @@ const row: InstitutoInformacion = {
   updatedBy: null,
 };
 
+const training: Capacitacion = {
+  id: 't1',
+  name: 'Biblia I',
+  description: 'Introduccion al Antiguo Testamento.',
+  modality: 'presencial',
+  isActive: true,
+  createdAt: '2026-01-01T00:00:00.000Z',
+  updatedAt: null,
+  deletedAt: null,
+  createdBy: null,
+  updatedBy: null,
+  deletedBy: null,
+};
+
+const course: Curso = {
+  id: 'c1',
+  title: 'Curso de Biblia',
+  description: 'Curso activo de introduccion.',
+  modality: 'en_linea',
+  capacitacionId: 't1',
+  startDate: '2026-02-01',
+  endDate: '2026-06-01',
+  meetingLink: 'https://meet.example.test/curso',
+  picture: null,
+  isActive: true,
+  createdAt: '2026-01-01T00:00:00.000Z',
+  updatedAt: null,
+  deletedAt: null,
+  createdBy: null,
+  updatedBy: null,
+  deletedBy: null,
+};
+
 describe('Institute (pagina publica)', () => {
   let fixture: ComponentFixture<Institute>;
   let serviceStub: jasmine.SpyObj<InstituteInformationService>;
+  let trainingsStub: jasmine.SpyObj<InstituteTrainingsService>;
+  let coursesStub: jasmine.SpyObj<InstituteCoursesService>;
 
   beforeEach(async () => {
-    serviceStub = jasmine.createSpyObj<InstituteInformationService>(
-      'InstituteInformationService',
-      ['getInformation'],
-    );
+    serviceStub = jasmine.createSpyObj<InstituteInformationService>('InstituteInformationService', [
+      'getInformation',
+    ]);
     serviceStub.getInformation.and.returnValue(of(row));
+
+    trainingsStub = jasmine.createSpyObj<InstituteTrainingsService>('InstituteTrainingsService', [
+      'getCapacitacionesPaginated',
+    ]);
+    (trainingsStub as { trainings: unknown }).trainings = signal([training]);
+    trainingsStub.getCapacitacionesPaginated.and.returnValue(
+      of({ count: 1, next: null, previous: null, results: [training] }),
+    );
+
+    coursesStub = jasmine.createSpyObj<InstituteCoursesService>('InstituteCoursesService', [
+      'getCursosPaginated',
+    ]);
+    (coursesStub as { courses: unknown }).courses = signal([course]);
+    coursesStub.getCursosPaginated.and.returnValue(
+      of({ count: 1, next: null, previous: null, results: [course] }),
+    );
 
     await TestBed.configureTestingModule({
       imports: [Institute],
       providers: [
         provideZonelessChangeDetection(),
         { provide: InstituteInformationService, useValue: serviceStub },
+        { provide: InstituteTrainingsService, useValue: trainingsStub },
+        { provide: InstituteCoursesService, useValue: coursesStub },
       ],
     }).compileComponents();
 
@@ -53,5 +109,11 @@ describe('Institute (pagina publica)', () => {
     const telLink = el.querySelector('a[href^="tel:"]');
     expect(mailLink?.textContent?.trim()).toBe('instituto@example.test');
     expect(telLink?.textContent?.trim()).toBe('6444151646');
+  });
+
+  it('muestra la oferta de capacitacion y los cursos activos', () => {
+    const text = (fixture.nativeElement as HTMLElement).textContent ?? '';
+    expect(text).toContain('Biblia I');
+    expect(text).toContain('Curso de Biblia');
   });
 });

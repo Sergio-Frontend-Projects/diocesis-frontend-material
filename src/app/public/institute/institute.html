@@ -29,6 +29,60 @@
         </div>
       }
     </div>
+
+    @if (trainingsService.trainings().length > 0) {
+      <div class="bg-custom-white mt-6 overflow-hidden rounded-lg p-8 shadow-xl">
+        <h2 class="text-custom-brown text-2xl font-bold">Oferta de capacitación</h2>
+        <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          @for (training of trainingsService.trainings(); track training.id) {
+            <div class="rounded-lg border border-black/10 p-4">
+              <h3 class="font-semibold">{{ training.name }}</h3>
+              <p class="mt-1 text-sm text-neutral-600">{{ modalityLabels[training.modality] }}</p>
+              <p class="mt-2 text-sm whitespace-pre-line">{{ training.description }}</p>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (coursesService.courses().length > 0) {
+      <div class="bg-custom-white mt-6 overflow-hidden rounded-lg p-8 shadow-xl">
+        <h2 class="text-custom-brown text-2xl font-bold">Cursos activos</h2>
+        <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          @for (course of coursesService.courses(); track course.id) {
+            <div class="flex gap-4 rounded-lg border border-black/10 p-4">
+              @if (course.picture) {
+                <img
+                  [src]="course.picture | cleanUrl"
+                  alt="Foto de {{ course.title }}"
+                  class="h-16 w-16 shrink-0 rounded-lg object-cover"
+                />
+              }
+              <div>
+                <h3 class="font-semibold">{{ course.title }}</h3>
+                <p class="mt-1 text-sm text-neutral-600">{{ modalityLabels[course.modality] }}</p>
+                @if (course.startDate || course.endDate) {
+                  <p class="mt-1 text-xs text-neutral-500">
+                    {{ course.startDate || '—' }} – {{ course.endDate || '—' }}
+                  </p>
+                }
+                <p class="mt-2 text-sm whitespace-pre-line">{{ course.description }}</p>
+                @if (course.meetingLink) {
+                  <a
+                    [href]="course.meetingLink"
+                    target="_blank"
+                    rel="noopener"
+                    class="mt-2 inline-block text-sm underline"
+                  >
+                    Enlace de videoconferencia
+                  </a>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    }
   } @else {
     <p class="text-center">No se pudo cargar la información del Instituto Bíblico.</p>
   }

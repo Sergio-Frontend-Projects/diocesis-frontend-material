@@ -61,6 +61,22 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'institute/trainings',
+        canActivate: [moduleAccessGuard('instituto-biblico')],
+        loadComponent: () =>
+          import('./admin/institute-trainings/institute-trainings').then(
+            (m) => m.InstituteTrainingsComponent,
+          ),
+      },
+      {
+        path: 'institute/courses',
+        canActivate: [moduleAccessGuard('instituto-biblico')],
+        loadComponent: () =>
+          import('./admin/institute-courses/institute-courses').then(
+            (m) => m.InstituteCoursesComponent,
+          ),
+      },
+      {
         path: '**',
         redirectTo: 'users',
       },

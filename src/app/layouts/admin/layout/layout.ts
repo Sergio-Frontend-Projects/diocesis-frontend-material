@@ -63,6 +63,16 @@ export class Layout implements OnInit {
           to: '/dashboard/institute/information',
           requiredModuleAccess: 'instituto-biblico',
         },
+        {
+          label: 'Capacitaciones',
+          to: '/dashboard/institute/trainings',
+          requiredModuleAccess: 'instituto-biblico',
+        },
+        {
+          label: 'Cursos',
+          to: '/dashboard/institute/courses',
+          requiredModuleAccess: 'instituto-biblico',
+        },
       ],
     },
   ];
