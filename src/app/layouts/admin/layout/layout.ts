@@ -85,6 +85,17 @@ export class Layout implements OnInit {
         },
       ],
     },
+    {
+      label: 'ISMA',
+      icon: this.iconsService.isma,
+      children: [
+        {
+          label: 'Información general',
+          to: '/dashboard/isma/information',
+          requiredModuleAccess: 'isma',
+        },
+      ],
+    },
   ];
 
   open = signal(false);

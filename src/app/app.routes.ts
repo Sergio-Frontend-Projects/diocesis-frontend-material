@@ -93,6 +93,14 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'isma/information',
+        canActivate: [moduleAccessGuard('isma')],
+        loadComponent: () =>
+          import('./admin/isma-information/isma-information').then(
+            (m) => m.IsmaInformationComponent,
+          ),
+      },
+      {
         path: '**',
         redirectTo: 'users',
       },
@@ -142,6 +150,10 @@ export const routes: Routes = [
       {
         path: 'diocesis/instituto-biblico',
         loadComponent: () => import('./public/institute/institute').then((m) => m.Institute),
+      },
+      {
+        path: 'diocesis/isma',
+        loadComponent: () => import('./public/isma/isma').then((m) => m.Isma),
       },
       {
         path: '**',
