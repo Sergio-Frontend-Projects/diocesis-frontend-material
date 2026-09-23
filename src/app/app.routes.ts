@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
+import { moduleAccessGuard } from './core/guards/module-access.guard';
 import { ReverendDetails } from './public/reverend-details/reverend-details';
 
 export const routes: Routes = [
@@ -52,6 +53,14 @@ export const routes: Routes = [
           import('./admin/documents/documents').then((m) => m.DocumentsComponent),
       },
       {
+        path: 'institute/information',
+        canActivate: [moduleAccessGuard('instituto-biblico')],
+        loadComponent: () =>
+          import('./admin/institute-information/institute-information').then(
+            (m) => m.InstituteInformationComponent,
+          ),
+      },
+      {
         path: '**',
         redirectTo: 'users',
       },
@@ -97,6 +106,10 @@ export const routes: Routes = [
       {
         path: 'noticias/:tag',
         loadComponent: () => import('./public/post-search/post-search').then((m) => m.PostSearch),
+      },
+      {
+        path: 'diocesis/instituto-biblico',
+        loadComponent: () => import('./public/institute/institute').then((m) => m.Institute),
       },
       {
         path: '**',

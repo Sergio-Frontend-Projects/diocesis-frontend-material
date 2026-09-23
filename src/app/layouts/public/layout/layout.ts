@@ -34,6 +34,11 @@ export class Layout {
           icon: this.iconsService.calendar1,
         },
         { label: 'Obituario', to: '/diocesis/obituario', icon: this.iconsService.heart },
+        {
+          label: 'Instituto Bíblico',
+          to: '/diocesis/instituto-biblico',
+          icon: this.iconsService.institute,
+        },
       ],
     },
     {
