@@ -101,6 +101,19 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'isma/special-cases',
+        canActivate: [moduleAccessGuard('isma')],
+        loadComponent: () =>
+          import('./admin/isma-special-cases/isma-special-cases').then(
+            (m) => m.IsmaSpecialCasesComponent,
+          ),
+      },
+      {
+        path: 'isma/faq',
+        canActivate: [moduleAccessGuard('isma')],
+        loadComponent: () => import('./admin/isma-faq/isma-faq').then((m) => m.IsmaFaqComponent),
+      },
+      {
         path: '**',
         redirectTo: 'users',
       },
